@@ -1,0 +1,36 @@
+# Environment Variables & Secrets
+.env
+.env*.local
+.env.production
+.env.development
+.env.test
+*.env
+!.env.example
+
+# Dependencies & Build Outputs
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+
+# System & OS Artifacts
+.DS_Store
+Thumbs.db
+*.pem
+*.key
+*.cert
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# IDE & Editor Artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Next.js / Vercel
+.vercel

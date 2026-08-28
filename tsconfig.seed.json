@@ -1,0 +1,1 @@
+{"compilerOptions":{"module":"commonjs","target":"ES2019","esModuleInterop":true,"resolveJsonModule":true,"outDir":"./dist","strict":false}}
