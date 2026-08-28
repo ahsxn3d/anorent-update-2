@@ -350,7 +350,40 @@ export const DeploymentsPage: React.FC<DeploymentsPageProps> = ({
       </ScrollReveal>
 
       {/* 3D HOLOCARD PRODUCT SHOWCASE */}
-      {filteredProducts.length === 0 ? (
+      {products.length === 0 ? (
+        <div className="text-center py-14 sm:py-20 px-6 bg-[#131422]/70 rounded-3xl border border-purple-500/30 backdrop-blur-2xl space-y-4 max-w-2xl mx-auto shadow-2xl">
+          <div className="w-14 h-14 mx-auto rounded-2xl bg-[#8B00EE]/20 border border-purple-400/40 flex items-center justify-center text-[#C084FC] shadow-[0_0_25px_rgba(139,0,238,0.4)]">
+            <Box className="w-7 h-7 animate-pulse" />
+          </div>
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-[10px] font-mono font-bold text-emerald-300 uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              COMMISSIONS OPEN // ZERO ACTIVE ARCHIVES
+            </div>
+            <h3 className="font-display text-xl sm:text-2xl font-black text-white tracking-tight">
+              Production Archives Staged for New Projects
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+              No placeholder projects are listed. Custom 3D WebGL scenes, bespoke Next.js architectures, and full-stack platforms are currently available for commission.
+            </p>
+          </div>
+          <div className="pt-2 flex items-center justify-center gap-3">
+            <button
+              onClick={() => {
+                sound.playClick();
+                if (propSetCurrentPage) {
+                  propSetCurrentPage('contact');
+                } else {
+                  router.push('/contact');
+                }
+              }}
+              className="px-6 py-2.5 bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-white text-xs font-extrabold uppercase tracking-wider rounded-full shadow-[0_0_20px_rgba(139,0,238,0.5)] hover:shadow-[0_0_30px_rgba(168,85,247,0.8)] transition-all cursor-pointer"
+            >
+              Start A Commission ↗
+            </button>
+          </div>
+        </div>
+      ) : filteredProducts.length === 0 ? (
         <div className="text-center py-10 sm:py-16 px-4 bg-[#131422]/60 rounded-2xl sm:rounded-3xl border border-purple-500/20 backdrop-blur-xl space-y-2 sm:space-y-3">
           <Box className="w-8 h-8 sm:w-10 sm:h-10 text-purple-400 mx-auto animate-pulse" />
           <h3 className="font-display text-base sm:text-lg font-bold text-white">No deployments found</h3>

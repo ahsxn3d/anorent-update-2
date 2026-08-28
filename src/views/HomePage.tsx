@@ -324,59 +324,61 @@ export const HomePage: React.FC<HomePageProps> = ({
       <HorizontalStory setCurrentPage={setCurrentPage} />
 
       {/* ================= FEATURED DEPLOYMENTS PROJECT CAROUSEL ================= */}
-      <section className="pt-4 sm:pt-10 space-y-4 sm:space-y-6">
-        <ScrollReveal direction="up" delay={0.05} distance={20}>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 border-b border-purple-500/20 pb-3 sm:pb-4">
-            <div className="space-y-0.5 sm:space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-[#C084FC]">
-                  Curated Assets & Systems
-                </span>
-                <span className="px-1.5 sm:px-2 py-0.5 rounded-full bg-[#8B00EE]/20 border border-purple-500/30 text-[8px] sm:text-[9px] font-mono text-purple-200">
-                  FEATURED SHOWCASE
-                </span>
+      {products && products.length > 0 && (
+        <section className="pt-4 sm:pt-10 space-y-4 sm:space-y-6">
+          <ScrollReveal direction="up" delay={0.05} distance={20}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 border-b border-purple-500/20 pb-3 sm:pb-4">
+              <div className="space-y-0.5 sm:space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-[#C084FC]">
+                    Curated Assets & Systems
+                  </span>
+                  <span className="px-1.5 sm:px-2 py-0.5 rounded-full bg-[#8B00EE]/20 border border-purple-500/30 text-[8px] sm:text-[9px] font-mono text-purple-200">
+                    FEATURED SHOWCASE
+                  </span>
+                </div>
+                <div className="mask-container">
+                  <h2 className="cyber-reveal-line font-display text-xl sm:text-3xl font-extrabold text-white" style={{ animationDelay: '0.15s' }}>
+                    Featured Digital Deployments
+                  </h2>
+                </div>
               </div>
-              <div className="mask-container">
-                <h2 className="cyber-reveal-line font-display text-xl sm:text-3xl font-extrabold text-white" style={{ animationDelay: '0.15s' }}>
-                  Featured Digital Deployments
-                </h2>
-              </div>
+
+              <ButterButton
+                variant="secondary"
+                size="sm"
+                onClick={() => {
+                  sound.playPageSwitch();
+                  setCurrentPage('deployments');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                icon={<ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C084FC]" />}
+                iconPosition="right"
+                className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide !py-1.5 sm:!py-2"
+              >
+                View All Deployments
+              </ButterButton>
             </div>
+          </ScrollReveal>
 
-            <ButterButton
-              variant="secondary"
-              size="sm"
-              onClick={() => {
-                sound.playPageSwitch();
-                setCurrentPage('deployments');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              icon={<ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C084FC]" />}
-              iconPosition="right"
-              className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide !py-1.5 sm:!py-2"
-            >
-              View All Deployments
-            </ButterButton>
-          </div>
-        </ScrollReveal>
-
-        {/* AUTONOMOUS HUD SHOWCASE CONSOLE */}
-        <ScrollReveal direction="up" delay={0.1} distance={24}>
-          <ShowcaseConsole
-            projects={products}
-            onInspect={(project) => {
-              const orig = products.find((x) => x.id === project.id);
-              if (orig) {
-                if (onSelectProduct) {
-                  onSelectProduct(orig);
-                } else {
-                  setSelectedProduct(orig);
+          {/* AUTONOMOUS HUD SHOWCASE CONSOLE */}
+          <ScrollReveal direction="up" delay={0.1} distance={24}>
+            <ShowcaseConsole
+              projects={products}
+              onInspect={(project) => {
+                const orig = products.find((x) => x.id === project.id);
+                if (orig) {
+                  if (onSelectProduct) {
+                    onSelectProduct(orig);
+                  } else {
+                    setSelectedProduct(orig);
+                  }
                 }
-              }
-            }}
-          />
-        </ScrollReveal>
-      </section>
+              }}
+            />
+          </ScrollReveal>
+        </section>
+      )}
 
       {/* REVIEWS AND RATING SECTION (SCROLL TRIGGERED) */}
       <section className="pt-2 sm:pt-6">
