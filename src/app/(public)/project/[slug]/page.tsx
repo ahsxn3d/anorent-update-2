@@ -3,14 +3,8 @@ import { notFound } from 'next/navigation';
 import { getDeploymentBySlug, getDeploymentsData } from '@/lib/data';
 import { ProjectDetailPage } from '@/views/ProjectDetailPage';
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  const products = await getDeploymentsData();
-  return products.map((p) => ({
-    slug: p.slug,
-  }));
-}
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function PublicProjectDetailRoute({
   params,
