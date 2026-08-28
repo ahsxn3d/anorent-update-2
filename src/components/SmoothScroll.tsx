@@ -13,15 +13,15 @@ export let lenisInstance: Lenis | null = null;
 
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
-    // Luxury Awwwards-grade smooth scroll initialization
+    // Luxury Awwwards-grade smooth scroll initialization (Optimized for 60-120Hz displays)
     const lenis = new Lenis({
-      duration: 1.0,
+      duration: 0.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.0,
       infinite: false,
     });
 
@@ -37,7 +37,6 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     gsap.ticker.add(updateLenis);
-    // Use standard lag smoothing (500ms max lag, 33ms target frame) to absorb frame drops smoothly
     gsap.ticker.lagSmoothing(500, 33);
 
     return () => {

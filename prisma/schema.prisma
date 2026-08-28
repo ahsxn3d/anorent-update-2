@@ -16,19 +16,19 @@ datasource db {
 // --------------------------------------------------------
 model SiteConfig {
   id              String   @id @default(cuid())
-  brandName       String   @default("ANORENT")
-  brandLogoText   String   @default("ANORENT")
+  brandName       String   @default("Anorix")
+  brandLogoText   String   @default("ANORIX")
   brandTagline    String   @default("Digital Artist & Creative Technologist Studio")
   liveBadgeStatus String   @default("99.98% LIVE")
-  pingLatency     String   @default("24ms")
+  pingLatency     String   @default("4ms")
   escrowCoverage  String   @default("100% ESCROW-PROTECTED")
-  contactEmail    String   @default("hello@anorent.com")
-  telegramHandle  String?  @default("@anorent")
-  discordHandle   String?  @default("anorent#0001")
-  githubUrl       String?  @default("https://github.com/anorent")
-  twitterUrl      String?  @default("https://twitter.com/anorent")
+  contactEmail    String   @default("hello@anorix.com")
+  telegramHandle  String?  @default("@anorix")
+  discordHandle   String?  @default("anorix#0001")
+  githubUrl       String?  @default("https://github.com/anorix")
+  twitterUrl      String?  @default("https://twitter.com/anorix")
   socialChannels  Json?
-  metaTitle       String?  @default("ANORENT — Cybernetic Web Experiences & 3D Architect")
+  metaTitle       String?  @default("Anorix — Cybernetic Web Experiences & 3D Architect")
   metaDescription String?  @db.Text
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -285,7 +285,7 @@ model EscrowPhase {
 // --------------------------------------------------------
 model AboutContent {
   id                   String   @id @default(cuid())
-  name                 String   @default("ANORENT")
+  name                 String   @default("Anorix")
   artistName           String?  @default("Ahsan")
   role                 String   @default("Lead Creative Technologist & Full-Stack Architect")
   tagline              String?  @default("Solo Creative Developer & 3D Artist")
@@ -293,14 +293,14 @@ model AboutContent {
   avatarUrl            String?  @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80")
   executiveBio         String   @db.Text
   bio                  String?  @db.Text
-  location             String   @default("Global Remote // Earth Grid")
-  locationTimezone     String   @default("UTC / EST Active")
-  availabilityStatus   String   @default("LIMITED SLOTS AVAILABLE")
-  yearsActive          String   @default("7+ Years")
-  deploymentsDelivered String   @default("48+")
-  clientSatisfaction   String   @default("99.8%")
+  location             String   @default("Lahore, PK (UTC+5)")
+  locationTimezone     String   @default("UTC+5 Active")
+  availabilityStatus   String   @default("AVAILABLE FOR Q3/Q4 COMMISSIONS")
+  yearsActive          String   @default("3+ Years")
+  deploymentsDelivered String   @default("12+")
+  clientSatisfaction   String   @default("100%")
   techSkills           String[] @default([])
-  contactEmail         String   @default("hello@anorent.com")
+  contactEmail         String   @default("ahsxn3d@gmail.com")
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }

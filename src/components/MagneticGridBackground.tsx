@@ -49,65 +49,82 @@ export const MagneticGridBackground: React.FC = () => {
       pulse: number;
     }
 
-    const particleCount = Math.min(50, Math.floor((width * height) / 28000));
+    // Keep particle count lightweight for rock-solid 60+ FPS
+    const particleCount = Math.min(32, Math.floor((width * height) / 45000));
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        size: Math.random() * 2 + 1,
-        alpha: Math.random() * 0.4 + 0.2,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        size: Math.random() * 1.5 + 1,
+        alpha: Math.random() * 0.35 + 0.15,
         pulse: Math.random() * Math.PI,
       });
     }
 
+    let isVisible = true;
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     const render = () => {
+      if (!isVisible) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
       const targetX = mouseX.get();
       const targetY = mouseY.get();
 
-      // Render & link particles
+      // Render particles
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.pulse += 0.02;
+        p.pulse += 0.015;
 
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        // Gravitational magnetic pull toward cursor
+        // Gravitational magnetic pull toward cursor (low computational overhead)
         const dx = targetX - p.x;
         const dy = targetY - p.y;
-        const distToMouse = Math.sqrt(dx * dx + dy * dy);
+        const distSq = dx * dx + dy * dy;
 
-        if (distToMouse < 160) {
-          const force = (1 - distToMouse / 160) * 0.06;
-          p.x += (dx / distToMouse) * force * 12;
-          p.y += (dy / distToMouse) * force * 12;
+        if (distSq < 22500) { // 150px squared
+          const distToMouse = Math.sqrt(distSq) || 1;
+          const force = (1 - distToMouse / 150) * 0.04;
+          p.x += (dx / distToMouse) * force * 8;
+          p.y += (dy / distToMouse) * force * 8;
         }
 
         // Draw particle
-        const currentAlpha = p.alpha * (0.8 + Math.sin(p.pulse) * 0.3);
+        const currentAlpha = p.alpha * (0.8 + Math.sin(p.pulse) * 0.2);
         ctx.fillStyle = `rgba(192, 132, 252, ${currentAlpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
 
-        // Connect with nearby neighbors
-        for (let j = i + 1; j < particles.length; j++) {
+        // Optimized neighbor linking (capped to next 3 particles to avoid O(N^2) lag)
+        const maxNeighbors = Math.min(particles.length, i + 4);
+        for (let j = i + 1; j < maxNeighbors; j++) {
           const p2 = particles[j];
-          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < 100) {
-            const lineAlpha = (1 - dist / 100) * 0.16;
+          const ndx = p.x - p2.x;
+          const ndy = p.y - p2.y;
+          const ndistSq = ndx * ndx + ndy * ndy;
+          if (ndistSq < 8100) { // 90px squared
+            const dist = Math.sqrt(ndistSq);
+            const lineAlpha = (1 - dist / 90) * 0.14;
             ctx.strokeStyle = `rgba(168, 85, 247, ${lineAlpha})`;
-            ctx.lineWidth = 0.6;
+            ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -121,15 +138,26 @@ export const MagneticGridBackground: React.FC = () => {
 
     animationFrameId = requestAnimationFrame(render);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+    let mouseRafId: number | null = null;
+    let pendingMouseX = width / 2;
+    let pendingMouseY = height / 2;
 
-      // Direct DOM update for spotlight mask without triggering React component re-renders
-      if (spotlightRef.current) {
-        const mask = `radial-gradient(650px circle at ${e.clientX}px ${e.clientY}px, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)`;
-        spotlightRef.current.style.webkitMaskImage = mask;
-        spotlightRef.current.style.maskImage = mask;
+    const handleMouseMove = (e: MouseEvent) => {
+      pendingMouseX = e.clientX;
+      pendingMouseY = e.clientY;
+
+      if (mouseRafId === null) {
+        mouseRafId = requestAnimationFrame(() => {
+          mouseX.set(pendingMouseX);
+          mouseY.set(pendingMouseY);
+
+          if (spotlightRef.current) {
+            const mask = `radial-gradient(550px circle at ${pendingMouseX}px ${pendingMouseY}px, black 0%, rgba(0,0,0,0.5) 50%, transparent 100%)`;
+            spotlightRef.current.style.webkitMaskImage = mask;
+            spotlightRef.current.style.maskImage = mask;
+          }
+          mouseRafId = null;
+        });
       }
     };
 
@@ -137,6 +165,8 @@ export const MagneticGridBackground: React.FC = () => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      if (mouseRafId !== null) cancelAnimationFrame(mouseRafId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
     };

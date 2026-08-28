@@ -802,7 +802,20 @@ async function main() {
       create: d,
     });
   }
-  console.log('✅ 7. Real Showcase Deployments seeded (3 products)');
+
+  // Purge any dummy or unlisted deployments
+  await prisma.deploymentProduct.deleteMany({
+    where: {
+      slug: {
+        notIn: [
+          'cyberpunk-hud-engine',
+          'quantum-ecommerce-realm',
+          'nexus-saas-platform',
+        ],
+      },
+    },
+  });
+  console.log('✅ 7. Real Showcase Deployments seeded (3 authentic products only)');
 
   // =========================================================================
   // 8. CLIENT REVIEWS & TESTIMONIALS

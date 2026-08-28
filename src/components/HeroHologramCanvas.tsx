@@ -28,9 +28,9 @@ interface Node3D {
 export const HeroHologramCanvas: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const telemetryRef = useRef<HTMLSpanElement>(null);
   const [activeMode, setActiveMode] = useState<HologramMode>('quantum');
-  const [fps, setFps] = useState(60);
-  const [coherence, setCoherence] = useState(99.4);
+  const coherenceRef = useRef(99.4);
   const [isInteracting, setIsInteracting] = useState(false);
 
   // Interaction physics state
@@ -59,8 +59,11 @@ export const HeroHologramCanvas: React.FC = () => {
       strength: 1.0,
     });
 
-    // Momentarily fluctuate coherence for cybernetic realism
-    setCoherence((prev) => +(Math.max(92, Math.min(100, prev + (Math.random() * 0.8 - 0.3)))).toFixed(1));
+    // Momentarily fluctuate coherence for cybernetic realism without triggering re-renders
+    coherenceRef.current = +(Math.max(92, Math.min(100, coherenceRef.current + (Math.random() * 0.8 - 0.3)))).toFixed(1);
+    if (telemetryRef.current) {
+      telemetryRef.current.textContent = `60 FPS // ${coherenceRef.current}%`;
+    }
   }, []);
 
   useEffect(() => {
@@ -209,17 +212,35 @@ export const HeroHologramCanvas: React.FC = () => {
     let frameCount = 0;
     let lastFpsTime = performance.now();
 
+    let isIntersecting = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(container);
+
     // RENDER LOOP
     const render = (time: number) => {
+      // If element is off-screen or tab is hidden, yield frame to keep 60 FPS everywhere else
+      if (!isIntersecting || document.hidden) {
+        animFrameId.current = requestAnimationFrame(render);
+        return;
+      }
+
       const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
 
-      // FPS tracking
+      // FPS tracking (direct DOM update, zero React re-renders)
       frameCount++;
       if (time - lastFpsTime >= 500) {
-        setFps(Math.round((frameCount * 1000) / (time - lastFpsTime)));
+        const currentFps = Math.min(60, Math.round((frameCount * 1000) / (time - lastFpsTime)));
         frameCount = 0;
         lastFpsTime = time;
+        if (telemetryRef.current) {
+          telemetryRef.current.textContent = `${currentFps} FPS // ${coherenceRef.current}%`;
+        }
       }
 
       // Always reset context transform to prevent any scaling drifts or misalignments
@@ -528,6 +549,7 @@ export const HeroHologramCanvas: React.FC = () => {
         cancelAnimationFrame(resizeRafId);
       }
       resizeObserver.disconnect();
+      observer.disconnect();
       canvas.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
@@ -556,7 +578,7 @@ export const HeroHologramCanvas: React.FC = () => {
 
       <div className="absolute top-3.5 right-4 z-20 text-emerald-400/90 text-[10px] font-mono tracking-widest flex items-center gap-1.5 pointer-events-none">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        {fps} FPS // {coherence}%
+        <span ref={telemetryRef}>60 FPS // 99.4%</span>
       </div>
 
       <div className="absolute bottom-12 left-4 z-20 text-slate-400/70 text-[9px] font-mono pointer-events-none hidden sm:block">

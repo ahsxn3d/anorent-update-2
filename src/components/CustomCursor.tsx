@@ -25,6 +25,9 @@ export const CustomCursor: React.FC = () => {
     const mediaQuery = window.matchMedia('(pointer: fine)');
     if (!mediaQuery.matches) return;
 
+    let lastHovered = false;
+    let lastText = '';
+
     const handleMouseMove = (e: MouseEvent) => {
       rawX.set(e.clientX);
       rawY.set(e.clientY);
@@ -34,13 +37,16 @@ export const CustomCursor: React.FC = () => {
       if (!target) return;
 
       const interactiveEl = target.closest('button, a, input, textarea, [data-cursor-hover]');
-      if (interactiveEl) {
-        setIsHovered(true);
-        const text = interactiveEl.getAttribute('data-cursor-text');
-        setCursorText(text || '');
-      } else {
-        setIsHovered(false);
-        setCursorText('');
+      const isNowHovered = !!interactiveEl;
+      const nextText = interactiveEl ? interactiveEl.getAttribute('data-cursor-text') || '' : '';
+
+      if (isNowHovered !== lastHovered) {
+        lastHovered = isNowHovered;
+        setIsHovered(isNowHovered);
+      }
+      if (nextText !== lastText) {
+        lastText = nextText;
+        setCursorText(nextText);
       }
     };
 
