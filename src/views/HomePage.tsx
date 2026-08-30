@@ -8,7 +8,7 @@ import { ReviewsDisplay } from '../components/ReviewsSection';
 import { CyberButton } from '../components/CyberButton';
 import { ButterButton } from '../components/ButterButton';
 import { ScrollReveal } from '../components/ScrollReveal';
-import { HeroHologramCanvas } from '../components/HeroHologramCanvas';
+import { HeroHologramVisual } from '../components/HeroHologramVisual';
 import { HoloCard } from '../components/HoloCard';
 import { DeploymentModal } from '../components/DeploymentModal';
 import { KineticHeroTitle } from '../components/KineticHeroTitle';
@@ -174,7 +174,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* HERO RIGHT COLUMN (Interactive 3D Quantum Hologram Sphere) */}
           <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
             <ScrollReveal direction="zoom" delay={0.2} distance={0}>
-              <HeroHologramCanvas />
+              <HeroHologramVisual />
             </ScrollReveal>
 
             {/* 3 Quick Category 3D Holo Cards with Permanent Blurry Glass & Ambient Back-glow */}

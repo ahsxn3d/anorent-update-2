@@ -107,6 +107,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <img
         src={product.thumbnailUrl}
         alt={product.title}
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105 opacity-100 will-change-transform pointer-events-none"
       />
 

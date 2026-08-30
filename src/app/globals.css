@@ -536,3 +536,24 @@ a:focus-visible {
   }
 }
 
+/* =========================================================================
+   MOBILE GPU PERFORMANCE OPTIMIZATIONS (120Hz Fluidity & Zero Overdraw)
+   ========================================================================= */
+@media (max-width: 767px) {
+  /* Prevent mobile GPU from running heavy Gaussian kernel blur passes on every scroll frame */
+  .backdrop-blur-3xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-xl,
+  .backdrop-blur-lg,
+  .backdrop-blur-md {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Optimize will-change layers on mobile to avoid VRAM overdraw and compositing lag */
+  .will-change-transform {
+    will-change: auto !important;
+  }
+}
+
+

@@ -13,7 +13,19 @@ export let lenisInstance: Lenis | null = null;
 
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
-    // Luxury Awwwards-grade smooth scroll initialization (Optimized for 60-120Hz displays)
+    const isTouchDevice =
+      typeof window !== 'undefined' &&
+      ('ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(pointer: coarse)').matches ||
+        window.innerWidth < 768);
+
+    // On mobile touch devices, use 100% native inertial touch scrolling (zero frame drops / touch hijacking)
+    if (isTouchDevice) {
+      return;
+    }
+
+    // Luxury Awwwards-grade smooth scroll initialization for desktop mouse/wheel devices
     const lenis = new Lenis({
       duration: 0.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -21,7 +33,7 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.0,
+      syncTouch: false,
       infinite: false,
     });
 

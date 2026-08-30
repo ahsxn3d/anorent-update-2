@@ -128,6 +128,8 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
             <img
               src={product.thumbnailUrl}
               alt={product.title}
+              loading="eager"
+              decoding="async"
               className="w-full h-auto max-h-[560px] object-cover object-center"
             />
 

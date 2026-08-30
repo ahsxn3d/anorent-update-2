@@ -22,6 +22,11 @@ export const MagneticGridBackground: React.FC = () => {
 
   // Dynamic particle constellation canvas with cursor gravity (Optimized, 0 React Re-renders)
   useEffect(() => {
+    // On mobile / touch screens (<768px), bypass particle canvas loop entirely to preserve 120 FPS
+    if (typeof window === 'undefined' || window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { alpha: true });
