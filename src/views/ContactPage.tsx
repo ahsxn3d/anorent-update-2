@@ -64,30 +64,32 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   onContactSubmit,
   contactEmail = 'ahsxn3d@gmail.com',
   whatsappNumber = '03284992759',
-  fiverrUrl = 'https://www.fiverr.com/s/7bK7e2b',
-  dribbbleUrl = 'https://dribbble.com/ahsanwebdesign',
-  twitterUrl = 'https://x.com/ahsanwebdesign',
+  fiverrUrl = 'https://www.fiverr.com/ahsxn_dev',
+  dribbbleUrl = 'https://dribbble.com/ahsxn_dev',
+  twitterUrl = 'https://x.com/Ahsanwebdesign',
 }) => {
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
-  // Live Telemetry Clock State
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [hasMounted, setHasMounted] = useState(false);
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
   useEffect(() => {
+    setHasMounted(true);
+    setCurrentTime(new Date());
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Formatted Date & Time Strings
-  const hours = String(currentTime.getHours()).padStart(2, '0');
-  const minutes = String(currentTime.getMinutes()).padStart(2, '0');
-  const seconds = String(currentTime.getSeconds()).padStart(2, '0');
-  const dayName = currentTime.toLocaleDateString('en-US', { weekday: 'long' });
-  const monthName = currentTime.toLocaleDateString('en-US', { month: 'long' });
-  const dayNum = currentTime.getDate();
-  const year = currentTime.getFullYear();
+  // Formatted Date & Time Strings (Hydration-safe)
+  const hours = hasMounted && currentTime ? String(currentTime.getHours()).padStart(2, '0') : '12';
+  const minutes = hasMounted && currentTime ? String(currentTime.getMinutes()).padStart(2, '0') : '00';
+  const seconds = hasMounted && currentTime ? String(currentTime.getSeconds()).padStart(2, '0') : '00';
+  const dayName = hasMounted && currentTime ? currentTime.toLocaleDateString('en-US', { weekday: 'long' }) : 'Saturday';
+  const monthName = hasMounted && currentTime ? currentTime.toLocaleDateString('en-US', { month: 'long' }) : 'August';
+  const dayNum = hasMounted && currentTime ? currentTime.getDate() : 30;
+  const year = hasMounted && currentTime ? currentTime.getFullYear() : 2026;
 
   // Form State for Direct Email Brief (Card 1)
   const [clientName, setClientName] = useState<string>('');
@@ -449,9 +451,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             <ButterButton
               variant="emerald"
               size="sm"
-              href="https://fiverr.com/pro/anorent"
+              href={fiverrUrl || 'https://www.fiverr.com/ahsxn_dev'}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label="Order on Fiverr Pro"
               icon={<ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
               iconPosition="right"
               className="w-full uppercase tracking-wider font-extrabold text-center justify-center text-[10px] sm:text-xs py-1.5 sm:py-2.5"
@@ -498,9 +501,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             <ButterButton
               variant="pink"
               size="sm"
-              href="https://dribbble.com/anorent"
+              href={dribbbleUrl || 'https://dribbble.com/ahsxn_dev'}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label="View Dribbble Portfolio"
               icon={<ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
               iconPosition="right"
               className="w-full uppercase tracking-wider font-extrabold text-center justify-center text-[10px] sm:text-xs py-1.5 sm:py-2.5"
@@ -547,9 +551,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             <ButterButton
               variant="blue"
               size="sm"
-              href="https://x.com/Ahsanwebdesign"
+              href={twitterUrl || 'https://x.com/Ahsanwebdesign'}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label="Connect on Twitter / X"
               icon={<ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
               iconPosition="right"
               className="w-full uppercase tracking-wider font-extrabold text-center justify-center text-[10px] sm:text-xs py-1.5 sm:py-2.5"
@@ -598,7 +603,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({
               size="sm"
               href="https://wa.me/923284992759"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label="Direct WhatsApp Message"
               icon={<ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
               iconPosition="right"
               className="w-full uppercase tracking-wider font-extrabold text-center justify-center text-[10px] sm:text-xs py-1.5 sm:py-2.5"

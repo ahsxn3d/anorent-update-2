@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Activity, Clock } from 'lucide-react';
+import { Activity, Clock, ArrowUpRight } from 'lucide-react';
 import { Page } from '../types';
 
 interface FooterProps {
@@ -10,20 +10,25 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
-  const [time, setTime] = useState(new Date());
+  const [hasMounted, setHasMounted] = useState(false);
+  const [time, setTime] = useState<Date | null>(null);
 
   useEffect(() => {
+    setHasMounted(true);
+    setTime(new Date());
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const formattedTime = time.toLocaleTimeString('en-US', { hour12: false });
-  const formattedDate = time.toLocaleDateString('en-US', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+  const formattedTime = hasMounted && time ? time.toLocaleTimeString('en-US', { hour12: false }) : '12:00:00';
+  const formattedDate = hasMounted && time
+    ? time.toLocaleDateString('en-US', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+    : '2026';
 
   return (
     <footer className="relative z-20 w-full mt-10 sm:mt-20 bg-gradient-to-tr from-[#0A0B14] via-[#131422] to-[#1F1035] border-t border-purple-500/20 overflow-hidden shadow-2xl">
@@ -94,31 +99,47 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
 
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-fuchsia-300 block mb-1.5 sm:mb-2 font-mono">
-                  Inquiries
+                  Official Channels
                 </span>
                 <ul className="space-y-1.5 sm:space-y-2 text-xs font-semibold text-purple-100/90">
+                  <li>
+                    <a
+                      href="https://www.fiverr.com/ahsxn_dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Order on Fiverr Pro"
+                      className="hover:text-emerald-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Fiverr Pro</span>
+                      <ArrowUpRight className="w-3 h-3 text-emerald-400" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://dribbble.com/ahsxn_dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="View Dribbble Portfolio"
+                      className="hover:text-pink-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Dribbble</span>
+                      <ArrowUpRight className="w-3 h-3 text-pink-400" />
+                    </a>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => setCurrentPage('contact')}
+                      className="hover:text-fuchsia-300 transition-colors cursor-pointer"
+                    >
+                      Direct Contact Portals
+                    </button>
+                  </li>
                   <li>
                     <button
                       onClick={() => setCurrentPage('faq')}
                       className="hover:text-fuchsia-300 transition-colors cursor-pointer"
                     >
                       FAQ & Guides
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => setCurrentPage('contact')}
-                      className="hover:text-fuchsia-300 transition-colors cursor-pointer"
-                    >
-                      Contact Portals
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => setCurrentPage('contact')}
-                      className="hover:text-fuchsia-300 transition-colors cursor-pointer"
-                    >
-                      Direct Email Brief
                     </button>
                   </li>
                 </ul>
@@ -144,11 +165,11 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
               <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 text-[11px] font-mono-tech">
                 <div>
                   <span className="text-purple-300/80 block text-[9px] uppercase">Exact Clock (UTC)</span>
-                  <span className="text-fuchsia-300 font-bold text-xs sm:text-sm tracking-widest">{formattedTime}</span>
+                  <span suppressHydrationWarning className="text-fuchsia-300 font-bold text-xs sm:text-sm tracking-widest">{formattedTime}</span>
                 </div>
                 <div>
                   <span className="text-purple-300/80 block text-[9px] uppercase">Calendar Date</span>
-                  <span className="text-white font-bold text-[11px] sm:text-xs">{formattedDate}</span>
+                  <span suppressHydrationWarning className="text-white font-bold text-[11px] sm:text-xs">{formattedDate}</span>
                 </div>
               </div>
             </div>

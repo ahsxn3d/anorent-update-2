@@ -238,12 +238,16 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
   const buttonClasses = `butter-button relative overflow-hidden group border-0 outline-none ring-0 focus:outline-none focus:ring-0 backdrop-blur-2xl transition-all duration-300 cursor-pointer select-none hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.96] inline-flex items-center justify-center font-mono ${colorThemes.defaultBg} ${colorThemes.shadow} ${sizeClasses} ${className}`;
 
   if (href) {
+    const isExternal = href.startsWith('http://') || href.startsWith('https://');
+    const computedTarget = target || (isExternal ? '_blank' : undefined);
+    const computedRel = rel || (computedTarget === '_blank' ? 'noopener noreferrer' : undefined);
+
     return (
       <a
         ref={btnRef as any}
         href={href}
-        target={target}
-        rel={rel}
+        target={computedTarget}
+        rel={computedRel}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}

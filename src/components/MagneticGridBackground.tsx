@@ -1,15 +1,16 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 
 export const MagneticGridBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const [hasMounted, setHasMounted] = useState(false);
   
-  const mouseX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth / 2 : 500);
-  const mouseY = useMotionValue(typeof window !== 'undefined' ? window.innerHeight / 2 : 400);
+  const mouseX = useMotionValue(500);
+  const mouseY = useMotionValue(400);
 
   const springX = useSpring(mouseX, { stiffness: 120, damping: 24, mass: 0.4 });
   const springY = useSpring(mouseY, { stiffness: 120, damping: 24, mass: 0.4 });
@@ -19,6 +20,10 @@ export const MagneticGridBackground: React.FC = () => {
 
   const tiltX = useTransform(springX, [0, windowWidth], [-8, 8]);
   const tiltY = useTransform(springY, [0, windowHeight], [-8, 8]);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   // Dynamic particle constellation canvas with cursor gravity (Optimized, 0 React Re-renders)
   useEffect(() => {
@@ -205,13 +210,21 @@ export const MagneticGridBackground: React.FC = () => {
       {/* Desktop Dynamic Spotlight & Parallax Pull Layer */}
       <motion.div
         ref={spotlightRef}
+        suppressHydrationWarning
         className="hidden md:block absolute -inset-10 will-change-transform"
-        style={{
-          x: tiltX,
-          y: tiltY,
-          WebkitMaskImage: 'radial-gradient(650px circle at 50% 40%, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
-          maskImage: 'radial-gradient(650px circle at 50% 40%, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
-        }}
+        style={
+          hasMounted
+            ? {
+                x: tiltX,
+                y: tiltY,
+                WebkitMaskImage: 'radial-gradient(650px circle at 50% 40%, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
+                maskImage: 'radial-gradient(650px circle at 50% 40%, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
+              }
+            : {
+                WebkitMaskImage: 'radial-gradient(650px circle at 50% 40%, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
+                maskImage: 'radial-gradient(650px circle at 50% 40%, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
+              }
+        }
       >
         <div className="w-full h-full opacity-90">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
