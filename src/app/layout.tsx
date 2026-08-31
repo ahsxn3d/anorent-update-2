@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Ahsan' }],
   icons: {
     icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon.png', type: 'image/png' },
       { url: '/favicon.ico' },
     ],
     apple: [{ url: '/apple-touch-icon.png' }],
@@ -68,7 +68,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
