@@ -65,6 +65,11 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${archivoBlack.variable} ${jetbrainsMono.variable} dark`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      </head>
       <body className="bg-[#0A0B14] text-white antialiased selection:bg-[#8B00EE] selection:text-white overflow-x-clip min-h-screen">
         {children}
       </body>
