@@ -173,6 +173,7 @@ export async function createDeployment(data: Partial<DeploymentProduct>): Promis
       };
     }
 
+    revalidatePath('/', 'layout');
     revalidatePath('/');
     revalidatePath('/deployments');
     revalidatePath('/admin/deployments');
