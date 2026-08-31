@@ -24,22 +24,24 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Anorix — Digital Artist & Developer Studio',
+  title: 'Ahsan | Frontend Developer & 3D Artist',
   description:
-    'High-performance 3D websites, WebGL shaders, and bespoke Next.js interfaces engineered for founders and cutting-edge brands.',
+    'Portfolio of Ahsan — Frontend Developer & 3D Artist specializing in high-performance Next.js architectures, interactive WebGL shaders, and bespoke digital experiences.',
   keywords: [
-    'Creative Technologist',
-    '3D WebGL',
-    'Next.js 15',
+    'Frontend Developer',
+    '3D Artist',
+    'WebGL',
+    'Three.js',
+    'Next.js 16',
     'React 19',
     'Creative Developer',
     'UI Engineering',
-    'Anorix',
+    'Ahsan',
   ],
-  authors: [{ name: 'Anorix Studio' }],
+  authors: [{ name: 'Ahsan' }],
   icons: {
     icon: [
-      { url: '/icon.png', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico' },
     ],
     apple: [{ url: '/apple-touch-icon.png' }],
@@ -66,7 +68,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" sizes="any" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
