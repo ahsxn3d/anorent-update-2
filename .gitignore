@@ -14,6 +14,7 @@ out/
 build/
 dist/
 coverage/
+*.tsbuildinfo
 
 # System & OS Artifacts
 .DS_Store

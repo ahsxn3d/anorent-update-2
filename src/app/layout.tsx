@@ -38,7 +38,12 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Anorix Studio' }],
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: '/favicon.ico' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png' }],
+    shortcut: ['/favicon.ico'],
   },
 };
 
