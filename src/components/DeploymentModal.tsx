@@ -45,7 +45,7 @@ import { Canvas } from '@react-three/fiber';
 
 export const DeploymentSystem = () => {
   return (
-    <div className="min-h-screen bg-[#0A0B14] text-white p-8">
+    <div className="min-h-screen bg-[#0A0B14] text-[#EDE9E3] p-8">
       {/* Category: ${product.category} */}
       <h1 className="text-4xl font-extrabold text-gradient-purple">
         ${product.title}
@@ -89,7 +89,7 @@ export const DeploymentSystem = () => {
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.92, opacity: 0, y: 20 }}
           transition={{ type: 'spring', stiffness: 350, damping: 26 }}
-          className="relative w-full max-w-5xl rounded-3xl bg-[#130722]/95 border border-purple-500/40 shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_50px_rgba(139,0,238,0.4)] overflow-hidden z-10 flex flex-col max-h-[92vh]"
+          className="relative w-full max-w-5xl rounded-3xl bg-[#130722]/95 border border-purple-500/40 shadow-[0_25px_80px_rgba(12, 11, 10,0.9),0_0_50px_rgba(139,0,238,0.4)] overflow-hidden z-10 flex flex-col max-h-[92vh]"
         >
           {/* Top Specular Rim */}
           <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-purple-300 to-transparent z-20" />
@@ -107,7 +107,7 @@ export const DeploymentSystem = () => {
                   </span>
                   <span className="text-xs text-slate-400 font-mono">ID: {product.id}</span>
                 </div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-white tracking-tight mt-0.5">
+                <h2 className="text-lg sm:text-xl font-extrabold text-[#EDE9E3] tracking-tight mt-0.5">
                   {product.title}
                 </h2>
               </div>
@@ -119,7 +119,7 @@ export const DeploymentSystem = () => {
                 sound.playClick();
                 onClose();
               }}
-              className="p-2 rounded-full bg-purple-950/60 border border-purple-400/40 text-slate-300 hover:text-white hover:bg-purple-800/50 hover:shadow-[0_0_15px_#A855F7] transition-all cursor-pointer"
+              className="p-2 rounded-full bg-purple-950/60 border border-purple-400/40 text-slate-300 hover:text-[#EDE9E3] hover:bg-purple-800/50 hover:shadow-[0_0_15px_#A855F7] transition-all cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -136,8 +136,8 @@ export const DeploymentSystem = () => {
                 }}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'preview'
-                    ? 'bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-[#EDE9E3] shadow-md'
+                    : 'text-slate-400 hover:text-[#EDE9E3]'
                 }`}
               >
                 <Monitor className="w-3.5 h-3.5" />
@@ -150,8 +150,8 @@ export const DeploymentSystem = () => {
                 }}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'specs'
-                    ? 'bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-[#EDE9E3] shadow-md'
+                    : 'text-slate-400 hover:text-[#EDE9E3]'
                 }`}
               >
                 <Code2 className="w-3.5 h-3.5" />
@@ -164,8 +164,8 @@ export const DeploymentSystem = () => {
                 }}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'telemetry'
-                    ? 'bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-[#EDE9E3] shadow-md'
+                    : 'text-slate-400 hover:text-[#EDE9E3]'
                 }`}
               >
                 <Activity className="w-3.5 h-3.5 text-emerald-400" />
@@ -182,7 +182,7 @@ export const DeploymentSystem = () => {
                     setDeviceView('desktop');
                   }}
                   className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
-                    deviceView === 'desktop' ? 'bg-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                    deviceView === 'desktop' ? 'bg-purple-600 text-[#EDE9E3] shadow-md' : 'text-slate-400 hover:text-[#EDE9E3]'
                   }`}
                   title="Desktop View"
                 >
@@ -194,7 +194,7 @@ export const DeploymentSystem = () => {
                     setDeviceView('tablet');
                   }}
                   className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
-                    deviceView === 'tablet' ? 'bg-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                    deviceView === 'tablet' ? 'bg-purple-600 text-[#EDE9E3] shadow-md' : 'text-slate-400 hover:text-[#EDE9E3]'
                   }`}
                   title="Tablet View"
                 >
@@ -206,7 +206,7 @@ export const DeploymentSystem = () => {
                     setDeviceView('mobile');
                   }}
                   className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
-                    deviceView === 'mobile' ? 'bg-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                    deviceView === 'mobile' ? 'bg-purple-600 text-[#EDE9E3] shadow-md' : 'text-slate-400 hover:text-[#EDE9E3]'
                   }`}
                   title="Mobile View"
                 >
@@ -236,10 +236,10 @@ export const DeploymentSystem = () => {
                       alt={product.title}
                       className="w-full h-full object-cover rounded-xl"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none rounded-xl" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#121110]/80 via-transparent to-[#121110]/30 pointer-events-none rounded-xl" />
 
                     {/* Interactive Frame Watermark */}
-                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white text-xs pointer-events-none">
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[#EDE9E3] text-xs pointer-events-none">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                         <span className="font-mono font-bold tracking-wider">LIVE 60FPS SHADER ENGINE</span>
@@ -302,7 +302,7 @@ export const DeploymentSystem = () => {
                   <span className="text-xs font-mono text-purple-300">TYPESCRIPT / TAILWIND PRODUCTION COMPONENT</span>
                   <button
                     onClick={handleCopyCode}
-                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-purple-800/40 border border-purple-400/40 text-xs font-bold text-white hover:bg-purple-700/50 transition cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-purple-800/40 border border-purple-400/40 text-xs font-bold text-[#EDE9E3] hover:bg-purple-700/50 transition cursor-pointer"
                   >
                     {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                     {copiedCode ? 'Copied to Clipboard!' : 'Copy Code'}
@@ -319,22 +319,22 @@ export const DeploymentSystem = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-2xl bg-[#1a0c32] border border-purple-500/30 text-center space-y-1">
                   <div className="text-3xl font-extrabold text-emerald-400 font-mono">100</div>
-                  <div className="text-xs font-bold text-white uppercase tracking-wider">Performance</div>
+                  <div className="text-xs font-bold text-[#EDE9E3] uppercase tracking-wider">Performance</div>
                   <div className="text-[10px] text-slate-400 font-mono">0.18s FCP</div>
                 </div>
                 <div className="p-4 rounded-2xl bg-[#1a0c32] border border-purple-500/30 text-center space-y-1">
                   <div className="text-3xl font-extrabold text-emerald-400 font-mono">100</div>
-                  <div className="text-xs font-bold text-white uppercase tracking-wider">Accessibility</div>
+                  <div className="text-xs font-bold text-[#EDE9E3] uppercase tracking-wider">Accessibility</div>
                   <div className="text-[10px] text-slate-400 font-mono">WCAG AAA</div>
                 </div>
                 <div className="p-4 rounded-2xl bg-[#1a0c32] border border-purple-500/30 text-center space-y-1">
                   <div className="text-3xl font-extrabold text-emerald-400 font-mono">100</div>
-                  <div className="text-xs font-bold text-white uppercase tracking-wider">Best Practices</div>
+                  <div className="text-xs font-bold text-[#EDE9E3] uppercase tracking-wider">Best Practices</div>
                   <div className="text-[10px] text-slate-400 font-mono">Zero Vuln</div>
                 </div>
                 <div className="p-4 rounded-2xl bg-[#1a0c32] border border-purple-500/30 text-center space-y-1">
                   <div className="text-3xl font-extrabold text-emerald-400 font-mono">100</div>
-                  <div className="text-xs font-bold text-white uppercase tracking-wider">SEO Audit</div>
+                  <div className="text-xs font-bold text-[#EDE9E3] uppercase tracking-wider">SEO Audit</div>
                   <div className="text-[10px] text-slate-400 font-mono">Structured Schema</div>
                 </div>
               </div>

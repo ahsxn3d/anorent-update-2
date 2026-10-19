@@ -35,3 +35,18 @@ pnpm-debug.log*
 
 # Next.js / Vercel
 .vercel
+
+
+# Backups, archives, local QA
+*.zip
+*.7z
+*.rar
+*backup*/
+*-backup-*
+*.bak
+.env*
+!.env.example
+*.log
+dev*.log
+/three-qa/
+.vercel

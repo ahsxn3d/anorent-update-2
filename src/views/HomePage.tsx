@@ -5,18 +5,14 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Page, DeploymentProduct, ReviewItem, HeroContent } from '../types';
 import { ReviewsDisplay } from '../components/ReviewsSection';
-import { CyberButton } from '../components/CyberButton';
 import { ButterButton } from '../components/ButterButton';
+import { HeroSpotlight, Magnetic, TokenPlayground, BeforeAfter, ScopeConfigurator } from '../components/craft/Interactive';
 import { ScrollReveal } from '../components/ScrollReveal';
-import { HeroHologramVisual } from '../components/HeroHologramVisual';
-import { HoloCard } from '../components/HoloCard';
 import { DeploymentModal } from '../components/DeploymentModal';
 import { KineticHeroTitle } from '../components/KineticHeroTitle';
-import { GsapPlayfulText } from '../components/GsapPlayfulText';
-import HorizontalStory from '../components/HorizontalStory';
 import ShowcaseConsole from '../components/ShowcaseConsole';
 import { sound } from '../utils/audio';
-import { ArrowRight, Box, Sparkles, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface HomePageProps {
   setCurrentPage?: (page: Page) => void;
@@ -75,284 +71,130 @@ export const HomePage: React.FC<HomePageProps> = ({
   const finalLatency = heroContent?.telemetryLatency || '4ms';
   const finalUptime = heroContent?.telemetryUptime || '99.98%';
 
+  const SERVICES = [
+    ['01', 'Web Architecture', 'Next.js, React, Tailwind'],
+    ['02', 'Animated Sites', 'Motion, shaders, physics'],
+    ['03', 'SaaS Dashboards', 'Analytics and APIs'],
+  ];
+
   return (
-    <div className="space-y-10 sm:space-y-24 pb-12 sm:pb-16">
+    <div className="space-y-24 sm:space-y-32 pb-24 sm:pb-32">
       {/* ================= HERO SECTION WITH 3D QUANTUM HOLOGRAM ================= */}
-      <section className="relative min-h-[75svh] lg:min-h-[90vh] flex flex-col justify-center py-2 sm:py-6 lg:py-10 overflow-visible">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 lg:gap-12 items-center">
-          
-          {/* HERO LEFT COLUMN (Copy & Streamlined Dual CTAs) */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left">
-            
-            {/* ONE CLEAN, MINIMAL STATUS BADGE */}
-            <ScrollReveal direction="down" delay={0.05} distance={16}>
-              <div 
-                onMouseEnter={() => sound.playHover()}
-                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 bg-[#8B00EE]/15 backdrop-blur-2xl border border-purple-500/40 rounded-full shadow-[0_0_25px_rgba(139,0,238,0.3)] cursor-default group"
-              >
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-[10px] sm:text-xs font-mono font-extrabold uppercase tracking-widest text-[#C084FC] group-hover:text-white transition-colors">
-                  {finalBadgeText}
-                </span>
-              </div>
-            </ScrollReveal>
+      <section className="relative left-1/2 -translate-x-1/2 w-screen max-w-[100vw] -mt-8 sm:-mt-14 min-h-[88svh] flex flex-col justify-end px-6 lg:px-8 pt-28 pb-12 lux-hero">
+        <div className="lux-hero-grid" aria-hidden="true" />
+        <HeroSpotlight />
+        <div className="relative max-w-[1200px] w-full mx-auto">
+          <p className="mb-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase text-[#9A958D]"><span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" aria-hidden="true" />
+            {finalBadgeText}
+          </p>
 
-            {/* Massive GSAP-Style Kinetic Animated Headline */}
-            <ScrollReveal direction="up" delay={0.12} distance={24}>
-              <KineticHeroTitle
-                line1={finalLine1}
-                line2={finalLine2}
-                line3={finalLine3}
-                isReady={isLoaded}
-              />
-            </ScrollReveal>
+          <KineticHeroTitle
+            line1={finalLine1}
+            line2={finalLine2}
+            line3={finalLine3}
+            isReady={isLoaded}
+          />
 
-            {/* Subtitle Bio with Letter-by-Letter 3D Rotating & Jumping Wave Animation */}
-            <ScrollReveal direction="up" delay={0.2} distance={20}>
-              <GsapPlayfulText
-                text={finalBioSubtext}
-                highlightWords={heroContent?.highlightWords || [
-                  'high-performance',
-                  '3D websites',
-                  'WebGL shaders',
-                  'bespoke Next.js interfaces',
-                  'founders',
-                  'stand out',
-                ]}
-                gradientTheme="purple-cyan"
-                className="text-xs sm:text-base md:text-lg text-slate-200 leading-relaxed max-w-2xl font-medium tracking-wide"
-                staggerDelay={0.016}
-                initialDelay={0.2}
-              />
-            </ScrollReveal>
+          <p className="mt-8 max-w-xl text-[16px] sm:text-[18px] leading-relaxed text-[#EDE9E3]/62">
+            {finalBioSubtext}
+          </p>
 
-            {/* STREAMLINED DUAL CTAs & TRANSPARENT PRICING SUBTEXT */}
-            <ScrollReveal direction="up" delay={0.28} distance={16}>
-              <div className="space-y-2.5 sm:space-y-3 pt-1 sm:pt-2 flex flex-col items-center sm:items-start text-center sm:text-left">
-                <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-2.5 sm:gap-4 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto sm:mx-0">
-                  <ButterButton
-                    variant="primary"
-                    size="lg"
-                    onClick={() => {
-                      sound.playPageSwitch();
-                      setCurrentPage(finalPrimaryCtaRoute);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    id="hero-start-project-btn"
-                    icon={<Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-300" />}
-                    iconPosition="right"
-                    className="w-full sm:w-auto justify-center uppercase tracking-wider font-black shadow-[0_0_25px_rgba(139,0,238,0.5)] !py-2.5 sm:!py-3.5 !px-5 sm:!px-8 text-xs sm:text-base"
-                  >
-                    {finalPrimaryCtaText}
-                  </ButterButton>
+          <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <Magnetic>
+<ButterButton
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                sound.playPageSwitch();
+                setCurrentPage(finalPrimaryCtaRoute);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              id="hero-start-project-btn"
+              icon={<ArrowRight className="w-4 h-4" />}
+              iconPosition="right"
+              className="lux-primary w-full sm:w-auto justify-center uppercase tracking-wider !py-3 sm:!py-3.5 !px-6 sm:!px-8 text-xs sm:text-sm"
+            >
+              {finalPrimaryCtaText}
+            </ButterButton>
+</Magnetic>
 
-                  <ButterButton
-                    variant="secondary"
-                    size="lg"
-                    onClick={() => {
-                      sound.playPageSwitch();
-                      setCurrentPage(finalSecondaryCtaRoute);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    id="hero-browse-deployments-btn"
-                    icon={<ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-300" />}
-                    iconPosition="right"
-                    className="w-full sm:w-auto justify-center uppercase tracking-wider font-black !py-2.5 sm:!py-3.5 !px-5 sm:!px-8 text-xs sm:text-base"
-                  >
-                    {finalSecondaryCtaText}
-                  </ButterButton>
-                </div>
-
-                {/* Direct Pricing Pre-qualification Subtext */}
-                <p className="text-[11px] sm:text-sm font-mono text-purple-300/80 tracking-wide text-center sm:text-left">
-                  {finalPricingNotice}
-                </p>
-              </div>
-            </ScrollReveal>
+            <ButterButton
+              variant="line"
+              size="lg"
+              onClick={() => {
+                sound.playPageSwitch();
+                setCurrentPage(finalSecondaryCtaRoute);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              id="hero-browse-deployments-btn"
+              icon={<ArrowRight className="w-4 h-4" />}
+              iconPosition="right"
+              className="w-full sm:w-auto justify-center uppercase tracking-wider !py-3 sm:!py-3.5 !px-6 sm:!px-8 text-xs sm:text-sm"
+            >
+              {finalSecondaryCtaText}
+            </ButterButton>
           </div>
 
-          {/* HERO RIGHT COLUMN (Interactive 3D Quantum Hologram Sphere) */}
-          <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
-            <ScrollReveal direction="zoom" delay={0.2} distance={0}>
-              <HeroHologramVisual />
-            </ScrollReveal>
+          <p className="mt-4 text-xs sm:text-sm text-[#EDE9E3]/40">{finalPricingNotice}</p>
+        </div>
 
-            {/* 3 Quick Category 3D Holo Cards with Permanent Blurry Glass & Ambient Back-glow */}
-            <div className="w-full relative mt-3 sm:mt-5 left-0 right-0 z-20">
-              {/* Vibrant Ambient Glow Orbs positioned behind the cards for visible glass refraction */}
-              <div className="absolute inset-0 grid grid-cols-3 pointer-events-none -z-10 opacity-70 blur-2xl">
-                <div className="w-full h-full bg-purple-600/30 rounded-full scale-75" />
-                <div className="w-full h-full bg-emerald-500/30 rounded-full scale-75" />
-                <div className="w-full h-full bg-cyan-500/30 rounded-full scale-75" />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
-                {/* Card 1 - Web Architecture (Purple) */}
-                <HoloCard
-                  maxTilt={24}
-                  theme="purple"
-                  onClick={() => {
-                    setCurrentPage('deployments');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="p-2.5 sm:p-3 cursor-pointer group h-full flex flex-col justify-between"
-                >
-                  <div className="flex flex-col h-full justify-between [transform-style:preserve-3d]">
-                    <div className="flex items-center justify-between [transform-style:preserve-3d]">
-                      <div
-                        style={{ transform: 'translateZ(30px)' }}
-                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#8B00EE]/30 border border-purple-400/50 flex items-center justify-center text-[#C084FC] group-hover:bg-[#8B00EE] group-hover:text-white transition-all duration-200 shadow-[0_4px_12px_rgba(139,0,238,0.3)]"
-                      >
-                        <Box className="w-3.5 h-3.5" />
-                      </div>
-                      <span
-                        style={{ transform: 'translateZ(24px)' }}
-                        className="text-[8px] sm:text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-[#8B00EE]/30 text-[#C084FC] border border-[#8B00EE]/60 shadow-[0_4px_10px_rgba(0,0,0,0.5)]"
-                      >
-                        LIVE
-                      </span>
-                    </div>
-                    <div className="mt-2 [transform-style:preserve-3d]">
-                      <h4
-                        style={{ transform: 'translateZ(34px)' }}
-                        className="font-bold text-[12px] sm:text-[13px] text-white tracking-wide transition-colors duration-200 group-hover:text-purple-200 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] truncate"
-                      >
-                        Web Architecture
-                      </h4>
-                      <p
-                        style={{ transform: 'translateZ(20px)' }}
-                        className="text-[9.5px] sm:text-[10px] text-slate-300/80 font-normal truncate mt-0.5"
-                      >
-                        Next.js, React, Tailwind v4
-                      </p>
-                    </div>
-                  </div>
-                </HoloCard>
-
-                {/* Card 2 - Animated Sites (Green / 60 FPS) */}
-                <HoloCard
-                  maxTilt={24}
-                  theme="green"
-                  onClick={() => {
-                    setCurrentPage('deployments');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="p-2.5 sm:p-3 cursor-pointer group h-full flex flex-col justify-between"
-                >
-                  <div className="flex flex-col h-full justify-between [transform-style:preserve-3d]">
-                    <div className="flex items-center justify-between [transform-style:preserve-3d]">
-                      <div
-                        style={{ transform: 'translateZ(30px)' }}
-                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500/25 border border-emerald-400/50 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200 shadow-[0_4px_12px_rgba(16,185,129,0.3)]"
-                      >
-                        <Sparkles className="w-3.5 h-3.5" />
-                      </div>
-                      <span
-                        style={{ transform: 'translateZ(24px)' }}
-                        className="text-[8px] sm:text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/25 text-emerald-300 border border-emerald-500/60 shadow-[0_4px_10px_rgba(0,0,0,0.5)]"
-                      >
-                        60 FPS
-                      </span>
-                    </div>
-                    <div className="mt-2 [transform-style:preserve-3d]">
-                      <h4
-                        style={{ transform: 'translateZ(34px)' }}
-                        className="font-bold text-[12px] sm:text-[13px] text-white tracking-wide transition-colors duration-200 group-hover:text-emerald-200 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] truncate"
-                      >
-                        Animated Sites
-                      </h4>
-                      <p
-                        style={{ transform: 'translateZ(20px)' }}
-                        className="text-[9.5px] sm:text-[10px] text-slate-300/80 font-normal truncate mt-0.5"
-                      >
-                        Motion, Shaders, Physics
-                      </p>
-                    </div>
-                  </div>
-                </HoloCard>
-
-                {/* Card 3 - SaaS Dashboards (Blue / Cyan) */}
-                <HoloCard
-                  maxTilt={24}
-                  theme="blue"
-                  onClick={() => {
-                    setCurrentPage('deployments');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="p-2.5 sm:p-3 cursor-pointer group h-full flex flex-col justify-between"
-                >
-                  <div className="flex flex-col h-full justify-between [transform-style:preserve-3d]">
-                    <div className="flex items-center justify-between [transform-style:preserve-3d]">
-                      <div
-                        style={{ transform: 'translateZ(30px)' }}
-                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/25 border border-cyan-400/50 flex items-center justify-center text-[#38BDF8] group-hover:bg-[#38BDF8] group-hover:text-[#0A0B14] transition-all duration-200 shadow-[0_4px_12px_rgba(56,189,248,0.3)]"
-                      >
-                        <Zap className="w-3.5 h-3.5" />
-                      </div>
-                      <span
-                        style={{ transform: 'translateZ(24px)' }}
-                        className="text-[8px] sm:text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/25 text-[#38BDF8] border border-cyan-500/60 shadow-[0_4px_10px_rgba(0,0,0,0.5)]"
-                      >
-                        VERIFIED
-                      </span>
-                    </div>
-                    <div className="mt-2 [transform-style:preserve-3d]">
-                      <h4
-                        style={{ transform: 'translateZ(34px)' }}
-                        className="font-bold text-[12px] sm:text-[13px] text-white tracking-wide transition-colors duration-200 group-hover:text-cyan-200 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] truncate"
-                      >
-                        SaaS Dashboards
-                      </h4>
-                      <p
-                        style={{ transform: 'translateZ(20px)' }}
-                        className="text-[9.5px] sm:text-[10px] text-slate-300/80 font-normal truncate mt-0.5"
-                      >
-                        Analytics & Modern APIs
-                      </p>
-                    </div>
-                  </div>
-                </HoloCard>
-              </div>
-            </div>
-
+        <div className="relative max-w-[1200px] w-full mx-auto lux-stats mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-5 border border-[#2A2825] rounded-[10px] overflow-hidden bg-[#121110]/60 [&>*]:p-5 [&>*]:border-[#2A2825] [&>*:not(:last-child)]:sm:border-r [&>*]:max-sm:border-b">
+          {SERVICES.map(([index, title, detail]) => (
+            <button
+              key={title}
+              type="button"
+              onClick={() => {
+                setCurrentPage('deployments');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="text-left group transition-transform duration-500 ease-out hover:-translate-y-0.5"
+            >
+              <span className="block text-[10px] tracking-[0.18em] uppercase text-[#EDE9E3]/35">{index}</span>
+              <span className="mt-1 block text-sm sm:text-base text-[#EDE9E3]/80 group-hover:text-[#EDE9E3] transition-colors duration-500">{title}</span>
+              <span className="mt-1 block text-xs text-[#EDE9E3]/40 group-hover:text-[#EDE9E3]/70 transition-colors duration-500">{detail}</span>
+            </button>
+          ))}
+          <div className="hidden sm:block">
+            <span className="block text-[10px] tracking-[0.18em] uppercase text-[#EDE9E3]/35">Response</span>
+            <span className="mt-1 block font-display text-2xl text-[#EDE9E3]">{finalLatency}</span>
           </div>
-
+          <div className="hidden sm:block">
+            <span className="block text-[10px] tracking-[0.18em] uppercase text-[#EDE9E3]/35">Uptime</span>
+            <span className="mt-1 block font-display text-2xl text-[#EDE9E3]">{finalUptime}</span>
+          </div>
         </div>
       </section>
 
-      {/* ================= BESPOKE HORIZONTAL CRAFT & ENGINEERING LAB ================= */}
-      <HorizontalStory setCurrentPage={setCurrentPage} />
-
       {/* ================= FEATURED DEPLOYMENTS PROJECT CAROUSEL ================= */}
       {products && products.length > 0 && (
-        <section className="pt-4 sm:pt-10 space-y-4 sm:space-y-6">
+        <section className="relative left-1/2 -translate-x-1/2 w-screen max-w-[100vw] px-6 lg:px-8 space-y-10 sm:space-y-12 ">
           <ScrollReveal direction="up" delay={0.05} distance={20}>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 border-b border-purple-500/20 pb-3 sm:pb-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-[#EDE9E3]/10 pb-5">
               <div className="space-y-0.5 sm:space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-[#C084FC]">
+                  <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">
                     Curated Assets & Systems
                   </span>
-                  <span className="px-1.5 sm:px-2 py-0.5 rounded-full bg-[#8B00EE]/20 border border-purple-500/30 text-[8px] sm:text-[9px] font-mono text-purple-200">
-                    FEATURED SHOWCASE
+                  <span className="text-[11px] tracking-[0.16em] uppercase text-[#EDE9E3]/30">
+                    Featured
                   </span>
                 </div>
                 <div className="mask-container">
-                  <h2 className="cyber-reveal-line font-display text-xl sm:text-3xl font-extrabold text-white" style={{ animationDelay: '0.15s' }}>
+                  <h2 className="cyber-reveal-line font-display text-4xl sm:text-6xl text-[#EDE9E3]" style={{ animationDelay: '0.15s' }}>
                     Featured Digital Deployments
                   </h2>
                 </div>
               </div>
 
               <ButterButton
-                variant="secondary"
+                variant="outline"
                 size="sm"
                 onClick={() => {
                   sound.playPageSwitch();
                   setCurrentPage('deployments');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                icon={<ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C084FC]" />}
+                icon={<ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                 iconPosition="right"
                 className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide !py-1.5 sm:!py-2"
               >
@@ -380,11 +222,94 @@ export const HomePage: React.FC<HomePageProps> = ({
         </section>
       )}
 
+      {/* BEFORE / AFTER + SCOPE CONFIGURATOR */}
+      <section className="space-y-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#2A2825] pb-6">
+          <div>
+            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">Before / After</p>
+            <h2 className="mt-3 text-[32px] sm:text-[48px] leading-[1.02] tracking-[-0.035em] text-[#EDE9E3]">{finalLine3}</h2>
+          </div>
+          <p className="max-w-md text-[15px] text-[#9A958D]">{finalBioSubtext}</p>
+        </div>
+        <div className="lux-depth"><BeforeAfter title={finalLine1} subtitle={finalBioSubtext} cta={finalPrimaryCtaText} /></div>
+      </section>
+
+      {/* PINNED 3D UI STACK */}
+      <section className="lux-stack-stage relative h-[460px] sm:h-[560px] overflow-visible" aria-label="Services">
+        <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">{finalBadgeText}</p>
+        <div className="lux-stack-inner absolute inset-x-0 top-20 bottom-0 flex items-center justify-center [perspective:1400px] [transform-style:preserve-3d]">
+          {[...SERVICES, ['04', finalLine2, finalPricingNotice]].map(([index, title, detail], i) => (
+            <div
+              key={index}
+              className="lux-stack-card absolute w-[230px] sm:w-[280px] h-[300px] sm:h-[340px] rounded-[14px] border border-[#2A2825] bg-[#16151A] p-6 flex flex-col justify-between will-change-transform"
+              style={{ zIndex: 10 - i }}
+            >
+              <span className="font-mono text-[11px] text-[#6E6A63]">{index}</span>
+              <div>
+                <div className="h-24 mb-6 rounded-[8px] border border-[#2A2825] bg-[#1C1B1F] grid grid-cols-3 gap-2 p-3">
+                  <span className="col-span-2 rounded bg-[#2A2825]" /><span className={`rounded ${i === 0 ? 'bg-[#3B82F6]' : 'bg-[#2A2825]'}`} />
+                  <span className="rounded bg-[#2A2825]" /><span className="col-span-2 rounded bg-[#2A2825]/60" />
+                </div>
+                <p className="text-[20px] tracking-[-0.02em] text-[#EDE9E3] leading-tight">{title}</p>
+                <p className="mt-2 text-[13px] text-[#9A958D] line-clamp-2">{detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-10">
+        <div className="border-b border-[#2A2825] pb-6">
+          <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">{finalBadgeText}</p>
+        </div>
+        <ScopeConfigurator
+          items={SERVICES.map(([, title, detail]) => ({ title, detail }))}
+          notice={finalPricingNotice}
+          cta={finalPrimaryCtaText}
+          onCta={() => {
+            sound.playPageSwitch();
+            setCurrentPage(finalPrimaryCtaRoute);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
+      </section>
+
       {/* REVIEWS AND RATING SECTION (SCROLL TRIGGERED) */}
       <section className="pt-2 sm:pt-6">
         <ScrollReveal direction="up" delay={0.1} distance={20}>
           <ReviewsDisplay reviews={reviews} />
         </ScrollReveal>
+      </section>
+
+      {/* CLOSING CTA */}
+      <section className="lux-closing border-t border-[#2A2825] pt-24 sm:pt-32 text-left">
+        <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">{finalBadgeText}</p>
+        <div className="mt-6 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+          <p className="max-w-2xl text-[22px] sm:text-[32px] leading-[1.2] tracking-[-0.02em] text-[#EDE9E3]">{finalBioSubtext}</p>
+          <div className="flex flex-col items-start gap-3 shrink-0">
+            <Magnetic>
+<ButterButton
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                sound.playPageSwitch();
+                setCurrentPage(finalPrimaryCtaRoute);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              id="closing-start-project-btn"
+              icon={<ArrowRight className="w-4 h-4" />}
+              iconPosition="right"
+              className="lux-primary w-full sm:w-auto justify-center uppercase tracking-wider !py-3.5 !px-8 text-xs sm:text-sm"
+            >
+              {finalPrimaryCtaText}
+            </ButterButton>
+</Magnetic>
+            <p className="text-xs text-[#6E6A63]">{finalPricingNotice}</p>
+          </div>
+        </div>
+        <div className="mt-16 sm:mt-20">
+          <div className="lux-depth"><TokenPlayground title={finalLine1} body={finalBioSubtext} cta={finalPrimaryCtaText} meta={finalPricingNotice} /></div>
+        </div>
       </section>
 
       {/* LIVE INTERACTIVE DEPLOYMENT INSPECTOR MODAL */}

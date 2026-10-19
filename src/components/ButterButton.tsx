@@ -5,7 +5,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { sound } from '../utils/audio';
 
 export interface ButterButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'glass' | 'emerald' | 'pink' | 'blue' | 'white' | 'purple' | 'cyan' | 'green' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'glass' | 'emerald' | 'pink' | 'blue' | 'white' | 'purple' | 'cyan' | 'green' | 'ghost' | 'solid' | 'line' | 'outline';
   size?: 'sm' | 'md' | 'lg' | 'icon';
   href?: string;
   target?: string;
@@ -102,85 +102,106 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
   const colorThemes = {
     primary: {
       defaultBg: 'bg-[#180A30]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 50%, #38BDF8 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(139,0,238,0.65)]',
     },
     purple: {
       defaultBg: 'bg-[#180A30]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 50%, #C084FC 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(139,0,238,0.65)]',
     },
     secondary: {
       defaultBg: 'bg-[#09152B]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #0284C7 0%, #06B6D4 50%, #8B00EE 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]',
     },
     cyan: {
       defaultBg: 'bg-[#081F33]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #00F0FF 0%, #0284C7 60%, #38BDF8 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]',
     },
     emerald: {
       defaultBg: 'bg-[#07241A]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #00FF9D 0%, #10B981 50%, #059669 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(16,185,129,0.6)]',
     },
     green: {
       defaultBg: 'bg-[#07241A]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #00FF9D 0%, #10B981 50%, #06B6D4 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(16,185,129,0.6)]',
     },
     pink: {
       defaultBg: 'bg-[#2B0A23]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #FF0055 0%, #EC4899 50%, #8B00EE 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(255,0,85,0.6)]',
     },
     glass: {
       defaultBg: 'bg-[#181932]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 50%, #38BDF8 100%)',
       shadow: 'hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]',
     },
     ghost: {
       defaultBg: 'bg-[#15172C]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #C084FC 100%)',
       shadow: 'hover:shadow-[0_0_22px_rgba(168,85,247,0.4)]',
     },
     blue: {
       defaultBg: 'bg-[#09152B]',
-      text: 'text-white',
-      hoverText: 'text-white',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #0284C7 0%, #38BDF8 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(56,189,248,0.6)]',
     },
     white: {
-      defaultBg: 'bg-white/15',
-      text: 'text-white',
-      hoverText: 'text-white',
+      defaultBg: 'bg-[#EDE9E3]/15',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(139,0,238,0.55)]',
     },
+    solid: {
+      defaultBg: 'bg-[#EDE9E3]',
+      text: 'text-[#121110]',
+      hoverText: 'group-hover:text-[#EDE9E3]',
+      wipeGradient: 'linear-gradient(160deg, #121110 0%, #1c1c1c 100%)',
+      shadow: 'hover:shadow-[0_12px_40px_rgba(12, 11, 10,0.35)]',
+    },
+    line: {
+      defaultBg: 'bg-transparent',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'group-hover:text-[#121110]',
+      wipeGradient: '#EDE9E3',
+      shadow: '',
+    },
+    outline: {
+      defaultBg: 'bg-transparent',
+      text: 'text-[#EDE9E3]',
+      hoverText: 'text-[#EDE9E3]',
+      wipeGradient: 'linear-gradient(115deg, rgba(237, 233, 227,0) 0%, rgba(237, 233, 227,0.22) 48%, rgba(237, 233, 227,0) 100%)',
+      shadow: 'hover:shadow-[0_0_24px_rgba(237, 233, 227,0.14)]',
+    },
   }[variant] || {
     defaultBg: 'bg-[#180A30]',
-    text: 'text-white',
-    hoverText: 'text-white',
+    text: 'text-[#EDE9E3]',
+    hoverText: 'text-[#EDE9E3]',
     wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 50%, #38BDF8 100%)',
     shadow: 'hover:shadow-[0_0_30px_rgba(139,0,238,0.65)]',
   };
@@ -235,7 +256,8 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
   );
 
   // Zero borders, zero outlines, responsive active scaling
-  const buttonClasses = `butter-button relative overflow-hidden group border-0 outline-none ring-0 focus:outline-none focus:ring-0 backdrop-blur-2xl transition-all duration-300 cursor-pointer select-none hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.96] inline-flex items-center justify-center font-mono ${colorThemes.defaultBg} ${colorThemes.shadow} ${sizeClasses} ${className}`;
+  const frame = variant === 'outline' ? 'border-2 border-[#EDE9E3]' : variant === 'line' ? 'border border-[#EDE9E3]/80' : 'border-0';
+  const buttonClasses = `butter-button relative overflow-hidden group ${frame} outline-none ring-0 focus:outline-none focus:ring-0 transition-all duration-300 cursor-pointer select-none hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.96] inline-flex items-center justify-center font-mono ${colorThemes.defaultBg} ${colorThemes.shadow} ${sizeClasses} ${className}`;
 
   if (href) {
     const isExternal = href.startsWith('http://') || href.startsWith('https://');
@@ -252,7 +274,7 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
         className={buttonClasses}
-        style={{ outline: 'none', border: 'none' }}
+        style={{ outline: 'none', border: variant === 'outline' || variant === 'line' ? undefined : 'none' }}
       >
         {content}
       </a>
@@ -266,7 +288,7 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       className={buttonClasses}
-      style={{ outline: 'none', border: 'none' }}
+      style={{ outline: 'none', border: variant === 'outline' || variant === 'line' ? undefined : 'none' }}
       {...(rest as any)}
     >
       {content}

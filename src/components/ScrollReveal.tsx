@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-
 import { motion } from 'motion/react';
 
 export interface ScrollRevealProps {
@@ -19,42 +18,44 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
   direction = 'up',
   delay = 0,
-  duration = 0.65,
-  distance = 36,
+  duration = 1.15,
+  distance = 56,
   className = '',
   id,
-  threshold = 0.15,
+  threshold = 0.18,
 }) => {
   const getInitialProps = () => {
+    const base = { opacity: 0, filter: 'blur(10px)' };
     switch (direction) {
       case 'up':
-        return { opacity: 0, y: distance, scale: 0.98 };
+        return { ...base, y: distance };
       case 'down':
-        return { opacity: 0, y: -distance, scale: 0.98 };
+        return { ...base, y: -distance };
       case 'left':
-        return { opacity: 0, x: distance, scale: 0.98 };
+        return { ...base, x: distance * 0.7 };
       case 'right':
-        return { opacity: 0, x: -distance, scale: 0.98 };
+        return { ...base, x: -distance * 0.7 };
       case 'zoom':
-        return { opacity: 0, scale: 0.92 };
+        return { ...base, y: 24, scale: 0.96 };
       case 'fade':
       default:
-        return { opacity: 0 };
+        return base;
     }
   };
 
   const getAnimateInView = () => {
     switch (direction) {
-      case 'up':
-      case 'down':
-        return { opacity: 1, y: 0, scale: 1 };
       case 'left':
       case 'right':
-        return { opacity: 1, x: 0, scale: 1 };
+        return { opacity: 1, x: 0, filter: 'blur(0px)' };
       case 'zoom':
+        return { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' };
       case 'fade':
+        return { opacity: 1, filter: 'blur(0px)' };
+      case 'up':
+      case 'down':
       default:
-        return { opacity: 1, scale: 1 };
+        return { opacity: 1, y: 0, filter: 'blur(0px)' };
     }
   };
 
@@ -63,11 +64,11 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       id={id}
       initial={getInitialProps()}
       whileInView={getAnimateInView()}
-      viewport={{ once: false, amount: threshold, margin: '0px 0px -40px 0px' }}
+      viewport={{ once: true, amount: threshold, margin: '0px 0px -12% 0px' }}
       transition={{
         duration,
         delay,
-        ease: [0.22, 1, 0.36, 1], // Smooth buttery cubic bezier
+        ease: [0.16, 1, 0.3, 1],
       }}
       className={className}
     >

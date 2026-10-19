@@ -27,52 +27,22 @@ interface ThemeConfig {
   accentRgb: string;
 }
 
+const quiet: ThemeConfig = {
+  defaultGlow: 'rgba(237, 233, 227, 0.2)',
+  defaultBorder: 'border-[#EDE9E3]/10',
+  hoverBorder: 'border-[#EDE9E3]/40',
+  hoverShadow: 'shadow-none',
+  topSheen: 'from-transparent via-[#EDE9E3]/30 to-transparent',
+  glassGradient: '#121110',
+  accentRgb: '255, 255, 255',
+};
+
 const themeStyles: Record<string, ThemeConfig> = {
-  purple: {
-    defaultGlow: 'rgba(168, 85, 247, 0.7)',
-    defaultBorder: 'border-purple-500/30',
-    hoverBorder: 'border-purple-400',
-    hoverShadow: 'shadow-[0_20px_45px_rgba(0,0,0,0.6),0_0_35px_rgba(168,85,247,0.55),inset_0_1px_2px_rgba(255,255,255,0.4)]',
-    topSheen: 'from-transparent via-purple-300/80 to-transparent',
-    glassGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(139, 0, 238, 0.1) 45%, rgba(10, 11, 20, 0.35) 100%)',
-    accentRgb: '168, 85, 247',
-  },
-  green: {
-    defaultGlow: 'rgba(16, 185, 129, 0.7)',
-    defaultBorder: 'border-emerald-500/30',
-    hoverBorder: 'border-emerald-400',
-    hoverShadow: 'shadow-[0_20px_45px_rgba(0,0,0,0.6),0_0_35px_rgba(16,185,129,0.55),inset_0_1px_2px_rgba(255,255,255,0.4)]',
-    topSheen: 'from-transparent via-emerald-300/80 to-transparent',
-    glassGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(16, 185, 129, 0.1) 45%, rgba(10, 11, 20, 0.35) 100%)',
-    accentRgb: '16, 185, 129',
-  },
-  emerald: {
-    defaultGlow: 'rgba(16, 185, 129, 0.7)',
-    defaultBorder: 'border-emerald-500/30',
-    hoverBorder: 'border-emerald-400',
-    hoverShadow: 'shadow-[0_20px_45px_rgba(0,0,0,0.6),0_0_35px_rgba(16,185,129,0.55),inset_0_1px_2px_rgba(255,255,255,0.4)]',
-    topSheen: 'from-transparent via-emerald-300/80 to-transparent',
-    glassGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(16, 185, 129, 0.1) 45%, rgba(10, 11, 20, 0.35) 100%)',
-    accentRgb: '16, 185, 129',
-  },
-  blue: {
-    defaultGlow: 'rgba(56, 189, 248, 0.7)',
-    defaultBorder: 'border-cyan-500/30',
-    hoverBorder: 'border-cyan-400',
-    hoverShadow: 'shadow-[0_20px_45px_rgba(0,0,0,0.6),0_0_35px_rgba(56,189,248,0.55),inset_0_1px_2px_rgba(255,255,255,0.4)]',
-    topSheen: 'from-transparent via-cyan-300/80 to-transparent',
-    glassGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(56, 189, 248, 0.1) 45%, rgba(10, 11, 20, 0.35) 100%)',
-    accentRgb: '56, 189, 248',
-  },
-  cyan: {
-    defaultGlow: 'rgba(56, 189, 248, 0.7)',
-    defaultBorder: 'border-cyan-500/30',
-    hoverBorder: 'border-cyan-400',
-    hoverShadow: 'shadow-[0_20px_45px_rgba(0,0,0,0.6),0_0_35px_rgba(56,189,248,0.55),inset_0_1px_2px_rgba(255,255,255,0.4)]',
-    topSheen: 'from-transparent via-cyan-300/80 to-transparent',
-    glassGradient: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(56, 189, 248, 0.1) 45%, rgba(10, 11, 20, 0.35) 100%)',
-    accentRgb: '56, 189, 248',
-  },
+  purple: quiet,
+  green: quiet,
+  emerald: quiet,
+  blue: quiet,
+  cyan: quiet,
 };
 
 export const HoloCard: React.FC<HoloCardProps> = ({
@@ -109,8 +79,9 @@ export const HoloCard: React.FC<HoloCardProps> = ({
     const yPct = yRatio - 0.5;
 
     // 3D tilt calculation: top tilts toward viewer when cursor is at top
-    const rotX = -yPct * maxTilt;
-    const rotY = xPct * maxTilt;
+    const tiltLimit = Math.min(maxTilt, 4);
+    const rotX = -yPct * tiltLimit;
+    const rotY = xPct * tiltLimit;
 
     setTilt({ x: rotX, y: rotY });
     setGlare({
@@ -149,11 +120,11 @@ export const HoloCard: React.FC<HoloCardProps> = ({
       <div
         style={{
           transform: isHovered
-            ? `rotateX(${tilt.x.toFixed(2)}deg) rotateY(${tilt.y.toFixed(2)}deg) translateY(-6px) scale3d(1.025, 1.025, 1.025)`
-            : 'rotateX(0deg) rotateY(0deg) translateY(0px) scale3d(1, 1, 1)',
-          background: glassy ? activeTheme.glassGradient : '#130722',
-          backdropFilter: glassy ? 'blur(16px) saturate(160%)' : undefined,
-          WebkitBackdropFilter: glassy ? 'blur(16px) saturate(160%)' : undefined,
+            ? `rotateX(${tilt.x.toFixed(2)}deg) rotateY(${tilt.y.toFixed(2)}deg) translateY(-4px)`
+            : 'rotateX(0deg) rotateY(0deg) translateY(0px)',
+          background: '#121110',
+          backdropFilter: undefined,
+          WebkitBackdropFilter: undefined,
           transition: isHovered
             ? 'transform 0.08s ease-out, border-color 0.25s ease, box-shadow 0.25s ease'
             : 'transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease',
@@ -161,7 +132,7 @@ export const HoloCard: React.FC<HoloCardProps> = ({
         }}
         className={`relative w-full h-full rounded-xl sm:rounded-2xl border transition-colors duration-300 will-change-transform ${
           glassy
-            ? 'shadow-[0_8px_32px_rgba(0,0,0,0.37),inset_0_1px_1px_rgba(255,255,255,0.22)]'
+            ? 'shadow-[0_8px_32px_rgba(12, 11, 10,0.37),inset_0_1px_1px_rgba(237, 233, 227,0.22)]'
             : 'bg-[#130722]'
         } ${
           isHovered
@@ -179,7 +150,7 @@ export const HoloCard: React.FC<HoloCardProps> = ({
           className="absolute inset-0 rounded-[inherit] pointer-events-none z-30 mix-blend-overlay transition-opacity duration-150"
           style={{
             opacity: glare.opacity,
-            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.05) 45%, transparent 75%)`,
+            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(237, 233, 227, 0.4) 0%, rgba(237, 233, 227, 0.05) 45%, transparent 75%)`,
           }}
         />
 

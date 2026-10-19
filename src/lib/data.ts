@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from './prisma';
 import {
   normalizeDeploymentList,
@@ -64,13 +65,25 @@ export async function getHeroData(): Promise<HeroContent> {
   }
 }
 
+async function readDeployments(where: Prisma.Sql): Promise<DeploymentProduct[]> {
+  const raw = await prisma.$queryRaw<Record<string, unknown>[]>`
+    SELECT
+      id, slug, title, client, year, category, badge,
+      "shortDescription", "fullDescription", "thumbnailUrl", "coverImageUrl",
+      "previewVideoUrl", "demoUrl", "githubUrl", "liveUrl", rating,
+      tags, "techStack", features, "fpsBenchmark", "auditScore",
+      status::text AS status,
+      "isFeatured", "isPublished", "displayOrder", "createdAt", "updatedAt"
+    FROM "DeploymentProduct"
+    WHERE ${where}
+    ORDER BY "displayOrder" ASC, "createdAt" DESC
+  `;
+  return normalizeDeploymentList(raw);
+}
+
 export async function getDeploymentsData(): Promise<DeploymentProduct[]> {
   try {
-    const raw = await prisma.deploymentProduct.findMany({
-      where: { isPublished: true },
-      orderBy: [{ displayOrder: 'asc' }, { createdAt: 'desc' }],
-    });
-    return normalizeDeploymentList(raw);
+    return await readDeployments(Prisma.sql`"isPublished" = true`);
   } catch (error) {
     console.warn('[Prisma getDeploymentsData fallback]', error);
     return [];
@@ -79,10 +92,7 @@ export async function getDeploymentsData(): Promise<DeploymentProduct[]> {
 
 export async function getAllAdminDeployments(): Promise<DeploymentProduct[]> {
   try {
-    const raw = await prisma.deploymentProduct.findMany({
-      orderBy: [{ displayOrder: 'asc' }, { createdAt: 'desc' }],
-    });
-    return normalizeDeploymentList(raw);
+    return await readDeployments(Prisma.sql`TRUE`);
   } catch (error) {
     console.warn('[Prisma getAllAdminDeployments fallback]', error);
     return [];
@@ -91,11 +101,7 @@ export async function getAllAdminDeployments(): Promise<DeploymentProduct[]> {
 
 export async function getFeaturedDeploymentsData(): Promise<DeploymentProduct[]> {
   try {
-    const raw = await prisma.deploymentProduct.findMany({
-      where: { isPublished: true, isFeatured: true },
-      orderBy: [{ displayOrder: 'asc' }, { createdAt: 'desc' }],
-    });
-    return normalizeDeploymentList(raw);
+    return await readDeployments(Prisma.sql`"isPublished" = true AND "isFeatured" = true`);
   } catch (error) {
     console.warn('[Prisma getFeaturedDeploymentsData fallback]', error);
     return [];

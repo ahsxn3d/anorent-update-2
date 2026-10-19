@@ -1,18 +1,19 @@
 import type { Metadata, Viewport } from 'next';
-import { Plus_Jakarta_Sans, Archivo_Black, JetBrains_Mono } from 'next/font/google';
+import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter_Tight({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const archivoBlack = Archivo_Black({
+const serif = Instrument_Serif({
   subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-display',
+  weight: '400',
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
   display: 'swap',
 });
 
@@ -50,7 +51,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0A0B14',
+  themeColor: '#121110',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -64,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} ${archivoBlack.variable} ${jetbrainsMono.variable} dark`}
+      className={`${inter.variable} ${serif.variable} ${jetbrainsMono.variable} dark`}
       suppressHydrationWarning
     >
       <head>
@@ -72,7 +73,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body className="bg-[#0A0B14] text-white antialiased selection:bg-[#8B00EE] selection:text-white overflow-x-clip min-h-screen">
+      <body className="bg-[#121110] text-[#EDE9E3] antialiased selection:bg-[#3B82F6] selection:text-[#EDE9E3] overflow-x-clip min-h-screen">
         {children}
       </body>
     </html>
