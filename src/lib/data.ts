@@ -2,7 +2,6 @@ import { Prisma } from '@prisma/client';
 import { prisma } from './prisma';
 import {
   normalizeDeploymentList,
-  normalizeDeploymentProduct,
   normalizeHeroContent,
   normalizeAboutContent,
   normalizeProofCardsList,
@@ -65,7 +64,9 @@ export async function getHeroData(): Promise<HeroContent> {
   }
 }
 
-async function readDeployments(where: Prisma.Sql): Promise<DeploymentProduct[]> {
+// Raw SQL on purpose: the live table stores status as an enum (cast to text here) and does not
+// have every column the Prisma model lists, so findFirst/findMany on it would fail.
+async function readDeployments(where: Prisma.Sql, limit?: number): Promise<DeploymentProduct[]> {
   const raw = await prisma.$queryRaw<Record<string, unknown>[]>`
     SELECT
       id, slug, title, client, year, category, badge,
@@ -77,6 +78,7 @@ async function readDeployments(where: Prisma.Sql): Promise<DeploymentProduct[]> 
     FROM "DeploymentProduct"
     WHERE ${where}
     ORDER BY "displayOrder" ASC, "createdAt" DESC
+    ${limit ? Prisma.sql`LIMIT ${limit}` : Prisma.empty}
   `;
   return normalizeDeploymentList(raw);
 }
@@ -110,10 +112,9 @@ export async function getFeaturedDeploymentsData(): Promise<DeploymentProduct[]>
 
 export async function getDeploymentBySlug(slug: string): Promise<DeploymentProduct | null> {
   try {
-    const raw = await prisma.deploymentProduct.findFirst({
-      where: { OR: [{ slug }, { id: slug }] },
-    });
-    return raw ? normalizeDeploymentProduct(raw) : null;
+    // same column list + status cast as the catalog query; slug and id are bound parameters
+    const [hit] = await readDeployments(Prisma.sql`slug = ${slug} OR id = ${slug}`, 1);
+    return hit ?? null;
   } catch (error) {
     console.warn('[Prisma getDeploymentBySlug fallback]', error);
     return null;
