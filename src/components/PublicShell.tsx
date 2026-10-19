@@ -6,7 +6,6 @@ import { motion, useScroll, useSpring } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { SmoothScroll } from './SmoothScroll';
-import { FogPlanes } from './FogPlanes';
 import { ScrollDepth } from './craft/ScrollDepth';
 import { Page } from '../types';
 
@@ -27,8 +26,7 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
 
   return (
     <SmoothScroll>
-      <div className="relative min-h-screen bg-[#0B0D12] text-[#E8EBF2] flex flex-col">
-        <FogPlanes />
+      <div className="lux-shell relative min-h-screen bg-[#0B0D12] text-[#E8EBF2] flex flex-col">
         <div className="lux-grain" aria-hidden="true" />
 
         <motion.div

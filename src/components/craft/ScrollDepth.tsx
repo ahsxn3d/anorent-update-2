@@ -18,7 +18,7 @@ if (typeof window !== 'undefined') {
  *  data-fx="cards"     container; its [data-fx-item] children hinge in (ScrollTrigger.batch, once)
  *  data-fx="media"     frame clip-reveals once; its [data-fx-inner] gets an 8% depth parallax (scrubbed)
  *  data-fx="hpin"      pinned horizontal track (desktop only); [data-fx-track], [data-fx-progress], [data-fx-panel]
- *  data-fx="recede"    element tilts back into depth as it leaves the top (scrubbed)
+ *  data-fx="recede"    element eases back into depth as it leaves the top (scrubbed)
  *  data-fx="bg"        background layer drifts slower than the page (scrubbed)
  *
  * Lenis drives ScrollTrigger.update (see SmoothScroll). Everything is created inside gsap.matchMedia,
@@ -65,10 +65,10 @@ export function ScrollDepth() {
           q('[data-fx="recede"]').forEach((el) => {
             gsap.fromTo(
               el,
-              { rotateX: 0, z: 0, transformPerspective: 1000, transformOrigin: '50% 100%' },
+              { rotateX: 0, y: 0, scale: 1, transformPerspective: 1400, transformOrigin: '50% 0%' },
               {
-                rotateX: 16 * k, z: -80 * k, opacity: 0.4, ease: 'none',
-                scrollTrigger: { trigger: el, start: 'top 55%', end: 'bottom top', scrub: true },
+                rotateX: -8 * k, y: -24 * k, scale: 0.97, opacity: 0.55, ease: 'none',
+                scrollTrigger: { trigger: el, start: 'top 40%', end: 'bottom top', scrub: true },
               },
             );
           });
@@ -78,7 +78,7 @@ export function ScrollDepth() {
             if (firstScreen(el)) return;
             gsap.fromTo(
               el,
-              { rotateX: 9 * k, y: 56 * k, opacity: 0, transformPerspective: 1200, transformOrigin: '50% 0%' },
+              { rotateX: 7 * k, y: 40 * k, opacity: 0, transformPerspective: 1400, transformOrigin: '50% 0%' },
               {
                 rotateX: 0, y: 0, opacity: 1, ease: 'none',
                 scrollTrigger: { trigger: el, start: 'clamp(top 96%)', end: 'clamp(top 76%)', scrub: 0.6 },
@@ -91,10 +91,10 @@ export function ScrollDepth() {
             if (firstScreen(el)) return;
             gsap.fromTo(
               el,
-              { rotateX: 22 * k, scale: 0.9, y: 40 * k, opacity: 0, transformPerspective: 1600, transformOrigin: '50% 100%' },
+              { rotateX: 10 * k, scale: 0.96, y: 48 * k, opacity: 0, transformPerspective: 1800, transformOrigin: '50% 100%' },
               {
                 rotateX: 0, scale: 1, y: 0, opacity: 1, ease: 'none',
-                scrollTrigger: { trigger: el, start: 'clamp(top bottom)', end: 'clamp(top 55%)', scrub: 0.8 },
+                scrollTrigger: { trigger: el, start: 'clamp(top 98%)', end: 'clamp(top 62%)', scrub: 0.8 },
               },
             );
           });
@@ -104,13 +104,13 @@ export function ScrollDepth() {
             if (desktop && group.closest('[data-fx="hpin"]')) return; // the pin owns these panels on desktop
             const items = gsap.utils.toArray<HTMLElement>(group.querySelectorAll('[data-fx-item]'));
             if (!items.length) return;
-            gsap.set(items, { rotateX: -38 * k, y: 40 * k, opacity: 0, transformPerspective: 1000, transformOrigin: '50% 0%' });
+            gsap.set(items, { rotateX: -16 * k, y: 32 * k, opacity: 0, transformPerspective: 1200, transformOrigin: '50% 0%' });
             ScrollTrigger.batch(items, {
               start: 'top 92%',
               once: true,
               onEnter: (batch) =>
                 gsap.to(batch, {
-                  rotateX: 0, y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.08,
+                  rotateX: 0, y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.07,
                   overwrite: true, clearProps: 'transform,opacity',
                 }),
             });
@@ -120,7 +120,7 @@ export function ScrollDepth() {
           q('[data-fx="media"]').forEach((frame) => {
             gsap.fromTo(
               frame,
-              { clipPath: 'inset(14% 10% 14% 10% round 16px)' },
+              { clipPath: 'inset(8% 6% 8% 6% round 16px)' },
               {
                 clipPath: 'inset(0% 0% 0% 0% round 16px)', duration: 1.2, ease: 'power3.out',
                 scrollTrigger: { trigger: frame, start: 'top 88%', once: true },
@@ -174,10 +174,10 @@ export function ScrollDepth() {
                 if (i === 0) return;
                 gsap.fromTo(
                   panel,
-                  { rotateY: -28, z: -120, opacity: 0, transformPerspective: 1400, transformOrigin: '0% 50%' },
+                  { rotateY: -14, z: -60, opacity: 0.5, transformPerspective: 1600, transformOrigin: '0% 50%' },
                   {
                     rotateY: 0, z: 0, opacity: 1, ease: 'none',
-                    scrollTrigger: { trigger: panel, containerAnimation: tween, start: 'left 95%', end: 'left 55%', scrub: true },
+                    scrollTrigger: { trigger: panel, containerAnimation: tween, start: 'left 100%', end: 'left 70%', scrub: true },
                   },
                 );
               });

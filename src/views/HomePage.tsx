@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Page, DeploymentProduct, ReviewItem, HeroContent } from '../types';
 import { ReviewsDisplay } from '../components/ReviewsSection';
 import { ButterButton } from '../components/ButterButton';
-import { TokenPlayground, BeforeAfter, ScopeConfigurator } from '../components/craft/Interactive';
+import { BeforeAfter, ScopeConfigurator } from '../components/craft/Interactive';
 import { DeploymentModal } from '../components/DeploymentModal';
 import { KineticHeroTitle } from '../components/KineticHeroTitle';
 import ShowcaseConsole from '../components/ShowcaseConsole';
@@ -78,7 +78,13 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   const COL = 'w-full max-w-[1200px] mx-auto px-6 lg:px-8';
   const BLEED = 'lux-bleed relative';
-  const PANELS = [...SERVICES, ['04', finalLine2, finalPricingNotice]];
+  // Static service copy for the pinned services track (presentation only, no data).
+  const PANELS: { index: string; title: string; detail: string; points: string[]; stack: string }[] = [
+    { index: '01', title: 'Web Architecture', detail: 'Fast, typed, maintainable front ends that scale with the product.', points: ['App Router + server components', 'Design-system tokens', 'Core Web Vitals budget'], stack: 'Next.js · React · Tailwind' },
+    { index: '02', title: 'Animated Sites', detail: 'Scroll-driven storytelling that stays at 60fps on real devices.', points: ['Scroll choreography', 'Shader and canvas moments', 'Reduced-motion fallbacks'], stack: 'GSAP · Lenis · Motion' },
+    { index: '03', title: 'SaaS Dashboards', detail: 'Dense data made calm: clear hierarchy, quick to scan.', points: ['Realtime charts', 'Role-based views', 'API integration'], stack: 'TypeScript · Prisma · APIs' },
+    { index: '04', title: '3D & WebGL', detail: 'Product visualisers and interactive scenes built for the browser.', points: ['Optimised GLTF pipelines', 'Custom GLSL materials', 'Mobile-safe fallbacks'], stack: 'Three.js · R3F · GLSL' },
+  ];
 
   return (
     <div className="lux-home flex flex-col pb-8" style={{ gap: 'clamp(96px, 12vw, 160px)' }}>
@@ -169,7 +175,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* ================= FEATURED DEPLOYMENTS CAROUSEL ================= */}
       {products && products.length > 0 && (
-        <section className="space-y-10 sm:space-y-12">
+        <section className="space-y-8 sm:space-y-10">
           <div data-fx="rise" className="lux-sh flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b">
             <div>
               <p className="lux-sh-eyebrow">Curated Assets & Systems · Featured</p>
@@ -212,13 +218,13 @@ export const HomePage: React.FC<HomePageProps> = ({
       )}
 
       {/* ================= BEFORE / AFTER ================= */}
-      <section className="space-y-10 sm:space-y-12">
+      <section className="space-y-8 sm:space-y-10">
         <div data-fx="rise" className="lux-sh flex flex-col md:flex-row md:items-end justify-between gap-4 border-b">
           <div>
             <p className="lux-sh-eyebrow">Before / After</p>
-            <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">{finalLine3}</h2>
+            <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">Template to signature</h2>
           </div>
-          <p className="max-w-md text-[15px] leading-relaxed text-[#8B93A7]">{finalBioSubtext}</p>
+          <p className="max-w-sm text-[15px] leading-relaxed text-[#8B93A7]">Drag the handle to compare a generic template with the same content, rebuilt with intent.</p>
         </div>
         <div data-fx="screen"><BeforeAfter title={finalLine1} subtitle={finalBioSubtext} cta={finalPrimaryCtaText} /></div>
       </section>
@@ -229,9 +235,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div data-fx="rise" className="lux-sh flex items-end justify-between gap-6 border-b">
             <div>
               <p className="lux-sh-eyebrow">Services</p>
-              <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">{finalLine2}</h2>
+              <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">What I build</h2>
             </div>
-            <span className="hidden lg:block font-mono text-[11px] uppercase tracking-[0.08em] text-[#5E667A]">Scroll →</span>
+            <span className="hidden lg:block font-mono text-[11px] uppercase tracking-[0.08em] text-[#8B93A7]">04 disciplines</span>
           </div>
           <div className="hidden lg:block relative h-px mt-[-1px] overflow-hidden" aria-hidden="true">
             <div data-fx-progress className="absolute inset-0 bg-[#4F7CFF] origin-left scale-x-0" />
@@ -242,24 +248,28 @@ export const HomePage: React.FC<HomePageProps> = ({
           data-fx="cards"
           className="lux-hpin-track mt-10 sm:mt-12 grid gap-4 px-6 lg:flex lg:w-max lg:gap-6"
         >
-          {PANELS.map(([index, title, detail], i) => (
+          {PANELS.map((p, i) => (
             <article
-              key={index}
+              key={p.index}
               data-fx-item
               data-fx-panel
-              className="lux-panel lux-card-surface flex flex-col justify-between gap-8 p-6 sm:p-8 lg:w-[460px] lg:h-[400px] shrink-0"
+              className="lux-panel lux-card-surface flex flex-col p-6 sm:p-8 lg:w-[440px] lg:h-[420px] shrink-0"
             >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] tracking-[0.08em] text-[#5E667A]">{index} / {String(PANELS.length).padStart(2, '0')}</span>
-                <span className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-[#4F7CFF]' : 'bg-[#2F3547]'}`} aria-hidden="true" />
+              <div className="flex items-baseline justify-between">
+                <span className="font-display text-[44px] sm:text-[56px] leading-none tracking-[-0.04em] text-[#E8EBF2]/90 tabular-nums">{p.index}</span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#8B93A7]">{p.stack}</span>
               </div>
-              <div className="hidden sm:grid h-28 rounded-[10px] border border-[rgba(232,235,242,0.08)] bg-[#171B24] grid-cols-3 gap-2 p-3" aria-hidden="true">
-                <span className="col-span-2 rounded bg-[#232837]" /><span className={`rounded ${i === 0 ? 'bg-[#4F7CFF]' : 'bg-[#232837]'}`} />
-                <span className="rounded bg-[#232837]" /><span className="col-span-2 rounded bg-[#232837]/60" />
-              </div>
-              <div>
-                <p className="font-display text-[24px] sm:text-[28px] leading-[1.1] text-[#E8EBF2]">{title}</p>
-                <p className="mt-2 text-[14px] leading-relaxed text-[#8B93A7]">{detail}</p>
+              <div className="mt-8 lg:mt-auto">
+                <h3 className="text-[24px] sm:text-[28px] leading-[1.1] text-[#E8EBF2]">{p.title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-[#8B93A7]">{p.detail}</p>
+                <ul className="mt-6 border-t border-[rgba(232,235,242,0.08)]">
+                  {p.points.map((pt) => (
+                    <li key={pt} className="flex items-center gap-3 py-2.5 border-b border-[rgba(232,235,242,0.08)] text-[14px] text-[#E8EBF2]/80">
+                      <span className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-[#4F7CFF]' : 'bg-[#4F7CFF]/60'}`} aria-hidden="true" />
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </article>
           ))}
@@ -267,10 +277,10 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= SCOPE CONFIGURATOR ================= */}
-      <section className="space-y-10 sm:space-y-12">
+      <section className="space-y-8 sm:space-y-10">
         <div data-fx="rise" className="lux-sh border-b">
           <p className="lux-sh-eyebrow">Scope</p>
-          <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">{finalPrimaryCtaText}</h2>
+          <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">Shape your build</h2>
         </div>
         <ScopeConfigurator
           items={SERVICES.map(([, title, detail]) => ({ title, detail }))}
@@ -290,33 +300,32 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= CLOSING CTA ================= */}
-      <section className="lux-closing border-t border-[rgba(232,235,242,0.08)] pt-16 sm:pt-24 text-left">
-        <div data-fx="rise">
-          <p className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#5E667A]">{finalBadgeText}</p>
-          <div className="mt-6 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-            <p className="max-w-2xl font-display text-[24px] sm:text-[34px] leading-[1.18] text-[#E8EBF2]">{finalBioSubtext}</p>
-            <div className="flex flex-col items-start gap-3 shrink-0">
-              <ButterButton
-                variant="outline"
-                size="lg"
-                onClick={() => {
-                  sound.playPageSwitch();
-                  setCurrentPage(finalPrimaryCtaRoute);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                id="closing-start-project-btn"
-                icon={<ArrowRight className="w-4 h-4" />}
-                iconPosition="right"
-                className="lux-primary w-full sm:w-auto justify-center uppercase tracking-wider !py-3.5 !px-8 text-xs sm:text-sm"
-              >
-                {finalPrimaryCtaText}
-              </ButterButton>
-              <p className="text-xs text-[#5E667A]">{finalPricingNotice}</p>
-            </div>
+      <section className="lux-closing border-t border-[rgba(232,235,242,0.08)] pt-16 sm:pt-24">
+        <div data-fx="rise" className="grid lg:grid-cols-12 gap-10 lg:gap-8 items-end">
+          <div className="lg:col-span-7">
+            <p className="lux-sh-eyebrow">Next step</p>
+            <h2 className="mt-5 font-display text-[40px] sm:text-[64px] lg:text-[80px] leading-[1] text-[#E8EBF2]">
+              Let&rsquo;s build the one people remember.
+            </h2>
           </div>
-        </div>
-        <div className="mt-16 sm:mt-20" data-fx="screen">
-          <TokenPlayground title={finalLine1} body={finalBioSubtext} cta={finalPrimaryCtaText} meta={finalPricingNotice} />
+          <div className="lg:col-span-5 flex flex-col items-start lg:items-end gap-3 lg:text-right">
+            <ButterButton
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                sound.playPageSwitch();
+                setCurrentPage(finalPrimaryCtaRoute);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              id="closing-start-project-btn"
+              icon={<ArrowRight className="w-4 h-4" />}
+              iconPosition="right"
+              className="lux-primary w-full sm:w-auto justify-center uppercase tracking-wider !py-3.5 !px-8 text-xs sm:text-sm"
+            >
+              {finalPrimaryCtaText}
+            </ButterButton>
+            <p className="text-[13px] text-[#8B93A7]">{finalPricingNotice}</p>
+          </div>
         </div>
       </section>
 

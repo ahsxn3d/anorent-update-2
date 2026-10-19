@@ -702,3 +702,25 @@ main [class*="backdrop-blur"], footer [class*="backdrop-blur"] { -webkit-backdro
 }
 /* Contact and About keep their exact text metrics (and so their wrapping, placement and spacing) */
 main[data-route="/contact"], main[data-route="/about"] { font-family: var(--font-sans), Inter, system-ui, -apple-system, sans-serif; }
+
+/* ===================== v6: sitewide polish (flat ground, one button language, legible metadata) ===================== */
+/* Flat deliberate ground: no fog bands, no grain. */
+html, body, .lux-shell { background-color: #0B0D12 !important; }
+/* Metadata labels: lift the faintest grey to a legible muted tone (about 4.6:1 on the base). */
+.text-\[\#5E667A\] { color: #7D859A !important; }
+.lux-sh-eyebrow, .lux-eyebrow { color: #8B93A7 !important; }
+/* Touch screens: secondary buttons stay outlined (no permanent light wipe), primary stays solid accent. */
+@media (hover: none) {
+  .butter-button:not(.lux-primary) .butter-button-wipe { opacity: 0 !important; }
+  .butter-button:not(.lux-primary) span, .butter-button:not(.lux-primary) svg { color: #E8EBF2 !important; }
+  .butter-button:not(.lux-primary) { border-color: #2F3547 !important; background-color: #11141B !important; }
+}
+/* Before/after: keyboard focus on the visually hidden range rings the frame. */
+.lux-ba-wrap:has(input:focus-visible) .lux-ba { outline: 2px solid #4F7CFF; outline-offset: 3px; }
+/* Ghost buttons (project toolbar). */
+.lux-ghost-btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(232,235,242,.1); color: #E8EBF2; font-size: 13px; background: transparent; cursor: pointer; transition: border-color .2s ease, background-color .2s ease; }
+.lux-ghost-btn:hover { border-color: rgba(79,124,255,.4); background-color: #11141B; }
+/* Services panels: index numerals and lists sit on the card surface. */
+.lux-panel ul li:last-child { border-bottom: 0; }
+/* Section heads: one rhythm everywhere. */
+.lux-sh { padding-bottom: 24px !important; }

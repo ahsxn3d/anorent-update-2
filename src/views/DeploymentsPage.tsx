@@ -153,7 +153,7 @@ export const DeploymentsPage: React.FC<DeploymentsPageProps> = ({
   const activeCategoryObj = categories.find((c) => c.name === selectedCategory) || categories[0];
 
   return (
-    <div className="space-y-8 sm:space-y-12 pb-24 sm:pb-32 px-1 sm:px-0">
+    <div className="space-y-8 sm:space-y-12 pb-8 px-1 sm:px-0">
       
       {/* PAGE HEADER */}
       <ScrollReveal direction="down" delay={0.05} distance={20}>
@@ -403,8 +403,11 @@ export const DeploymentsPage: React.FC<DeploymentsPageProps> = ({
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-14 sm:gap-y-20 pt-4">
-          {filteredProducts.map((item, idx) => (
-            <div key={item.id} className={idx === 0 ? 'md:col-span-2' : 'col-span-1'}>
+          {filteredProducts.map((item, idx) => {
+            // First tile is full width; if the rest leave a single tile alone in the last row, widen it too.
+            const wide = idx === 0 || (idx === filteredProducts.length - 1 && (filteredProducts.length - 1) % 2 === 1);
+            return (
+            <div key={item.id} className={wide ? 'md:col-span-2' : 'col-span-1'}>
               <ProjectTile
                 title={item.title}
                 category={item.category}
@@ -412,11 +415,12 @@ export const DeploymentsPage: React.FC<DeploymentsPageProps> = ({
                 image={item.coverImageUrl || item.thumbnailUrl}
                 tags={(item.techStack && item.techStack.length ? item.techStack : item.tags) || []}
                 year={item.year ? String(item.year) : undefined}
-                large={idx === 0}
+                large={wide}
                 onOpen={() => handleSelectProduct(item)}
               />
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

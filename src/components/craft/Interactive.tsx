@@ -88,17 +88,22 @@ export const BeforeAfter: React.FC<{ title: string; subtitle: string; cta: strin
     if (!r) return;
     setPos(Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100)));
   };
+  // "Before": a dated, generic template look (muted, cluttered, centred-everything) without neon.
   const Before = (
-    <div className="absolute inset-0 p-6 sm:p-10 bg-[#1A1030] overflow-hidden flex flex-col items-center justify-center text-center" aria-hidden="true">
-      <div className="absolute inset-0" style={{ background: 'radial-gradient(320px circle at 10% 0%, rgba(124,58,237,.38), transparent 70%), radial-gradient(360px circle at 100% 100%, rgba(6,182,212,.26), transparent 70%)' }} />
-      <div className="relative flex gap-2 flex-wrap justify-center">
-        {['NEW!!', 'HOT', 'SALE', '50% OFF'].map((t) => (
-          <span key={t} className="px-2 py-0.5 text-[10px] font-black border-2 border-[#F472B6] text-[#F472B6] rotate-[-3deg]">{t}</span>
+    <div className="absolute inset-0 p-6 sm:p-10 bg-[#1B1E26] overflow-hidden flex flex-col items-center justify-center text-center" aria-hidden="true">
+      <div className="absolute inset-x-0 top-0 h-9 border-b border-[#2F3547] bg-[#232837] flex items-center gap-3 px-4">
+        {['Home', 'About us', 'Services', 'Portfolio', 'Blog', 'Contact us'].map((t) => (
+          <span key={t} className="text-[10px] text-[#8B93A7] underline">{t}</span>
         ))}
       </div>
-      <p className="relative mt-6 text-[28px] sm:text-[56px] font-black italic uppercase leading-none text-[#22D3EE] tracking-tight">{title}</p>
-      <p className="relative mt-3 text-[11px] text-[#C4B5FD] max-w-sm line-clamp-2">{subtitle}</p>
-      <span className="relative mt-5 inline-block px-4 py-2 text-[11px] font-black uppercase bg-gradient-to-r from-[#F472B6] to-[#7C3AED] text-[#E8EBF2] rounded-sm">{cta}!!!</span>
+      <div className="relative flex gap-2 flex-wrap justify-center">
+        {['NEW!', 'HOT', 'SALE'].map((t) => (
+          <span key={t} className="px-2 py-0.5 text-[10px] font-bold border border-[#8B93A7] text-[#8B93A7] rotate-[-3deg]">{t}</span>
+        ))}
+      </div>
+      <p className="relative mt-6 text-[26px] sm:text-[48px] font-bold italic uppercase leading-none text-[#A9B0C2] tracking-[0.02em]" style={{ fontFamily: 'Georgia, serif' }}>{title}</p>
+      <p className="relative mt-3 text-[11px] text-[#8B93A7] max-w-sm line-clamp-2">{subtitle}</p>
+      <span className="relative mt-5 inline-block px-4 py-2 text-[11px] font-bold uppercase bg-[#3A4050] text-[#E8EBF2] border border-[#5E667A]">Click here!!!</span>
     </div>
   );
   const After = (
@@ -110,7 +115,7 @@ export const BeforeAfter: React.FC<{ title: string; subtitle: string; cta: strin
     </div>
   );
   return (
-    <div className="space-y-4">
+    <div className="lux-ba-wrap">
       <div
         ref={wrap}
         className="lux-ba relative h-[300px] sm:h-[420px] rounded-[12px] border border-[#232837] overflow-hidden select-none touch-none cursor-ew-resize"
@@ -132,7 +137,7 @@ export const BeforeAfter: React.FC<{ title: string; subtitle: string; cta: strin
         value={Math.round(pos)}
         onChange={(e) => setPos(Number(e.target.value))}
         aria-label="Before and after comparison"
-        className="lux-range w-full"
+        className="lux-range sr-only"
       />
     </div>
   );
@@ -178,7 +183,7 @@ export const ScopeConfigurator: React.FC<{
         <ul className="mt-4 space-y-2 min-h-[48px]">
           {picked.length === 0 && <li className="text-[13px] text-[#5E667A]">—</li>}
           {picked.map((t) => (
-            <li key={t} className="flex items-center justify-between text-[14px] text-[#E8EBF2] border-b border-[#232837] pb-2">
+            <li key={t} className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[14px] text-[#E8EBF2] border-b border-[#232837] pb-2">
               {t}
               <span className="font-mono text-[11px] text-[#8B93A7]">{items.find((x) => x.title === t)?.detail}</span>
             </li>

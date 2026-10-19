@@ -146,7 +146,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
   });
 
   return (
-    <div className="space-y-8 sm:space-y-12 pb-24 sm:pb-32 px-1 sm:px-0">
+    <div className="space-y-8 sm:space-y-12 pb-8 px-1 sm:px-0">
       
       {/* ========================================================= */}
       {/* 1. HERO HEADER WITH AWWWARDS-GRADE ANIMATED DISPLAY */}
