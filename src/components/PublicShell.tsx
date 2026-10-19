@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -11,6 +11,9 @@ import { Page } from '../types';
 
 export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
+  const pathname = usePathname();
+  // The homepage paints its own flat ink ground, so the animated fog canvas is not mounted there
+  const isHome = pathname === '/';
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -26,8 +29,8 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
   return (
     <SmoothScroll>
       <div className="relative min-h-screen bg-black text-[#f4f4f4] flex flex-col selection:bg-white selection:text-black">
-        <FogPlanes />
-        <div className="lux-grain" aria-hidden="true" />
+        {!isHome && <FogPlanes />}
+        {!isHome && <div className="lux-grain" aria-hidden="true" />}
 
         <motion.div
           className="fixed top-0 left-0 right-0 h-px bg-white origin-left z-[200] pointer-events-none"
@@ -38,7 +41,7 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
 
         <main className="flex-1 w-full max-w-6xl mx-auto px-5 sm:px-8 pt-8 sm:pt-14 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={isHome ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
