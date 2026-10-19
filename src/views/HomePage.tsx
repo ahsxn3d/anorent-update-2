@@ -103,6 +103,8 @@ export const HomePage: React.FC<HomePageProps> = ({
     ['02', 'Animated Sites', 'Motion, shaders, physics'],
     ['03', 'SaaS Dashboards', 'Analytics and APIs'],
   ];
+  // orb tint per service (cobalt, coral, teal from the palette)
+  const serviceTint = ['23 64 169', '255 107 76', '68 197 171'];
 
   const process = [
     { n: '01', when: 'Days 1-2', title: 'Discover', desc: 'A short call, your references and goals, turned into a one-page brief with scope and price locked.', out: ['Brief', 'Sitemap', 'Fixed quote'] },
@@ -181,16 +183,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             scrollTrigger: { trigger: '.ah-hero', start: 'top top', end: 'bottom top', scrub: true },
           });
 
-          // Process: the coral rule draws across, the four steps fold up out of depth
-          gsap.fromTo(
-            '.ah-steps-fill',
-            { scaleX: 0 },
-            {
-              scaleX: 1,
-              ease: 'none',
-              scrollTrigger: { trigger: '.ah-steps-wrap', start: desktop ? 'top 82%' : 'top 85%', end: desktop ? 'top 30%' : 'bottom 75%', scrub: true },
-            }
-          );
+          // Process: the four steps fold up out of depth
+          // the coral fill is driven by the orb (it ends exactly where the orb sits)
           const steps = gsap.utils.toArray<HTMLElement>('.ah-step-inner');
           if (desktop && steps.length) {
             gsap.timeline({
@@ -210,23 +204,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             });
           }
 
-          // Statement: word-by-word reading reveal
-          gsap.fromTo(
-            '.ah-word',
-            // opacity only: a per-frame blur on dozens of word layers was the main scroll jank
-            { opacity: 0.12 },
-            {
-              opacity: 1,
-              ease: 'none',
-              stagger: 0.08,
-              scrollTrigger: {
-                trigger: '.ah-statement-text',
-                start: desktop ? 'top 78%' : 'top 85%',
-                end: desktop ? 'bottom 48%' : 'bottom 60%',
-                scrub: true,
-              },
-            }
-          );
+          // Statement words are lit by the orb's reading lens (ScrollOrb), not a tween
 
           // Section labels + titles: masked line rise
           gsap.utils.toArray<HTMLElement>('.ah-rise').forEach((el) => {
@@ -246,18 +224,6 @@ export const HomePage: React.FC<HomePageProps> = ({
               scrollTrigger: { trigger: el, start: 'top 92%', once: true },
             });
           });
-
-          // Services chapter: the off-white sheet lifts up from depth as it arrives
-          gsap.fromTo(
-            '.ah-services',
-            { scale: desktop ? 0.9 : 0.94, yPercent: 4, transformOrigin: '50% 0%' },
-            {
-              scale: 1,
-              yPercent: 0,
-              ease: 'none',
-              scrollTrigger: { trigger: '.ah-services', start: 'top bottom', end: 'top 20%', scrub: true },
-            }
-          );
 
           // Services index: rows fold up in 3D, then brighten as they cross the centre
           gsap.utils.toArray<HTMLElement>('.ah-service').forEach((row) => {
@@ -424,7 +390,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <div ref={root} className="ah-home">
       {/* ============================ 01 HERO ============================ */}
-      <section className="ah-hero ah-bleed" data-orb="0.68 0.5 1 0 1" data-orb-m="0.5 0.44 1 0 0.9" data-orb-at="top">
+      <section className="ah-hero ah-bleed">
         <div className="ah-glow" aria-hidden="true" />
         <div className="ah-hero-top ah-hero-chrome ah-load" style={{ animationDelay: '0.1s' }}>
           <p className="ah-label">{finalBadgeText}</p>
@@ -513,8 +479,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section
         className="ah-process ah-bleed"
         aria-label="Process"
-        data-orb="0.85 0.24 0.42 0.3 0.95"
-        data-orb-m="0.84 0.2 0.42 0.3 0.7"
+       
+       
       >
         <div className="ah-grid ah-process-head">
           <p className="ah-chapter">
@@ -532,37 +498,41 @@ export const HomePage: React.FC<HomePageProps> = ({
           </p>
         </div>
 
-        <div className="ah-steps-wrap">
-          <span className="ah-steps-rule" aria-hidden="true"><span className="ah-steps-fill" /></span>
-          <ol className="ah-steps">
-            {process.map((st) => (
-              <li key={st.n} className="ah-step">
-                <div className="ah-step-inner">
-                  <span className="ah-step-num" aria-hidden="true">{st.n}</span>
-                  <span className="ah-label ah-step-when">{st.when}</span>
-                  <h3 className="ah-step-title">{st.title}</h3>
-                  <p className="ah-step-desc">{st.desc}</p>
-                  <ul className="ah-step-out" aria-label={`${st.title} deliverables`}>
-                    {st.out.map((o) => <li key={o}>{o}</li>)}
-                  </ul>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <dl className="ah-process-facts">
-          {facts.map(([k, v]) => (
-            <div key={k} className="ah-fact ah-fade">
-              <dt className="ah-label">{k}</dt>
-              <dd className="ah-fact-v" style={{ margin: 0 }}>{v}</dd>
+        <div className="ah-process-track">
+          <div className="ah-process-pin">
+            <div className="ah-steps-wrap">
+              <span className="ah-steps-rule" aria-hidden="true"><span className="ah-steps-fill" /></span>
+              <ol className="ah-steps">
+                {process.map((st) => (
+                  <li key={st.n} className="ah-step">
+                    <div className="ah-step-inner">
+                      <span className="ah-step-num" aria-hidden="true">{st.n}</span>
+                      <span className="ah-label ah-step-when">{st.when}</span>
+                      <h3 className="ah-step-title">{st.title}</h3>
+                      <p className="ah-step-desc">{st.desc}</p>
+                      <ul className="ah-step-out" aria-label={`${st.title} deliverables`}>
+                        {st.out.map((o) => <li key={o}>{o}</li>)}
+                      </ul>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
-          ))}
-        </dl>
+
+            <dl className="ah-process-facts">
+              {facts.map(([k, v]) => (
+                <div key={k} className="ah-fact ah-fade">
+                  <dt className="ah-label">{k}</dt>
+                  <dd className="ah-fact-v" style={{ margin: 0 }}>{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
       </section>
 
       {/* ========================== 02 STATEMENT ========================== */}
-      <section className="ah-section ah-statement ah-bleed" aria-label="Statement" data-orb="0.12 0.52 0.5 0.55 0.9" data-orb-m="0.18 0.78 0.5 0.55 0.55">
+      <section className="ah-section ah-statement ah-bleed" aria-label="Statement">
         <div className="ah-notes" aria-hidden="true">
           {annotations.map((t, k) => (
             <span key={t} className={`ah-note ah-note-${k}`}>{t}</span>
@@ -585,7 +555,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ========================== 03 SERVICES =========================== */}
-      <section className="ah-section ah-services ah-light ah-bleed" aria-label="Services" data-orb="0.86 0.5 0.45 0.65 1" data-orb-m="0.82 0.5 0.4 0.65 0.6">
+      <section className="ah-section ah-services ah-light ah-bleed" aria-label="Services">
         <div className="ah-grid">
           <p className="ah-chapter">
             <span className="ah-serif">03</span>
@@ -594,8 +564,8 @@ export const HomePage: React.FC<HomePageProps> = ({
           </p>
         </div>
         <ul className="ah-service-list">
-          {services.map(([index, title, detail]) => (
-            <li key={title} className="ah-service">
+          {services.map(([index, title, detail], k) => (
+            <li key={title} className="ah-service" data-tint={serviceTint[k % serviceTint.length]}>
               <button
                 type="button"
                 onClick={() => {
@@ -616,7 +586,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* ============================ 04 WORK ============================= */}
       {products && products.length > 0 && (
-        <section className="ah-section ah-work ah-bleed" aria-label="Featured Digital Deployments" data-orb="0.13 0.64 0.6 0.75 0.45" data-orb-m="0.86 0.22 0.45 0.75 0.35">
+        <section className="ah-section ah-work ah-bleed" aria-label="Featured Digital Deployments">
           <div className="ah-grid ah-work-head">
             <p className="ah-chapter">
               <span className="ah-serif">04</span>
@@ -691,9 +661,6 @@ export const HomePage: React.FC<HomePageProps> = ({
                           />
                         ) : null}
                       </span>
-                      <span className="ah-case-hover ah-label">
-                        Inspect <Arrow />
-                      </span>
                     </button>
 
                     <div className="ah-case-body">
@@ -727,7 +694,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* =========================== 05 REVIEWS =========================== */}
       {reviews && reviews.length > 0 && (
-        <section className="ah-reviews ah-cobalt-ground ah-bleed" aria-label="Client Reviews" data-orb="0.8 0.5 0.6 0.85 0.4" data-orb-m="0.2 0.5 0.5 0.85 0.3">
+        <section className="ah-reviews ah-cobalt-ground ah-bleed" aria-label="Client Reviews">
           <div className="ah-reviews-track" style={{ ['--ah-count' as string]: reviews.length } as React.CSSProperties}>
             <div className="ah-reviews-stage">
               <div className="ah-grid ah-reviews-head">
@@ -775,7 +742,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       )}
 
       {/* ============================ 06 CTA ============================== */}
-      <section className="ah-section ah-cta ah-bleed" aria-label="Start a project" data-orb="0.74 0.48 1.05 0.9 1" data-orb-m="0.62 0.62 0.9 1 0.85">
+      <section className="ah-section ah-cta ah-bleed" aria-label="Start a project">
         <div className="ah-glow ah-glow-low ah-glow-warm" aria-hidden="true" />
         <div className="ah-grid">
           <p className="ah-chapter">
@@ -800,6 +767,21 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </span>
               </span>
             ))}
+          </button>
+          {/* the orb becomes this button: a real, focusable control sits on top of it */}
+          <button
+            type="button"
+            className="ah-cta-orb"
+            onClick={() => {
+              sound.playPageSwitch();
+              setCurrentPage(finalPrimaryCtaRoute);
+            }}
+          >
+            <span className="ah-cta-orb-fallback" aria-hidden="true" />
+            <span className="ah-cta-orb-text">
+              <span>Let&rsquo;s talk</span>
+              <Arrow />
+            </span>
           </button>
           <div className="ah-cta-foot">
             <p className="ah-cta-note ah-fade">{finalPricingNotice}</p>

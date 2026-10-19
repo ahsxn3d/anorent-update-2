@@ -5,6 +5,8 @@ import type Lenis from 'lenis';
 import { loadGsap, whenSettled } from './site/gsap';
 
 export let lenisInstance: Lenis | null = null;
+/** callbacks run inside the shared tick right after Lenis has moved (same frame, fresh scroll) */
+export const scrollHooks = new Set<() => void>();
 
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
@@ -38,7 +40,10 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
       lenisInstance = lenis;
       const onScroll = () => ScrollTrigger.update();
       lenis.on('scroll', onScroll);
-      const update = (time: number) => lenis.raf(time * 1000);
+      const update = (time: number) => {
+        lenis.raf(time * 1000);
+        scrollHooks.forEach((f) => f());
+      };
       gsap.ticker.add(update);
       // never "catch up" after a long frame: Lenis and scrubs stay locked to real time
       gsap.ticker.lagSmoothing(0);

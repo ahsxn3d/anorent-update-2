@@ -21,7 +21,7 @@
   grid-template-rows: auto 1fr auto;
   padding: clamp(20px, 2.4vw, 36px) var(--ah-pad) clamp(24px, 3vw, 40px);
 }
-.ah-hero > :not(.ah-glow) { position: relative; z-index: 1; }
+.ah-hero > :not(.ah-glow) { position: relative; z-index: 2; }
 .ah-hero-top {
   display: flex;
   justify-content: space-between;
@@ -37,7 +37,9 @@
   padding-block: clamp(40px, 6vh, 80px);
 }
 @media (min-width: 900px) {
-  .ah-hero-title { padding-left: calc(var(--ah-col) + var(--ah-gut)); }
+  /* the headline sits beside the orb (orb owns the right ~40%) */
+  .ah-hero-title { max-width: 60vw; }
+  .ah-hero-h1 { font-size: clamp(3.1rem, 6.7vw, 8.6rem); }
 }
 
 .ah-hero-h1 {
@@ -61,8 +63,7 @@
   margin-top: 0.04em;
 }
 @media (min-width: 900px) {
-  .ah-hero-h1 .ah-hero-l2 { padding-left: calc(2 * (var(--ah-col) + var(--ah-gut))); }
-  .ah-hero-h1 .ah-hero-l3 { padding-left: calc(1 * (var(--ah-col) + var(--ah-gut))); }
+  .ah-hero-h1 .ah-hero-l2 { padding-left: calc(1 * (var(--ah-col) + var(--ah-gut))); }
 }
 .ah-hero-h1 .ah-hero-l3 .ah-bt-w:last-child { color: var(--ah-coral); }
 
@@ -709,29 +710,40 @@
 }
 .ah-case-hover { background: rgba(5, 18, 54, 0.82); }
 
-/* ---- travelling orb (WebGL metaball, gradient orb on low-end / no WebGL) ---- */
+/* ======================= ORB: stacking + activation ======================= */
+/* Layers on the homepage: section grounds (sheets, cobalt) < orb (z 1) < all copy and controls (z 2).
+   Sections lose their own stacking context so the orb can sit between ground and copy. Case
+   media stays under the orb (it is the lens over the image); case text stays above it. */
+.ah-site:has(.ah-home) .ah-main { z-index: 2; }
+.ah-home { position: relative; }
+.ah-home > .ah-bleed { z-index: auto; }
+:where(.ah-home > .ah-bleed > :not(.ah-glow)) { position: relative; }
+.ah-home > .ah-bleed > :not(.ah-glow):not(.ah-notes) { z-index: 2; }
+.ah-home > .ah-work.ah-bleed > .ah-cases.ah-cases { z-index: auto; }
+:where(.ah-case-body) { position: relative; }
+.ah-case-side, .ah-case-body { z-index: 2; }
+
 .ah-orb {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
-  z-index: 0;
+  z-index: 1;
   width: min(86vh, 56vw);
   height: min(86vh, 56vw);
   pointer-events: none;
-  will-change: transform, opacity;
-  contain: strict;
-  /* hero pose before the loop starts (matches data-orb on the hero) */
-  transform: translate3d(calc(68vw - min(86vh, 56vw) / 2), calc(50vh - min(86vh, 56vw) / 2), 0);
+  will-change: transform;
+  contain: layout paint size style;
+  transform-origin: 50% 50%;
+  /* hero pose before the loop starts */
+  transform: translate3d(calc(74vw - min(86vh, 56vw) / 2), calc(50svh - 32px - min(86vh, 56vw) / 2), 0) scale(0.86);
 }
 @media (max-width: 899px) {
   .ah-orb {
     width: min(98vw, 62vh);
     height: min(98vw, 62vh);
-    transform: translate3d(calc(50vw - min(98vw, 62vh) / 2), calc(42vh - min(98vw, 62vh) / 2), 0);
+    transform: translate3d(calc(50vw - min(98vw, 62vh) / 2), calc(34svh - 22px - min(98vw, 62vh) / 2), 0) scale(0.9);
   }
 }
-/* reduced motion: the orb belongs to the hero and scrolls away with it */
-@media (prefers-reduced-motion: reduce) { .ah-orb { position: absolute; } }
 .ah-orb-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s var(--ah-ease); }
 .ah-orb.is-live .ah-orb-canvas { opacity: 1; }
 .ah-orb-fallback {
@@ -746,3 +758,118 @@
   transition: opacity 1.4s var(--ah-ease);
 }
 .ah-orb.is-live .ah-orb-fallback { opacity: 0; visibility: hidden; transition: opacity 1.4s var(--ah-ease), visibility 0s linear 1.4s; }
+/* the lens label is counter-scaled by the orb loop so it always reads at 12px */
+.ah-orb-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.ah-orb-label > span {
+  white-space: nowrap;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ah-cream);
+}
+
+/* ---- process: pinned rail; the orb is the step indicator ---- */
+.ah-steps-fill { transition: none; }
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .ah-process { padding-bottom: 0; }
+  .ah-process-track { height: calc(100vh + 200vh); }
+  .ah-process-pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 64px;
+  }
+  .ah-process-pin .ah-step-inner { min-height: clamp(300px, 27vw, 420px); }
+  .ah-process-pin .ah-step-num { margin-bottom: clamp(20px, 2.6vw, 48px); }
+  .ah-process-pin .ah-process-facts { margin-top: clamp(32px, 4vw, 64px); }
+}
+.ah-steps-rule { overflow: visible; }
+.ah-step-num, .ah-step-title, .ah-step-desc, .ah-step-when { transition: color 0.5s var(--ah-ease), opacity 0.5s var(--ah-ease); }
+.ah-step-inner { transition: background-color 0.5s var(--ah-ease); }
+.ah-home.orb-on:not(.orb-static) .ah-step .ah-step-num { color: rgba(255, 107, 76, 0.32); }
+.ah-home.orb-on:not(.orb-static) .ah-step .ah-step-title { opacity: 0.5; }
+.ah-home.orb-on:not(.orb-static) .ah-step .ah-step-desc { opacity: 0.55; }
+.ah-home.orb-on:not(.orb-static) .ah-step.is-active .ah-step-num { color: var(--ah-coral); }
+.ah-home.orb-on:not(.orb-static) .ah-step.is-active .ah-step-title,
+.ah-home.orb-on:not(.orb-static) .ah-step.is-active .ah-step-desc { opacity: 1; }
+.ah-step.is-active .ah-step-when { color: var(--ah-cream); }
+.ah-step.is-active .ah-step-inner { background-color: rgba(255, 253, 226, 0.035); }
+
+/* ---- statement: the reading lens lights words ---- */
+.ah-word { transition: opacity 0.45s var(--ah-ease), color 0.45s var(--ah-ease); }
+.ah-home.orb-on:not(.orb-static) .ah-word { opacity: 0.16; }
+.ah-home.orb-on:not(.orb-static) .ah-word.is-lit { opacity: 0.9; }
+.ah-home.orb-on:not(.orb-static) .ah-word.is-hot { opacity: 1; color: #fff; }
+.ah-home.orb-on:not(.orb-static) .ah-word-hot.is-hot { color: var(--ah-cream); }
+
+/* ---- services: the orb is the selector ---- */
+.ah-service.is-orb .ah-service-title { transform: translateX(14px); }
+.ah-service.is-orb .ah-service-arrow { transform: rotate(45deg); color: var(--ah-accent); }
+.ah-service-arrow { transition: transform 0.5s var(--ah-ease), color 0.5s var(--ah-ease); }
+
+/* ---- work: the orb is the inspect lens (the old pill is gone on the homepage) ---- */
+
+/* ---- CTA: the orb is the button ---- */
+.ah-cta > .ah-grid { position: relative; }
+.ah-cta-orb {
+  position: relative;
+  grid-column: 1 / -1;
+  justify-self: end;
+  width: min(54vw, 260px);
+  aspect-ratio: 1;
+  margin-top: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--ah-cream);
+  -webkit-tap-highlight-color: transparent;
+}
+@media (min-width: 900px) {
+  .ah-cta-orb {
+    position: absolute;
+    right: calc(var(--ah-pad) + 2vw);
+    top: 46%;
+    width: clamp(220px, 24vw, 360px);
+    margin: 0;
+    transform: translateY(-50%);
+  }
+}
+.ah-cta-orb-text {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ah-display);
+  font-weight: 600;
+  font-size: clamp(17px, 1.5vw, 22px);
+  letter-spacing: -0.01em;
+  transition: transform 0.5s var(--ah-ease);
+}
+@media (hover: hover) { .ah-cta-orb:hover .ah-cta-orb-text { transform: scale(1.08); } }
+.ah-cta-orb:focus-visible { outline: 2px solid var(--ah-cream); outline-offset: 6px; }
+/* static orb inside the button when the travelling orb is not running (no JS / reduced motion) */
+.ah-cta-orb-fallback {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(38% 38% at 38% 34%, rgba(255, 253, 226, 0.3), rgba(255, 253, 226, 0) 100%),
+    radial-gradient(closest-side, #1740a9 52%, rgba(255, 107, 76, 0.55) 86%, rgba(255, 107, 76, 0) 100%);
+}
+.ah-home.orb-on:not(.orb-static) .ah-cta-orb-fallback { display: none; }
