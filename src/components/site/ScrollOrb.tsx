@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { loadGsap, whenIdle } from './gsap';
+import { loadGsap, whenIdle, whenSettled } from './gsap';
 import { lenisInstance } from '../SmoothScroll';
 
 /**
@@ -96,9 +96,7 @@ export const ScrollOrb: React.FC = () => {
     let dead = false;
     let stop = () => {};
 
-    whenIdle(1500).then(async () => {
-      if (dead) return;
-      const { gsap, ScrollTrigger } = await loadGsap();
+    whenIdle(1500).then(() => {
       if (dead) return;
 
       /* ------------------------------ shader ------------------------------ */
@@ -245,13 +243,41 @@ export const ScrollOrb: React.FC = () => {
           live = true;
           host.classList.add('is-live');
         }
-        if (reduce) gsap.ticker.remove(frame);
+        if (reduce) stopLoop();
       };
       if (!gl) host.classList.add('is-css');
-      gsap.ticker.add(frame);
 
+      // Until the scroll runtime arrives (first scroll intent / idle) the orb runs on its own RAF;
+      // then it moves onto gsap.ticker, the one RAF that also drives Lenis and ScrollTrigger.
+      // GSAP is never pulled into first paint just for the orb.
+      let raf = 0;
+      let onTicker = false;
+      let tick: { remove: (f: () => void) => void } | null = null;
+      const rafLoop = () => {
+        frame();
+        if (!onTicker && !stopped) raf = requestAnimationFrame(rafLoop);
+      };
+      let stopped = false;
+      const stopLoop = () => {
+        stopped = true;
+        cancelAnimationFrame(raf);
+        tick?.remove(frame);
+      };
+      raf = requestAnimationFrame(rafLoop);
       const onRefresh = () => measure();
-      ScrollTrigger.addEventListener('refresh', onRefresh);
+      let offRefresh = () => {};
+      whenSettled()
+        .then(loadGsap)
+        .then(({ gsap, ScrollTrigger }) => {
+          if (dead || stopped) return;
+          cancelAnimationFrame(raf);
+          onTicker = true;
+          tick = gsap.ticker;
+          gsap.ticker.add(frame);
+          ScrollTrigger.addEventListener('refresh', onRefresh);
+          offRefresh = () => ScrollTrigger.removeEventListener('refresh', onRefresh);
+          measure();
+        });
       let rt = 0;
       const onResize = () => {
         window.clearTimeout(rt);
@@ -263,8 +289,8 @@ export const ScrollOrb: React.FC = () => {
       host.classList.add('is-on');
 
       stop = () => {
-        gsap.ticker.remove(frame);
-        ScrollTrigger.removeEventListener('refresh', onRefresh);
+        stopLoop();
+        offRefresh();
         window.removeEventListener('resize', onResize);
         window.removeEventListener('pointermove', onMove);
         window.clearTimeout(rt);
