@@ -2,10 +2,25 @@
 
 import React, { useState } from 'react';
 
-import { ArrowLeft, ArrowRight, ExternalLink, Copy, Check } from 'lucide-react';
+import { motion } from 'motion/react';
+import {
+  ArrowLeft,
+  ExternalLink,
+  Star,
+  Zap,
+  Activity,
+  ShieldCheck,
+  Sparkles,
+  Copy,
+  Check,
+  Layers,
+  Send,
+  Globe,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { DeploymentProduct, Page } from '../types';
 import { ButterButton } from '../components/ButterButton';
+import { ScrollReveal } from '../components/ScrollReveal';
 import { sound } from '../utils/audio';
 
 interface ProjectDetailPageProps {
@@ -53,116 +68,224 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const stack = product.techStack || [];
-  const facts: [string, React.ReactNode][] = [
-    ['Category', product.category],
-    ...(product.client ? [['Client', product.client] as [string, React.ReactNode]] : []),
-    ...(product.year ? [['Year', String(product.year)] as [string, React.ReactNode]] : []),
-    ['Status', product.status || 'Production'],
-    ['Rating', '4.9 / 5.0'],
-  ];
-
   return (
-    <div className="lux-detail pt-4 sm:pt-6 pb-8">
-      {/* Toolbar */}
-      <div className="flex items-center justify-between gap-3 pb-5 border-b border-[rgba(232,235,242,0.08)]">
-        <button type="button" onClick={handleBack} className="lux-ghost-btn group">
-          <ArrowLeft className="w-4 h-4 transition-[translate] duration-200 group-hover:-translate-x-0.5" aria-hidden="true" />
-          <span>All deployments</span>
+    <div className="space-y-6 sm:space-y-10 pb-16 pt-2">
+      
+      {/* ------------------------------------------------------------- */}
+      {/* TOP NAVIGATION & ACTION BAR */}
+      {/* ------------------------------------------------------------- */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-purple-500/20 pb-4 sm:pb-6">
+        <button
+          onClick={handleBack}
+          className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-[#131422]/90 hover:bg-[#1f1638] border border-purple-500/30 text-xs sm:text-sm font-bold text-white transition-all shadow-md cursor-pointer hover:border-purple-400/70 group"
+        >
+          <ArrowLeft className="w-4 h-4 text-[#C084FC] group-hover:-translate-x-1 transition-transform" />
+          <span>Back to Deployments</span>
         </button>
-        <button type="button" onClick={handleCopyLink} className="lux-ghost-btn" aria-live="polite">
-          {copied ? <Check className="w-4 h-4" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}
-          <span>{copied ? 'Link copied' : 'Share'}</span>
-        </button>
-      </div>
 
-      {/* Header */}
-      <header data-fx="rise" className="mt-12 sm:mt-16 grid lg:grid-cols-12 gap-8 lg:gap-8 items-end">
-        <div className="lg:col-span-8">
-          <p className="lux-sh-eyebrow">{product.category}{product.year ? ` · ${product.year}` : ''}</p>
-          <h1 className="lux-sh-title mt-5 text-[40px] sm:text-[64px] lg:text-[76px] leading-[1] text-[#E8EBF2]">
-            {product.title}
-          </h1>
-          {product.shortDescription && (
-            <p className="mt-6 max-w-2xl text-[16px] sm:text-[18px] leading-relaxed text-[#8B93A7]">{product.shortDescription}</p>
-          )}
-        </div>
-        <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end gap-3">
+
+        <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            onClick={handleCopyLink}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#131422]/90 hover:bg-[#1f1638] border border-purple-500/30 text-xs font-mono font-semibold text-slate-300 hover:text-white transition-all shadow-sm cursor-pointer"
+          >
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-emerald-300">Link Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5 text-purple-300" />
+                <span>Share Project</span>
+              </>
+            )}
+          </button>
+
           <ButterButton
-            variant="outline"
-            size="lg"
+            variant="primary"
+            size="sm"
             onClick={() => {
               window.open(product.demoUrl, '_blank');
             }}
-            icon={<ExternalLink className="w-4 h-4" />}
+            icon={<ExternalLink className="w-3.5 h-3.5" />}
             iconPosition="right"
-            className="lux-primary w-full sm:w-auto justify-center uppercase tracking-wider !py-3.5 !px-8 text-xs sm:text-sm"
+            className="uppercase tracking-wider font-extrabold text-xs"
           >
-            Visit Live Demo
+            Launch Live Demo
           </ButterButton>
-          <ButterButton
-            variant="line"
-            size="md"
-            onClick={() => {
-              setCurrentPage('contact');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            icon={<ArrowRight className="w-4 h-4" />}
-            iconPosition="right"
-            className="w-full sm:w-auto justify-center uppercase tracking-wider text-xs"
-          >
-            Inquire for Similar Build
-          </ButterButton>
-        </div>
-      </header>
-
-      {/* Media */}
-      <div
-        data-fx="media"
-        className="mt-10 sm:mt-14 relative w-full aspect-[4/3] sm:aspect-[16/9] rounded-[16px] overflow-hidden border border-[rgba(232,235,242,0.08)] bg-[#171B24]"
-      >
-        <div data-fx-inner className="absolute inset-0">
-          <img
-            src={product.thumbnailUrl}
-            alt={product.title}
-            loading="eager"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
         </div>
       </div>
 
-      {/* Overview + facts */}
-      <div className="mt-14 sm:mt-20 grid lg:grid-cols-12 gap-12 lg:gap-8">
-        <div className="lg:col-span-7" data-fx="rise">
-          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#8B93A7]">Overview</p>
-          <p className="mt-5 text-[17px] sm:text-[20px] leading-[1.6] text-[#E8EBF2]/85">
-            {product.fullDescription || product.shortDescription}
-          </p>
-        </div>
-        <div className="lg:col-span-4 lg:col-start-9" data-fx="rise">
-          <dl className="border-t border-[rgba(232,235,242,0.08)]">
-            {facts.map(([k, v]) => (
-              <div key={k} className="flex items-baseline justify-between gap-6 py-3.5 border-b border-[rgba(232,235,242,0.08)]">
-                <dt className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#8B93A7]">{k}</dt>
-                <dd className="text-[14px] text-[#E8EBF2] text-right">{v}</dd>
+      {/* ------------------------------------------------------------- */}
+      {/* MAIN PROJECT SHOWCASE HERO */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-6 sm:space-y-8">
+        
+        {/* BIG FULL-SIZE HIGH-RES THUMBNAIL FRAME */}
+        <ScrollReveal direction="down" delay={0.05} distance={20}>
+          <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-purple-500/40 bg-[#080210] shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(139,0,238,0.25)]">
+            <img
+              src={product.thumbnailUrl}
+              alt={product.title}
+              loading="eager"
+              decoding="async"
+              className="w-full h-auto max-h-[560px] object-cover object-center"
+            />
+
+            {/* Subtle Gradient Rim */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B14] via-transparent to-black/20 pointer-events-none" />
+
+            {/* Floating Live Telemetry Watermark */}
+            <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-6 right-3 sm:right-6 flex items-center justify-between text-white text-[10px] sm:text-xs pointer-events-none">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/10 shadow-lg">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="font-mono font-bold tracking-wider text-slate-200">
+                  LIVE 60FPS SHADER ENGINE
+                </span>
               </div>
-            ))}
-          </dl>
-          {stack.length > 0 && (
-            <div className="mt-8">
-              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#8B93A7]">Stack</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {stack.map((tech, idx) => (
-                  <span key={idx} className="px-3 py-1 rounded-full border border-[rgba(232,235,242,0.12)] text-[12px] text-[#E8EBF2]/80">
-                    {tech}
+              <span className="hidden sm:inline font-mono text-purple-300/80 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/10">
+                HTTPS://ANORIX.STUDIO
+              </span>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* ------------------------------------------------------------- */}
+        {/* PRODUCT DETAILS & COMPLETE DESCRIPTION (NO CUTOFFS) */}
+        {/* ------------------------------------------------------------- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+          
+          {/* LEFT 8 COLS: Title, Full Description & Tech Stack */}
+          <div className="lg:col-span-8 space-y-6">
+            
+            <div className="p-5 sm:p-8 bg-[#131422]/95 backdrop-blur-2xl rounded-2xl sm:rounded-3xl border border-purple-500/30 shadow-2xl space-y-4">
+              
+              {/* Category & Status */}
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 bg-[#8B00EE]/20 border border-[#8B00EE]/40 text-[#C084FC] text-xs font-mono font-extrabold uppercase rounded-full tracking-wider shadow-sm">
+                    {product.category}
                   </span>
-                ))}
+                  <span className="text-xs font-mono text-slate-400">
+                    ID: {product.id}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold rounded-full shadow-sm">
+                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  <span>4.9 / 5.0 Rating</span>
+                </div>
+              </div>
+
+              {/* Exact Title in Full */}
+              <h1 className="font-display text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight uppercase leading-tight">
+                {product.title}
+              </h1>
+
+              {/* FULL UNCUT DESCRIPTION (Everything is readable) */}
+              <div className="pt-2 border-t border-purple-500/20 space-y-2">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-purple-300 block">
+                  Complete System Description
+                </span>
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-normal">
+                  {product.fullDescription || product.shortDescription}
+                </p>
+              </div>
+
+              {/* Client & Year Metadata */}
+              {(product.client || product.year) && (
+                <div className="pt-2 flex items-center gap-4 text-xs font-mono text-slate-400">
+                  {product.client && (
+                    <span>Client: <strong className="text-white">{product.client}</strong></span>
+                  )}
+                  {product.year && (
+                    <span>Year: <strong className="text-white">{product.year}</strong></span>
+                  )}
+                  <span>Status: <strong className="text-emerald-400">{product.status || 'Production'}</strong></span>
+                </div>
+              )}
+
+              {/* Complete Tech Stack */}
+              <div className="pt-4 border-t border-purple-500/20 space-y-2">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-purple-300 block">
+                  Full Technology Stack
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {(product.techStack || []).map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3.5 py-1.5 bg-[#1f1035] border border-purple-400/40 text-purple-200 text-xs font-mono font-bold rounded-xl shadow-sm"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* RIGHT 4 COLS: Performance, Escrow & Inquire Actions */}
+          <div className="lg:col-span-4 space-y-6">
+            
+            {/* Action Box */}
+            <div className="p-5 sm:p-6 bg-[#131422]/95 backdrop-blur-2xl rounded-2xl sm:rounded-3xl border border-purple-500/30 shadow-2xl space-y-4">
+              <h3 className="text-xs font-mono font-extrabold uppercase tracking-wider text-[#C084FC]">
+                Live Deployment Actions
+              </h3>
+
+              <ButterButton
+                variant="primary"
+                size="lg"
+                onClick={() => {
+                  window.open(product.demoUrl, '_blank');
+                }}
+                icon={<ExternalLink className="w-4 h-4" />}
+                iconPosition="right"
+                className="w-full uppercase tracking-wider font-extrabold shadow-[0_0_25px_rgba(139,0,238,0.5)]"
+              >
+                Visit Live Demo
+              </ButterButton>
+
+              <ButterButton
+                variant="secondary"
+                size="md"
+                onClick={() => {
+                  setCurrentPage('contact');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                icon={<Send className="w-3.5 h-3.5 text-[#C084FC]" />}
+                iconPosition="left"
+                className="w-full uppercase tracking-wider font-bold text-xs"
+              >
+                Inquire for Similar Build
+              </ButterButton>
+
+              {/* Status checklist */}
+              <div className="pt-3 border-t border-purple-500/20 space-y-2.5 text-xs text-slate-300 font-mono">
+                <div className="flex items-center gap-2 text-emerald-400">
+                  <ShieldCheck className="w-4 h-4 shrink-0" />
+                  <span>Awwwards-Grade Architecture</span>
+                </div>
+                <div className="flex items-center gap-2 text-purple-300">
+                  <Zap className="w-4 h-4 shrink-0 text-[#A855F7]" />
+                  <span>8ms TTFB & 60 FPS WebGL</span>
+                </div>
+                <div className="flex items-center gap-2 text-slate-300">
+                  <Globe className="w-4 h-4 shrink-0 text-cyan-400" />
+                  <span>Global Edge CDN Distributed</span>
+                </div>
               </div>
             </div>
-          )}
+
+          </div>
+
         </div>
+
       </div>
+
     </div>
   );
 };

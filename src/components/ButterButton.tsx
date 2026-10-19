@@ -37,8 +37,12 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
   const btnRef = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [coords, setCoords] = useState({ x: 50, y: 50 });
-  // Start false on both server and client so hydration matches; the effect below switches touch devices on.
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    }
+    return false;
+  });
 
   // Detect genuine touch/mobile/tablet devices where hover physically does not exist
   useEffect(() => {
@@ -98,106 +102,106 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
   const colorThemes = {
     primary: {
       defaultBg: 'bg-[#180A30]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 50%, #38BDF8 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(139,0,238,0.65)]',
     },
     purple: {
       defaultBg: 'bg-[#180A30]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 50%, #C084FC 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(139,0,238,0.65)]',
     },
     secondary: {
       defaultBg: 'bg-[#09152B]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #0284C7 0%, #06B6D4 50%, #8B00EE 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]',
     },
     cyan: {
       defaultBg: 'bg-[#081F33]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #00F0FF 0%, #0284C7 60%, #38BDF8 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]',
     },
     emerald: {
       defaultBg: 'bg-[#07241A]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #00FF9D 0%, #10B981 50%, #059669 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(16,185,129,0.6)]',
     },
     green: {
       defaultBg: 'bg-[#07241A]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #00FF9D 0%, #10B981 50%, #06B6D4 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(16,185,129,0.6)]',
     },
     pink: {
       defaultBg: 'bg-[#2B0A23]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #FF0055 0%, #EC4899 50%, #8B00EE 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(255,0,85,0.6)]',
     },
     glass: {
       defaultBg: 'bg-[#181932]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 50%, #38BDF8 100%)',
       shadow: 'hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]',
     },
     ghost: {
       defaultBg: 'bg-[#15172C]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #C084FC 100%)',
       shadow: 'hover:shadow-[0_0_22px_rgba(168,85,247,0.4)]',
     },
     blue: {
       defaultBg: 'bg-[#09152B]',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #0284C7 0%, #38BDF8 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(56,189,248,0.6)]',
     },
     white: {
-      defaultBg: 'bg-[#E8EBF2]/15',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
+      defaultBg: 'bg-white/15',
+      text: 'text-white',
+      hoverText: 'text-white',
       wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 100%)',
       shadow: 'hover:shadow-[0_0_30px_rgba(139,0,238,0.55)]',
     },
     solid: {
-      defaultBg: 'bg-[#E8EBF2]',
-      text: 'text-[#0B0D12]',
-      hoverText: 'group-hover:text-[#E8EBF2]',
-      wipeGradient: 'linear-gradient(160deg, #0B0D12 0%, #1c1c1c 100%)',
-      shadow: 'hover:shadow-[0_12px_40px_rgba(6, 8, 12,0.35)]',
+      defaultBg: 'bg-white',
+      text: 'text-black',
+      hoverText: 'group-hover:text-white',
+      wipeGradient: 'linear-gradient(160deg, #0a0a0a 0%, #1c1c1c 100%)',
+      shadow: 'hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]',
     },
     line: {
       defaultBg: 'bg-transparent',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'group-hover:text-[#0B0D12]',
-      wipeGradient: '#E8EBF2',
+      text: 'text-white',
+      hoverText: 'group-hover:text-black',
+      wipeGradient: '#ffffff',
       shadow: '',
     },
     outline: {
       defaultBg: 'bg-transparent',
-      text: 'text-[#E8EBF2]',
-      hoverText: 'text-[#E8EBF2]',
-      wipeGradient: 'linear-gradient(115deg, rgba(232, 235, 242,0) 0%, rgba(232, 235, 242,0.22) 48%, rgba(232, 235, 242,0) 100%)',
-      shadow: 'hover:shadow-[0_0_24px_rgba(232, 235, 242,0.14)]',
+      text: 'text-white',
+      hoverText: 'text-white',
+      wipeGradient: 'linear-gradient(115deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.22) 48%, rgba(255,255,255,0) 100%)',
+      shadow: 'hover:shadow-[0_0_24px_rgba(255,255,255,0.14)]',
     },
   }[variant] || {
     defaultBg: 'bg-[#180A30]',
-    text: 'text-[#E8EBF2]',
-    hoverText: 'text-[#E8EBF2]',
+    text: 'text-white',
+    hoverText: 'text-white',
     wipeGradient: 'linear-gradient(135deg, #8B00EE 0%, #A855F7 50%, #38BDF8 100%)',
     shadow: 'hover:shadow-[0_0_30px_rgba(139,0,238,0.65)]',
   };
@@ -252,7 +256,7 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
   );
 
   // Zero borders, zero outlines, responsive active scaling
-  const frame = variant === 'outline' ? 'border-2 border-[#E8EBF2]' : variant === 'line' ? 'border border-[#E8EBF2]/80' : 'border-0';
+  const frame = variant === 'outline' ? 'border-2 border-white' : variant === 'line' ? 'border border-white/80' : 'border-0';
   const buttonClasses = `butter-button relative overflow-hidden group ${frame} outline-none ring-0 focus:outline-none focus:ring-0 transition-all duration-300 cursor-pointer select-none hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.96] inline-flex items-center justify-center font-mono ${colorThemes.defaultBg} ${colorThemes.shadow} ${sizeClasses} ${className}`;
 
   if (href) {

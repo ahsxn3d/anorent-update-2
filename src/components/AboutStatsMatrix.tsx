@@ -62,7 +62,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <span className="text-[8px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-purple-300 block">
                 Curated Systems
               </span>
-              <h3 className="font-display font-black text-sm sm:text-xl md:text-2xl text-[#E8EBF2] leading-tight">
+              <h3 className="font-display font-black text-sm sm:text-xl md:text-2xl text-white leading-tight">
                 12+ <span className="text-xs sm:text-base font-semibold text-slate-300">Deployments</span>
               </h3>
             </div>
@@ -136,7 +136,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
                   </span>
                 </div>
                 <span
-                  className="text-[8px] sm:text-[10px] font-mono font-bold px-1 py-0.2 rounded bg-[#0B0D12]/50 border border-[#E8EBF2]/10"
+                  className="text-[8px] sm:text-[10px] font-mono font-bold px-1 py-0.2 rounded bg-black/50 border border-white/10"
                   style={{ color: cat.color }}
                 >
                   {cat.count}
@@ -166,7 +166,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <span className="text-[8px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300 block">
                 Client Satisfaction
               </span>
-              <h3 className="font-display font-black text-sm sm:text-xl md:text-2xl text-[#E8EBF2] leading-tight">
+              <h3 className="font-display font-black text-sm sm:text-xl md:text-2xl text-white leading-tight">
                 99.9% <span className="text-xs sm:text-base font-semibold text-amber-300 font-mono">5.0 ★</span>
               </h3>
             </div>
@@ -189,7 +189,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <span>Code Quality & Architecture</span>
               <span className="text-emerald-400 font-bold">100% Passed</span>
             </div>
-            <div className="h-1.5 w-full bg-[#0A0B14] rounded-full overflow-hidden border border-[#E8EBF2]/5">
+            <div className="h-1.5 w-full bg-[#0A0B14] rounded-full overflow-hidden border border-white/5">
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: '100%' }}
@@ -205,7 +205,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <span>GPU 60 FPS Framerate Stability</span>
               <span className="text-cyan-400 font-bold">99.8% Stable</span>
             </div>
-            <div className="h-1.5 w-full bg-[#0A0B14] rounded-full overflow-hidden border border-[#E8EBF2]/5">
+            <div className="h-1.5 w-full bg-[#0A0B14] rounded-full overflow-hidden border border-white/5">
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: '99.8%' }}
@@ -221,7 +221,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <span>On-Time Milestone Delivery</span>
               <span className="text-purple-400 font-bold">100% Rate</span>
             </div>
-            <div className="h-1.5 w-full bg-[#0A0B14] rounded-full overflow-hidden border border-[#E8EBF2]/5">
+            <div className="h-1.5 w-full bg-[#0A0B14] rounded-full overflow-hidden border border-white/5">
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: '100%' }}
@@ -259,7 +259,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <span className="text-[8px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-300 block">
                 Direct Communication
               </span>
-              <h3 className="font-display font-black text-sm sm:text-xl md:text-2xl text-[#E8EBF2] leading-tight">
+              <h3 className="font-display font-black text-sm sm:text-xl md:text-2xl text-white leading-tight">
                 &lt; 1-2 Hours
               </h3>
             </div>
@@ -316,7 +316,6 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
                 strokeWidth="2"
                 strokeLinecap="round"
                 transform={`rotate(${hourAngle} 24 24)`}
-                suppressHydrationWarning
               />
               {/* Minute Hand */}
               <line
@@ -328,7 +327,6 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 transform={`rotate(${minuteAngle} 24 24)`}
-                suppressHydrationWarning
               />
               {/* Second Hand (Ticking) */}
               <line
@@ -340,11 +338,10 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
                 strokeWidth="1"
                 strokeLinecap="round"
                 transform={`rotate(${secondAngle} 24 24)`}
-                suppressHydrationWarning
               />
               {/* Center Pivot Point */}
               <circle cx="24" cy="24" r="2.5" fill="#10B981" />
-              <circle cx="24" cy="24" r="1" fill="#E8EBF2" />
+              <circle cx="24" cy="24" r="1" fill="#FFFFFF" />
             </svg>
           </div>
 
@@ -354,7 +351,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <Globe className="w-3 h-3 shrink-0 text-emerald-400" />
               <span>Timezone: UTC+5 (Live)</span>
             </div>
-            <div suppressHydrationWarning className="font-mono text-sm sm:text-base font-black text-[#E8EBF2] tracking-widest mt-0.5">
+            <div className="font-mono text-sm sm:text-base font-black text-white tracking-widest mt-0.5">
               {formattedUtc5}
             </div>
             <div className="text-[9px] sm:text-[10px] font-mono text-slate-400 flex items-center gap-1.5 mt-0.5">
@@ -366,10 +363,10 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
 
         {/* Availability Channels */}
         <div className="grid grid-cols-2 gap-1.5 pt-1 border-t border-purple-500/20 text-center font-mono text-[9px] sm:text-[10px]">
-          <div className="p-1.5 rounded bg-[#0A0B14]/60 border border-[#E8EBF2]/5 text-slate-300">
+          <div className="p-1.5 rounded bg-[#0A0B14]/60 border border-white/5 text-slate-300">
             Email & WhatsApp
           </div>
-          <div className="p-1.5 rounded bg-[#0A0B14]/60 border border-[#E8EBF2]/5 text-emerald-300 font-bold">
+          <div className="p-1.5 rounded bg-[#0A0B14]/60 border border-white/5 text-emerald-300 font-bold">
             Daily Async Updates
           </div>
         </div>
@@ -394,7 +391,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <span className="text-[8px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-purple-300 block">
                 Client Rights & Escrow
               </span>
-              <h3 className="font-display font-black text-sm sm:text-xl md:text-2xl text-[#E8EBF2] leading-tight">
+              <h3 className="font-display font-black text-sm sm:text-xl md:text-2xl text-white leading-tight">
                 100% IP Transfer
               </h3>
             </div>
@@ -451,7 +448,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
 
             {/* Inner 100% Number */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <span className="text-[11px] sm:text-xs font-mono font-black text-[#E8EBF2] leading-none">
+              <span className="text-[11px] sm:text-xs font-mono font-black text-white leading-none">
                 100%
               </span>
             </div>

@@ -15,11 +15,11 @@ export const ReviewsDisplay: React.FC<ReviewsDisplayProps> = ({ reviews }) => {
     ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
     : '5.0';
 
-  // Helper card renderer for marquee rows - Clean minimalist border-[#E8EBF2]/10 design
+  // Helper card renderer for marquee rows - Clean minimalist border-white/10 design
   const renderReviewCard = (rev: ReviewItem, keyIdx: number) => (
     <div
       key={`${rev.id}-${keyIdx}`}
-      className="w-60 sm:w-80 md:w-96 shrink-0 bg-[#0c0919]/90 backdrop-blur-xl border border-[#E8EBF2]/10 rounded-xl p-3 sm:p-4 hover:border-[#E8EBF2]/20 transition-all flex flex-col justify-between space-y-2.5 sm:space-y-3 cursor-pointer"
+      className="w-60 sm:w-80 md:w-96 shrink-0 bg-[#0c0919]/90 backdrop-blur-xl border border-white/10 rounded-xl p-3 sm:p-4 hover:border-white/20 transition-all flex flex-col justify-between space-y-2.5 sm:space-y-3 cursor-pointer"
     >
       <div className="space-y-1.5 sm:space-y-2">
         <div className="flex items-center justify-between">
@@ -45,12 +45,12 @@ export const ReviewsDisplay: React.FC<ReviewsDisplayProps> = ({ reviews }) => {
         </p>
       </div>
 
-      <div className="flex items-center gap-2 sm:gap-2.5 pt-2 border-t border-[#E8EBF2]/10">
+      <div className="flex items-center gap-2 sm:gap-2.5 pt-2 border-t border-white/10">
         <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-purple-600/30 border border-purple-500/40 text-purple-200 flex items-center justify-center text-[8px] sm:text-[10px] font-bold font-mono shrink-0">
           {rev.name.charAt(0)}
         </div>
         <div className="truncate">
-          <h4 className="font-bold text-[10px] sm:text-xs text-[#E8EBF2] truncate">{rev.name}</h4>
+          <h4 className="font-bold text-[10px] sm:text-xs text-white truncate">{rev.name}</h4>
           <p className="text-[8px] sm:text-[10px] text-zinc-400 font-mono truncate">{rev.email}</p>
         </div>
       </div>
@@ -84,17 +84,17 @@ export const ReviewsDisplay: React.FC<ReviewsDisplayProps> = ({ reviews }) => {
     <div className="space-y-3 sm:space-y-6 pt-3 sm:pt-6 pb-2 overflow-hidden">
       
       {/* CLEAN MINIMALIST HEADING ROW */}
-      <div className="lux-sh flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E8EBF2]/10 pb-5 px-1">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 border-b border-white/10 pb-3 sm:pb-4 px-1">
         <div>
-          <span className="lux-sh-eyebrow">
+          <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-purple-300">
             02 // VERIFIED FEEDBACK
           </span>
-          <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">
+          <h2 className="font-display text-lg sm:text-2xl md:text-3xl font-extrabold text-white">
             Client Reviews
           </h2>
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 px-3 py-1 bg-[#E8EBF2]/5 text-[#E8EBF2] rounded-full text-[10px] sm:text-xs font-mono font-bold border border-[#E8EBF2]/10 w-fit">
+        <div className="flex items-center gap-1.5 sm:gap-2 px-3 py-1 bg-white/5 text-white rounded-full text-[10px] sm:text-xs font-mono font-bold border border-white/10 w-fit">
           <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
           <span>{avgRating} / 5.0</span>
           <span className="text-zinc-500">•</span>
@@ -108,8 +108,8 @@ export const ReviewsDisplay: React.FC<ReviewsDisplayProps> = ({ reviews }) => {
       <div className="space-y-2 sm:space-y-3 relative py-2 sm:py-3">
 
         {/* Edge Gradient Fades */}
-        <div className="absolute inset-y-0 left-0 w-8 sm:w-20 bg-gradient-to-r from-[#0B0D12] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-8 sm:w-20 bg-gradient-to-l from-[#0B0D12] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-8 sm:w-20 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-8 sm:w-20 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
         {/* LINE 1: Scroll Left to Right */}
         <div className="overflow-hidden py-0.5">
@@ -163,15 +163,15 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onAddReview }) => 
   };
 
   return (
-    <div className="bg-[#0c0919]/90 text-[#E8EBF2] rounded-2xl border border-[#E8EBF2]/10 p-4 sm:p-6 md:p-8 space-y-4 md:space-y-6 backdrop-blur-xl">
+    <div className="bg-[#0c0919]/90 text-white rounded-2xl border border-white/10 p-4 sm:p-6 md:p-8 space-y-4 md:space-y-6 backdrop-blur-xl">
       
       {/* HEADER */}
-      <div className="space-y-1.5 md:space-y-2 border-b border-[#E8EBF2]/10 pb-3 md:pb-4">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#E8EBF2]/5 border border-[#E8EBF2]/10 rounded-full text-[10px] md:text-xs font-mono font-bold text-purple-300 uppercase">
+      <div className="space-y-1.5 md:space-y-2 border-b border-white/10 pb-3 md:pb-4">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-white/5 border border-white/10 rounded-full text-[10px] md:text-xs font-mono font-bold text-purple-300 uppercase">
           <MessageSquare className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-400" />
           <span>Feedback Channel</span>
         </div>
-        <h2 className="font-display text-lg sm:text-2xl md:text-3xl font-extrabold text-[#E8EBF2] tracking-wide uppercase">
+        <h2 className="font-display text-lg sm:text-2xl md:text-3xl font-extrabold text-white tracking-wide uppercase">
           Add Review or Rating
         </h2>
         <p className="text-[11px] md:text-xs text-zinc-400">
@@ -182,7 +182,7 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onAddReview }) => 
       {submitted ? (
         <div className="p-6 md:p-8 text-center bg-purple-950/40 rounded-xl border border-purple-500/30 space-y-3 my-3">
           <Check className="w-8 h-8 md:w-10 md:h-10 text-emerald-400 mx-auto animate-bounce" />
-          <h3 className="font-display text-lg md:text-xl font-extrabold text-[#E8EBF2] uppercase tracking-wider">
+          <h3 className="font-display text-lg md:text-xl font-extrabold text-white uppercase tracking-wider">
             Review Published!
           </h3>
           <p className="text-xs text-zinc-300">
@@ -203,7 +203,7 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onAddReview }) => 
                 placeholder="e.g. Sarah Jenkins"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-[#0B0D12]/50 border border-[#E8EBF2]/10 rounded-xl text-xs md:text-sm font-sans text-[#E8EBF2] placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
+                className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs md:text-sm font-sans text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
               />
             </div>
 
@@ -217,7 +217,7 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onAddReview }) => 
                 placeholder="e.g. sarah@techcorp.io"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-[#0B0D12]/50 border border-[#E8EBF2]/10 rounded-xl text-xs md:text-sm font-sans text-[#E8EBF2] placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
+                className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs md:text-sm font-sans text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
               />
             </div>
           </div>
@@ -236,7 +236,7 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onAddReview }) => 
                   className={`p-1.5 md:p-2 rounded-lg transition-all cursor-pointer ${
                     rating >= star
                       ? 'bg-amber-400/20 text-amber-400 border border-amber-400/40'
-                      : 'bg-[#E8EBF2]/5 text-zinc-600 border border-[#E8EBF2]/10 hover:bg-[#E8EBF2]/10'
+                      : 'bg-white/5 text-zinc-600 border border-white/10 hover:bg-white/10'
                   }`}
                 >
                   <Star className={`w-4 h-4 md:w-5 md:h-5 ${rating >= star ? 'fill-amber-400 text-amber-400' : ''}`} />
@@ -259,7 +259,7 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onAddReview }) => 
               placeholder="Tell us about the project quality, performance metrics, design aesthetics, or delivery time..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-[#0B0D12]/50 border border-[#E8EBF2]/10 rounded-xl text-xs md:text-sm font-sans text-[#E8EBF2] placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
+              className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs md:text-sm font-sans text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
             />
           </div>
 

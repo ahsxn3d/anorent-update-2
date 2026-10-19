@@ -37,23 +37,23 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
   };
 
   return (
-    <footer className="relative z-20 w-full mt-[clamp(80px,9vw,128px)] border-t border-[#E8EBF2]/10">
-      <div data-fx="rise" className="max-w-[1200px] mx-auto px-6 lg:px-8 pt-14 sm:pt-16 pb-10">
+    <footer className="relative z-20 w-full mt-24 sm:mt-32 border-t border-white/10">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
           <div className="md:col-span-5 space-y-5">
-            <p className="text-[15px] tracking-[-0.04em] text-[#E8EBF2]">Anorix</p>
-            <p className="text-sm text-[#E8EBF2]/55 leading-relaxed max-w-sm">
+            <p className="text-[15px] tracking-[-0.04em] text-white">Anorix</p>
+            <p className="text-sm text-white/55 leading-relaxed max-w-sm">
               &ldquo;Where Cyberpunk Aesthetics Meet High-Performance Web Engineering.&rdquo;
             </p>
-            <p className="text-xs text-[#8B93A7]">
+            <p className="text-xs text-white/35">
               © 2026 ANORIX STUDIO. All rights reserved.
             </p>
           </div>
 
           <div className="md:col-span-4 grid grid-cols-2 gap-8">
             <div>
-              <p className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#8B93A7] mb-4">Pages</p>
-              <ul className="space-y-2.5 text-sm text-[#E8EBF2]/70">
+              <p className="text-[11px] tracking-[0.18em] uppercase text-white/35 mb-4">Pages</p>
+              <ul className="space-y-2.5 text-sm text-white/70">
                 <li><button onClick={() => go('home')} className="lux-link cursor-pointer">Home</button></li>
                 <li><button onClick={() => go('deployments')} className="lux-link cursor-pointer">Deployments</button></li>
                 <li><button onClick={() => go('about')} className="lux-link cursor-pointer">About Studio</button></li>
@@ -62,8 +62,8 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
               </ul>
             </div>
             <div>
-              <p className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#8B93A7] mb-4">Channels</p>
-              <ul className="space-y-2.5 text-sm text-[#E8EBF2]/70">
+              <p className="text-[11px] tracking-[0.18em] uppercase text-white/35 mb-4">Channels</p>
+              <ul className="space-y-2.5 text-sm text-white/70">
                 <li>
                   <a href="https://www.fiverr.com/ahsxn_dev" target="_blank" rel="noopener noreferrer" className="lux-link">
                     Fiverr Pro
@@ -79,17 +79,17 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
           </div>
 
           <div className="md:col-span-3">
-            <p className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#8B93A7] mb-4">Studio time</p>
-            <p suppressHydrationWarning className="text-3xl tracking-[-0.04em] text-[#E8EBF2] tabular-nums">
+            <p className="text-[11px] tracking-[0.18em] uppercase text-white/35 mb-4">Studio time</p>
+            <p suppressHydrationWarning className="text-3xl tracking-[-0.04em] text-white tabular-nums">
               {formattedTime}
             </p>
-            <p suppressHydrationWarning className="mt-2 text-sm text-[#E8EBF2]/45">
+            <p suppressHydrationWarning className="mt-2 text-sm text-white/45">
               {formattedDate}
             </p>
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-[#E8EBF2]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-[11px] tracking-[0.08em] uppercase text-[#8B93A7]">
+        <div className="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[11px] tracking-[0.14em] uppercase text-white/30">
           <span>Anorix Architecture // Modern Portfolio Showcase</span>
           <span>Powered by Anorix Core Engine</span>
         </div>

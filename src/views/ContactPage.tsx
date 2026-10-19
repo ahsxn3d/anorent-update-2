@@ -146,7 +146,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen text-[#E8EBF2] space-y-10 sm:space-y-12 my-4 pb-16">
+    <div className="min-h-screen text-white space-y-10 sm:space-y-12 my-4 pb-16">
       
       {/* STEP 1: HERO HEADER WITH SCROLL REVEAL & GSAP PLAYFUL TYPOGRAPHY */}
       <ScrollReveal direction="down" delay={0.05} distance={24}>
@@ -161,7 +161,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             text="LET'S BUILD TOGETHER."
             highlightWords={["LET'S", "BUILD"]}
             gradientTheme="pure-purple"
-            className="font-display text-4xl sm:text-6xl lg:text-8xl font-black text-[#E8EBF2] tracking-tight uppercase leading-none"
+            className="font-display text-4xl sm:text-6xl lg:text-8xl font-black text-white tracking-tight uppercase leading-none"
             staggerDelay={0.03}
             initialDelay={0.1}
           />
@@ -191,20 +191,20 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                     Card 01
                   </span>
                   <span className="text-xs text-slate-500">•</span>
-                  <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-[#E8EBF2] uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
+                  <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
                     <Mail className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-[#C084FC]" />
                     <span>Direct Email</span>
                   </h2>
                 </div>
                 <p className="text-[10px] sm:text-xs text-slate-300 font-medium">
-                  Direct transmission line to <strong className="text-[#E8EBF2] font-mono">ahsxn3d@gmail.com</strong>
+                  Direct transmission line to <strong className="text-white font-mono">ahsxn3d@gmail.com</strong>
                 </p>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onPointerDown={() => handleCopy('ahsxn3d@gmail.com', 'direct-email')}
-                  className="px-2.5 sm:px-3 py-1 sm:py-2 bg-[#8B00EE]/25 hover:bg-[#8B00EE]/40 border border-[#8B00EE]/50 text-[9px] sm:text-xs font-mono font-bold text-[#E8EBF2] rounded-lg sm:rounded-xl flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer shadow-[0_0_12px_rgba(139,0,238,0.25)] hover:scale-105"
+                  className="px-2.5 sm:px-3 py-1 sm:py-2 bg-[#8B00EE]/25 hover:bg-[#8B00EE]/40 border border-[#8B00EE]/50 text-[9px] sm:text-xs font-mono font-bold text-white rounded-lg sm:rounded-xl flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer shadow-[0_0_12px_rgba(139,0,238,0.25)] hover:scale-105"
                 >
                   {copiedField === 'direct-email' ? <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400" /> : <Copy className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C084FC]" />}
                   <span>{copiedField === 'direct-email' ? 'Copied!' : 'Copy Email'}</span>
@@ -215,7 +215,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             {submittedSuccess ? (
               <div className="p-5 sm:p-8 text-center bg-[#8B00EE]/20 rounded-xl sm:rounded-2xl border border-[#8B00EE]/40 space-y-2 sm:space-y-3 my-auto shadow-inner">
                 <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-[#C084FC] mx-auto animate-bounce" />
-                <h3 className="font-display text-base sm:text-lg font-extrabold text-[#E8EBF2] uppercase tracking-wider">
+                <h3 className="font-display text-base sm:text-lg font-extrabold text-white uppercase tracking-wider">
                   Direct Email Transmitted!
                 </h3>
                 <p className="text-[11px] sm:text-xs text-slate-300 max-w-md mx-auto font-medium">
@@ -235,7 +235,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       placeholder="e.g. Marcus Aurelius"
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
-                      className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-[#E8EBF2] placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
+                      className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
                     />
                   </div>
 
@@ -249,7 +249,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       placeholder="e.g. marcus@hyperion.io"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-[#E8EBF2] placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
+                      className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
                     />
                   </div>
                 </div>
@@ -278,7 +278,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                         {selectedBudgetObj.range}
                       </div>
                       <div className="truncate flex items-center gap-1.5">
-                        <span className="text-xs sm:text-sm font-bold text-[#E8EBF2] truncate">
+                        <span className="text-xs sm:text-sm font-bold text-white truncate">
                           {selectedBudgetObj.value.replace(/^[^(]+\(([^)]+)\)$/, '$1')}
                         </span>
                         {selectedBudgetObj.badge && (
@@ -315,7 +315,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                         transition={{ duration: 0.22, ease: 'easeOut' }}
                         className="overflow-hidden"
                       >
-                        <div className="bg-[#090314]/95 border border-purple-500/45 rounded-xl sm:rounded-2xl p-2 sm:p-2.5 space-y-1.5 shadow-[0_10px_30px_rgba(6, 8, 12,0.8),0_0_20px_rgba(139,0,238,0.25)] mt-1.5">
+                        <div className="bg-[#090314]/95 border border-purple-500/45 rounded-xl sm:rounded-2xl p-2 sm:p-2.5 space-y-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(139,0,238,0.25)] mt-1.5">
                           <div className="px-2 py-1 text-[9px] font-mono font-bold tracking-widest text-slate-400 uppercase border-b border-purple-500/20 flex items-center justify-between">
                             <span>SELECT YOUR ESTIMATED SPRINT TIER</span>
                             <span className="text-purple-400">100% ESCROW SECURED</span>
@@ -341,12 +341,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                                     <div className="flex items-center gap-1.5 flex-wrap">
                                       <span className={`px-2 py-0.5 rounded-md font-mono text-[10px] sm:text-xs font-black ${
                                         isSelected
-                                          ? 'bg-[#8B00EE] text-[#E8EBF2] shadow-[0_0_10px_rgba(139,0,238,0.5)]'
-                                          : 'bg-[#E8EBF2]/10 text-purple-300'
+                                          ? 'bg-[#8B00EE] text-white shadow-[0_0_10px_rgba(139,0,238,0.5)]'
+                                          : 'bg-white/10 text-purple-300'
                                       }`}>
                                         {opt.range}
                                       </span>
-                                      <span className="font-bold text-xs text-[#E8EBF2]">
+                                      <span className="font-bold text-xs text-white">
                                         {opt.value.replace(/^[^(]+\(([^)]+)\)$/, '$1')}
                                       </span>
                                     </div>
@@ -394,7 +394,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                     placeholder="Describe your vision and requirements..."
                     value={projectBrief}
                     onChange={(e) => setProjectBrief(e.target.value)}
-                    className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-[#E8EBF2] placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
+                    className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
                   />
                 </div>
 
@@ -425,7 +425,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <span className="text-[8px] sm:text-[10px] font-mono text-emerald-400 font-bold uppercase truncate">Escrow</span>
               </div>
               
-              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-[#E8EBF2] uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
+              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
                 <Layers className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
                 <span className="truncate">Fiverr</span>
               </h2>
@@ -437,7 +437,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             <div className="space-y-1.5 sm:space-y-3 my-auto py-1 sm:py-2">
               <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-emerald-500/30 space-y-0.5 sm:space-y-1 shadow-xs">
                 <span className="text-[8px] sm:text-[10px] font-mono text-emerald-400 uppercase block font-bold">Escrow Advantage</span>
-                <p className="text-[10px] sm:text-xs font-semibold text-[#E8EBF2] truncate">Funds held safely in escrow.</p>
+                <p className="text-[10px] sm:text-xs font-semibold text-white truncate">Funds held safely in escrow.</p>
               </div>
 
               <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-emerald-500/30 flex items-center justify-between shadow-xs">
@@ -475,7 +475,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <span className="text-[8px] sm:text-[10px] font-mono text-pink-400 font-bold uppercase truncate">40+ Shots</span>
               </div>
 
-              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-[#E8EBF2] uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
+              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
                 <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-pink-400 shrink-0" />
                 <span className="truncate">Dribbble</span>
               </h2>
@@ -487,7 +487,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             <div className="space-y-1.5 sm:space-y-3 my-auto py-1 sm:py-2">
               <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-pink-500/30 space-y-0.5 sm:space-y-1 shadow-xs">
                 <span className="text-[8px] sm:text-[10px] font-mono text-pink-400 uppercase block font-bold">Featured Works</span>
-                <p className="text-[10px] sm:text-xs font-semibold text-[#E8EBF2] truncate">Dashboards, motion & UI suites.</p>
+                <p className="text-[10px] sm:text-xs font-semibold text-white truncate">Dashboards, motion & UI suites.</p>
               </div>
 
               <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-pink-500/30 flex items-center justify-between shadow-xs">
@@ -516,17 +516,17 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
         {/* ================= CARD 4: TWITTER (COL 1 OF ROW 3) ================= */}
         <ScrollReveal direction="up" delay={0.18} distance={20} className="col-span-1 h-full">
-          <div className="channel-twitter bg-[#131422]/90 backdrop-blur-2xl border border-[#E8EBF2]/80 rounded-xl sm:rounded-3xl p-3 sm:p-6 lg:p-7 space-y-2.5 sm:space-y-5 flex flex-col justify-between h-full">
+          <div className="channel-twitter bg-[#131422]/90 backdrop-blur-2xl border border-white/80 rounded-xl sm:rounded-3xl p-3 sm:p-6 lg:p-7 space-y-2.5 sm:space-y-5 flex flex-col justify-between h-full">
             <div className="space-y-1.5 sm:space-y-2.5 border-b border-purple-500/20 pb-2 sm:pb-4">
               <div className="flex items-center justify-between">
-                <span className="px-2 sm:px-2.5 py-0.5 bg-blue-500/25 text-blue-300 text-[8px] sm:text-[10px] font-mono font-bold rounded-full uppercase tracking-wider border border-blue-500/40 shadow-[0_0_8px_rgba(79, 124, 255,0.3)]">
+                <span className="px-2 sm:px-2.5 py-0.5 bg-blue-500/25 text-blue-300 text-[8px] sm:text-[10px] font-mono font-bold rounded-full uppercase tracking-wider border border-blue-500/40 shadow-[0_0_8px_rgba(59,130,246,0.3)]">
                   Card 04
                 </span>
                 <span className="text-[8px] sm:text-[10px] font-mono text-blue-400 font-bold uppercase truncate">Open DMs</span>
               </div>
 
-              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-[#E8EBF2] uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
-                <Twitter className="w-4 h-4 sm:w-6 sm:h-6 text-[#E8EBF2] shrink-0" />
+              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
+                <Twitter className="w-4 h-4 sm:w-6 sm:h-6 text-white shrink-0" />
                 <span className="truncate">Twitter</span>
               </h2>
               <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-medium line-clamp-2 sm:line-clamp-none">
@@ -537,7 +537,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             <div className="space-y-1.5 sm:space-y-3 my-auto py-1 sm:py-2">
               <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-blue-500/30 space-y-0.5 sm:space-y-1 shadow-xs">
                 <span className="text-[8px] sm:text-[10px] font-mono text-blue-400 uppercase block font-bold">Handle</span>
-                <p className="text-[10px] sm:text-xs font-mono font-extrabold text-[#E8EBF2] truncate">@Ahsanwebdesign</p>
+                <p className="text-[10px] sm:text-xs font-mono font-extrabold text-white truncate">@Ahsanwebdesign</p>
               </div>
 
               <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-blue-500/30 flex items-center justify-between shadow-xs">
@@ -575,7 +575,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <span className="text-[8px] sm:text-[10px] font-mono text-emerald-400 font-bold uppercase truncate">Instant</span>
               </div>
 
-              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-[#E8EBF2] uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
+              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
                 <MessageCircle className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
                 <span className="truncate">WhatsApp</span>
               </h2>
@@ -587,7 +587,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             <div className="space-y-1.5 sm:space-y-3 my-auto py-1 sm:py-2">
               <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-purple-500/20 space-y-0.5 sm:space-y-1 shadow-xs">
                 <span className="text-[8px] sm:text-[10px] font-mono text-emerald-400 uppercase block font-bold">Direct Line</span>
-                <p className="text-[10px] sm:text-xs font-mono font-extrabold text-[#E8EBF2] truncate">03284992759</p>
+                <p className="text-[10px] sm:text-xs font-mono font-extrabold text-white truncate">03284992759</p>
               </div>
 
               <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-purple-500/20 flex items-center justify-between shadow-xs">
@@ -625,7 +625,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <Clock className="w-3.5 h-3.5 text-[#C084FC]" />
                 <span>Studio Telemetry • Live Clock</span>
               </div>
-              <h3 className="font-display text-lg sm:text-xl lg:text-2xl font-black text-[#E8EBF2] uppercase tracking-wide">
+              <h3 className="font-display text-lg sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide">
                 Real-Time Calendar & Telemetry System
               </h3>
               <p className="text-xs text-slate-300 font-medium">
@@ -637,14 +637,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             <div className="p-3.5 sm:p-4 bg-[#0A0B14]/80 border border-purple-500/30 rounded-2xl flex flex-row justify-between items-center w-full lg:w-auto gap-4 sm:gap-6 shadow-inner shrink-0">
               <div className="text-left sm:text-center font-mono">
                 <span className="text-[9px] sm:text-xs text-[#C084FC] block font-bold uppercase tracking-widest">EXACT CLOCK (UTC)</span>
-                <span className="text-base sm:text-xl lg:text-2xl font-mono font-black text-[#E8EBF2] tracking-wider sm:tracking-widest">
+                <span className="text-base sm:text-xl lg:text-2xl font-mono font-black text-white tracking-wider sm:tracking-widest">
                   {hours}:{minutes}:{seconds}
                 </span>
               </div>
               <div className="h-6 sm:h-8 w-[1px] bg-purple-500/30 shrink-0" />
               <div className="text-right sm:text-center font-mono">
                 <span className="text-[9px] sm:text-xs text-[#C084FC] block font-bold uppercase tracking-widest">CALENDAR DATE</span>
-                <span className="text-xs sm:text-sm lg:text-base font-mono font-bold text-[#E8EBF2]">
+                <span className="text-xs sm:text-sm lg:text-base font-mono font-bold text-white">
                   {dayName}, {monthName} {dayNum}, {year}
                 </span>
               </div>

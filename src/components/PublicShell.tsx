@@ -1,17 +1,16 @@
 'use client';
 
 import React from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { SmoothScroll } from './SmoothScroll';
-import { ScrollDepth } from './craft/ScrollDepth';
+import { FogPlanes } from './FogPlanes';
 import { Page } from '../types';
 
 export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
-  const pathname = usePathname();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -26,20 +25,25 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
 
   return (
     <SmoothScroll>
-      <div className="lux-shell relative min-h-screen bg-[#0B0D12] text-[#E8EBF2] flex flex-col">
+      <div className="relative min-h-screen bg-black text-[#f4f4f4] flex flex-col selection:bg-white selection:text-black">
+        <FogPlanes />
         <div className="lux-grain" aria-hidden="true" />
 
         <motion.div
-          className="fixed top-0 left-0 right-0 h-px bg-[#4F7CFF] origin-left z-[200] pointer-events-none"
+          className="fixed top-0 left-0 right-0 h-px bg-white origin-left z-[200] pointer-events-none"
           style={{ scaleX }}
         />
 
-        <ScrollDepth />
         <Navbar />
 
-        <main data-route={pathname} className="flex-1 w-full max-w-[1200px] mx-auto px-6 lg:px-8 pt-8 sm:pt-14 relative z-10">
-          {/* No page-level fade: content paints with the HTML (fast LCP); sections bring their own entrances. */}
-          <div data-page-root>{children}</div>
+        <main className="flex-1 w-full max-w-6xl mx-auto px-5 sm:px-8 pt-8 sm:pt-14 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {children}
+          </motion.div>
         </main>
 
         <Footer setCurrentPage={go} />

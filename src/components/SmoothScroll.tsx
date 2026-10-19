@@ -21,14 +21,14 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
         window.innerWidth < 768);
 
     // On mobile touch devices, use 100% native inertial touch scrolling (zero frame drops / touch hijacking)
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isTouchDevice || reduced) {
+    if (isTouchDevice) {
       return;
     }
 
     // Luxury Awwwards-grade smooth scroll initialization for desktop mouse/wheel devices
     const lenis = new Lenis({
-      lerp: 0.1,
+      duration: 0.8,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
