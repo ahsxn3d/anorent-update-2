@@ -40,12 +40,12 @@ export function FogPlanes() {
 
     const paint = () => {
       context.clearRect(0, 0, width, height);
-      context.fillStyle = '#121110';
+      context.fillStyle = '#0B0D12';
       context.fillRect(0, 0, width, height);
 
       const glow = context.createRadialGradient(width * 0.72, height * 0.08, 0, width * 0.55, height * 0.4, width * 0.75);
-      glow.addColorStop(0, 'rgba(237, 233, 227,0.05)');
-      glow.addColorStop(1, 'rgba(18,17,16,0)');
+      glow.addColorStop(0, 'rgba(232, 235, 242,0.05)');
+      glow.addColorStop(1, 'rgba(11, 13, 18,0)');
       context.fillStyle = glow;
       context.fillRect(0, 0, width, height);
 
@@ -57,11 +57,11 @@ export function FogPlanes() {
         context.rotate(plane.tilt + px * 0.03);
         context.scale(1, 0.16 + plane.depth * 0.05);
         const sheet = context.createLinearGradient(-width, 0, width, 0);
-        sheet.addColorStop(0, 'rgba(237, 233, 227,0)');
-        sheet.addColorStop(0.28, `rgba(237, 233, 227,${plane.alpha * 0.35})`);
-        sheet.addColorStop(0.5, `rgba(237,233,227,${plane.alpha})`);
-        sheet.addColorStop(0.72, `rgba(237, 233, 227,${plane.alpha * 0.25})`);
-        sheet.addColorStop(1, 'rgba(237, 233, 227,0)');
+        sheet.addColorStop(0, 'rgba(232, 235, 242,0)');
+        sheet.addColorStop(0.28, `rgba(232, 235, 242,${plane.alpha * 0.35})`);
+        sheet.addColorStop(0.5, `rgba(232, 235, 242,${plane.alpha})`);
+        sheet.addColorStop(0.72, `rgba(232, 235, 242,${plane.alpha * 0.25})`);
+        sheet.addColorStop(1, 'rgba(232, 235, 242,0)');
         context.fillStyle = sheet;
         context.beginPath();
         context.ellipse(0, 0, width * (0.62 + plane.depth * 0.2), height * 1.15, 0, 0, Math.PI * 2);
@@ -70,8 +70,8 @@ export function FogPlanes() {
       });
 
       const veil = context.createLinearGradient(0, height * 0.35, 0, height);
-      veil.addColorStop(0, 'rgba(18,17,16,0)');
-      veil.addColorStop(1, 'rgba(18,17,16,0.72)');
+      veil.addColorStop(0, 'rgba(11, 13, 18,0)');
+      veil.addColorStop(1, 'rgba(11, 13, 18,0.72)');
       context.fillStyle = veil;
       context.fillRect(0, 0, width, height);
     };

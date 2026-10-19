@@ -97,7 +97,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <div className="relative z-10 isolate p-3.5 sm:p-6 bg-[#131422]/90 backdrop-blur-2xl rounded-xl sm:rounded-3xl border border-purple-500/30 shadow-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="relative shrink-0">
-              <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#8B00EE] via-[#5B009D] to-[#0A0B14] flex items-center justify-center text-[#EDE9E3] font-black text-sm sm:text-lg shadow-md border border-purple-400/40">
+              <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#8B00EE] via-[#5B009D] to-[#0A0B14] flex items-center justify-center text-[#E8EBF2] font-black text-sm sm:text-lg shadow-md border border-purple-400/40">
                 {finalName.slice(0, 2).toUpperCase()}
               </div>
               <span className="absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#A855F7] border-2 border-[#0A0B14] shadow-[0_0_8px_#A855F7]" />
@@ -105,7 +105,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-sm sm:text-base text-[#EDE9E3] truncate">{finalName}</h3>
+                <h3 className="font-extrabold text-sm sm:text-base text-[#E8EBF2] truncate">{finalName}</h3>
                 <span className="px-2 py-0.5 bg-[#8B00EE]/20 border border-[#8B00EE]/40 text-[#C084FC] text-[9px] sm:text-[10px] font-mono font-extrabold uppercase rounded-full shrink-0">
                   {finalTitle}
                 </span>
@@ -153,7 +153,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 text={finalName.toUpperCase()}
                 highlightWords={[finalName.toUpperCase()]}
                 gradientTheme="pure-purple"
-                className="font-display text-3xl sm:text-6xl lg:text-7xl font-black text-[#EDE9E3] tracking-tight leading-none uppercase"
+                className="font-display text-3xl sm:text-6xl lg:text-7xl font-black text-[#E8EBF2] tracking-tight leading-none uppercase"
                 staggerDelay={0.035}
                 initialDelay={0.1}
               />
@@ -173,10 +173,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
           {/* BIO & EXECUTIVE SUMMARY CARD */}
           <ScrollReveal direction="up" delay={0.16} distance={20}>
-            <div className="relative z-10 isolate p-4 sm:p-8 bg-[#131422]/90 backdrop-blur-2xl rounded-xl sm:rounded-3xl border border-purple-400/50 shadow-[0_4px_25px_rgba(12, 11, 10,0.7),0_0_20px_rgba(139,0,238,0.2)] space-y-3 sm:space-y-4 hover:border-purple-400/80 transition-all duration-300">
+            <div className="relative z-10 isolate p-4 sm:p-8 bg-[#131422]/90 backdrop-blur-2xl rounded-xl sm:rounded-3xl border border-purple-400/50 shadow-[0_4px_25px_rgba(6, 8, 12,0.7),0_0_20px_rgba(139,0,238,0.2)] space-y-3 sm:space-y-4 hover:border-purple-400/80 transition-all duration-300">
               <div className="flex items-center gap-2">
                 <Terminal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C084FC]" />
-                <h2 className="font-display text-base sm:text-xl font-black text-[#EDE9E3] uppercase tracking-wider">
+                <h2 className="font-display text-base sm:text-xl font-black text-[#E8EBF2] uppercase tracking-wider">
                   Bio & Executive Summary
                 </h2>
               </div>
@@ -209,10 +209,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
           {/* TECHNICAL STACK & SPECIALIZATIONS */}
           <ScrollReveal direction="up" delay={0.28} distance={20}>
-            <div className="relative z-10 isolate p-4 sm:p-8 bg-[#131422]/90 backdrop-blur-2xl rounded-xl sm:rounded-3xl border border-purple-400/50 shadow-[0_4px_25px_rgba(12, 11, 10,0.7),0_0_20px_rgba(139,0,238,0.2)] space-y-3 sm:space-y-4 hover:border-purple-400/80 transition-all duration-300">
+            <div className="relative z-10 isolate p-4 sm:p-8 bg-[#131422]/90 backdrop-blur-2xl rounded-xl sm:rounded-3xl border border-purple-400/50 shadow-[0_4px_25px_rgba(6, 8, 12,0.7),0_0_20px_rgba(139,0,238,0.2)] space-y-3 sm:space-y-4 hover:border-purple-400/80 transition-all duration-300">
               <div className="flex items-center gap-2">
                 <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C084FC]" />
-                <h2 className="font-display text-sm sm:text-lg font-black text-[#EDE9E3] uppercase tracking-wider">
+                <h2 className="font-display text-sm sm:text-lg font-black text-[#E8EBF2] uppercase tracking-wider">
                   Technical Stack & Specializations
                 </h2>
               </div>
@@ -257,7 +257,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             <div className="relative z-10 isolate p-4 sm:p-7 bg-[#131422]/90 backdrop-blur-2xl rounded-xl sm:rounded-3xl border border-purple-500/30 shadow-2xl text-center space-y-4 sm:space-y-6 hover:border-purple-400/60 transition-all duration-300">
               
               {/* Profile Photo */}
-              <div className="w-16 h-16 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-[#8B00EE] via-[#5B009D] to-[#0A0B14] flex items-center justify-center text-[#EDE9E3] font-black text-xl sm:text-3xl shadow-xl mx-auto border-2 border-purple-400/40">
+              <div className="w-16 h-16 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-[#8B00EE] via-[#5B009D] to-[#0A0B14] flex items-center justify-center text-[#E8EBF2] font-black text-xl sm:text-3xl shadow-xl mx-auto border-2 border-purple-400/40">
                 {finalName.slice(0, 2).toUpperCase()}
               </div>
 
@@ -267,7 +267,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                   text={finalName}
                   highlightWords={[finalName]}
                   gradientTheme="pure-purple"
-                  className="font-display text-lg sm:text-xl font-black text-[#EDE9E3]"
+                  className="font-display text-lg sm:text-xl font-black text-[#E8EBF2]"
                   staggerDelay={0.03}
                   initialDelay={0.2}
                 />
@@ -280,11 +280,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <div className="space-y-2.5 sm:space-y-3 pt-2.5 sm:pt-3 border-t border-purple-500/20 text-left text-xs text-slate-300">
                 <div className="flex items-center gap-2.5">
                   <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C084FC] shrink-0" />
-                  <span className="font-mono font-semibold text-[#EDE9E3] truncate">{finalEmail}</span>
+                  <span className="font-mono font-semibold text-[#E8EBF2] truncate">{finalEmail}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C084FC] shrink-0" />
-                  <span className="font-semibold text-[#EDE9E3]">{finalLocation}</span>
+                  <span className="font-semibold text-[#E8EBF2]">{finalLocation}</span>
                 </div>
                 <div className="flex items-center justify-between pt-2.5 sm:pt-3 border-t border-purple-500/20">
                   <span className="text-[10px] sm:text-[11px] font-mono font-bold text-slate-400 uppercase">Availability</span>

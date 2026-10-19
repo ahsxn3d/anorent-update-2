@@ -77,7 +77,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-purple-500/20 pb-4 sm:pb-6">
         <button
           onClick={handleBack}
-          className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-[#131422]/90 hover:bg-[#1f1638] border border-purple-500/30 text-xs sm:text-sm font-bold text-[#EDE9E3] transition-all shadow-md cursor-pointer hover:border-purple-400/70 group"
+          className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-[#131422]/90 hover:bg-[#1f1638] border border-purple-500/30 text-xs sm:text-sm font-bold text-[#E8EBF2] transition-all shadow-md cursor-pointer hover:border-purple-400/70 group"
         >
           <ArrowLeft className="w-4 h-4 text-[#C084FC] group-hover:-translate-x-1 transition-transform" />
           <span>Back to Deployments</span>
@@ -87,7 +87,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={handleCopyLink}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#131422]/90 hover:bg-[#1f1638] border border-purple-500/30 text-xs font-mono font-semibold text-slate-300 hover:text-[#EDE9E3] transition-all shadow-sm cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#131422]/90 hover:bg-[#1f1638] border border-purple-500/30 text-xs font-mono font-semibold text-slate-300 hover:text-[#E8EBF2] transition-all shadow-sm cursor-pointer"
           >
             {copied ? (
               <>
@@ -124,7 +124,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
         
         {/* BIG FULL-SIZE HIGH-RES THUMBNAIL FRAME */}
         <ScrollReveal direction="down" delay={0.05} distance={20}>
-          <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-purple-500/40 bg-[#080210] shadow-[0_20px_60px_rgba(12, 11, 10,0.9),0_0_40px_rgba(139,0,238,0.25)]">
+          <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-purple-500/40 bg-[#080210] shadow-[0_20px_60px_rgba(6, 8, 12,0.9),0_0_40px_rgba(139,0,238,0.25)]">
             <img
               src={product.thumbnailUrl}
               alt={product.title}
@@ -134,17 +134,17 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
             />
 
             {/* Subtle Gradient Rim */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B14] via-transparent to-[#121110]/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B14] via-transparent to-[#0B0D12]/20 pointer-events-none" />
 
             {/* Floating Live Telemetry Watermark */}
-            <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-6 right-3 sm:right-6 flex items-center justify-between text-[#EDE9E3] text-[10px] sm:text-xs pointer-events-none">
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#121110]/80 backdrop-blur-md border border-[#EDE9E3]/10 shadow-lg">
+            <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-6 right-3 sm:right-6 flex items-center justify-between text-[#E8EBF2] text-[10px] sm:text-xs pointer-events-none">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B0D12]/80 backdrop-blur-md border border-[#E8EBF2]/10 shadow-lg">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="font-mono font-bold tracking-wider text-slate-200">
                   LIVE 60FPS SHADER ENGINE
                 </span>
               </div>
-              <span className="hidden sm:inline font-mono text-purple-300/80 px-3 py-1 rounded-full bg-[#121110]/80 backdrop-blur-md border border-[#EDE9E3]/10">
+              <span className="hidden sm:inline font-mono text-purple-300/80 px-3 py-1 rounded-full bg-[#0B0D12]/80 backdrop-blur-md border border-[#E8EBF2]/10">
                 HTTPS://ANORIX.STUDIO
               </span>
             </div>
@@ -179,7 +179,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
               </div>
 
               {/* Exact Title in Full */}
-              <h1 className="text-[36px] sm:text-[56px] lg:text-[64px] font-medium text-[#EDE9E3] tracking-[-0.04em] leading-[1]">
+              <h1 className="text-[36px] sm:text-[56px] lg:text-[64px] font-medium text-[#E8EBF2] tracking-[-0.04em] leading-[1]">
                 {product.title}
               </h1>
 
@@ -197,10 +197,10 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
               {(product.client || product.year) && (
                 <div className="pt-2 flex items-center gap-4 text-xs font-mono text-slate-400">
                   {product.client && (
-                    <span>Client: <strong className="text-[#EDE9E3]">{product.client}</strong></span>
+                    <span>Client: <strong className="text-[#E8EBF2]">{product.client}</strong></span>
                   )}
                   {product.year && (
-                    <span>Year: <strong className="text-[#EDE9E3]">{product.year}</strong></span>
+                    <span>Year: <strong className="text-[#E8EBF2]">{product.year}</strong></span>
                   )}
                   <span>Status: <strong className="text-emerald-400">{product.status || 'Production'}</strong></span>
                 </div>

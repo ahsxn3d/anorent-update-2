@@ -125,7 +125,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Top Content Area */}
         <div className="flex flex-col gap-1 sm:gap-2">
           <div className="flex items-center justify-between gap-1">
-            <h3 className="font-display font-black text-xs sm:text-sm text-[#EDE9E3] truncate leading-tight drop-shadow-[0_1px_3px_rgba(12, 11, 10,0.9)]">
+            <h3 className="font-display font-black text-xs sm:text-sm text-[#E8EBF2] truncate leading-tight drop-shadow-[0_1px_3px_rgba(6, 8, 12,0.9)]">
               {product.title}
             </h3>
             <div className="flex items-center gap-0.5 px-1.5 py-0.5 bg-amber-500/25 text-amber-300 text-[8px] sm:text-[9.5px] font-black rounded-full shrink-0 border border-amber-500/40 shadow-sm backdrop-blur-sm">
@@ -134,7 +134,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           </div>
 
-          <p className="text-[9.5px] sm:text-xs text-slate-200 line-clamp-2 leading-tight font-medium drop-shadow-[0_1px_2px_rgba(12, 11, 10,0.9)]">
+          <p className="text-[9.5px] sm:text-xs text-slate-200 line-clamp-2 leading-tight font-medium drop-shadow-[0_1px_2px_rgba(6, 8, 12,0.9)]">
             {product.shortDescription}
           </p>
 
@@ -157,24 +157,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Bottom Footer Bar (100% Backgroundless & See-Through to Thumbnail) */}
         <div className="mt-auto pt-2 bg-transparent flex items-center justify-between gap-1 sm:gap-2">
-          <div className="flex items-center gap-1 text-[#C084FC] text-[8.5px] sm:text-[10px] font-mono font-black uppercase tracking-wider truncate max-w-[62%] drop-shadow-[0_2px_4px_rgba(12, 11, 10,0.95)]">
-            <Tag className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#C084FC] shrink-0 drop-shadow-[0_2px_4px_rgba(12, 11, 10,0.95)]" />
+          <div className="flex items-center gap-1 text-[#C084FC] text-[8.5px] sm:text-[10px] font-mono font-black uppercase tracking-wider truncate max-w-[62%] drop-shadow-[0_2px_4px_rgba(6, 8, 12,0.95)]">
+            <Tag className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#C084FC] shrink-0 drop-shadow-[0_2px_4px_rgba(6, 8, 12,0.95)]" />
             <span className="truncate">{product.category}</span>
           </div>
 
           <button
             onClick={handleCopyUrl}
-            className="flex items-center gap-1 text-slate-100 hover:text-[#EDE9E3] text-[8.5px] sm:text-[10px] font-bold transition-all cursor-pointer active:scale-95 shrink-0 drop-shadow-[0_2px_4px_rgba(12, 11, 10,0.95)]"
+            className="flex items-center gap-1 text-slate-100 hover:text-[#E8EBF2] text-[8.5px] sm:text-[10px] font-bold transition-all cursor-pointer active:scale-95 shrink-0 drop-shadow-[0_2px_4px_rgba(6, 8, 12,0.95)]"
             title="Copy deployment link"
           >
             {copied ? (
               <>
-                <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-400 drop-shadow-[0_2px_4px_rgba(12, 11, 10,0.95)]" />
+                <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-400 drop-shadow-[0_2px_4px_rgba(6, 8, 12,0.95)]" />
                 <span className="text-emerald-300 font-bold">Copied</span>
               </>
             ) : (
               <>
-                <Copy className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-purple-300 drop-shadow-[0_2px_4px_rgba(12, 11, 10,0.95)]" />
+                <Copy className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-purple-300 drop-shadow-[0_2px_4px_rgba(6, 8, 12,0.95)]" />
                 <span className="text-slate-100">Copy</span>
               </>
             )}
@@ -195,7 +195,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </span>
         <button
           onClick={handleCopyUrl}
-          className="px-2.5 py-1 bg-[#0A0B14]/90 hover:bg-[#131422] backdrop-blur-md border border-purple-500/40 text-[#EDE9E3] text-[10px] font-semibold rounded-full flex items-center gap-1 transition-all cursor-pointer shadow-md hover:scale-105 shrink-0"
+          className="px-2.5 py-1 bg-[#0A0B14]/90 hover:bg-[#131422] backdrop-blur-md border border-purple-500/40 text-[#E8EBF2] text-[10px] font-semibold rounded-full flex items-center gap-1 transition-all cursor-pointer shadow-md hover:scale-105 shrink-0"
           title="Copy deployment link"
         >
           {copied ? (
@@ -216,7 +216,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="hidden lg:flex absolute inset-x-0 bottom-0 p-5 pt-12 bg-gradient-to-t from-[#0A0B14] via-[#0A0B14]/90 to-transparent backdrop-blur-md opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out will-change-transform z-20 flex-col justify-between gap-3 pointer-events-auto">
         <div className="space-y-1.5">
           <div className="flex items-center justify-between gap-1.5">
-            <h3 className="font-display font-black text-sm text-[#EDE9E3] group-hover:text-[#C084FC] transition-colors leading-snug truncate">
+            <h3 className="font-display font-black text-sm text-[#E8EBF2] group-hover:text-[#C084FC] transition-colors leading-snug truncate">
               {product.title}
             </h3>
             <div className="flex items-center gap-0.5 px-1.5 py-0.5 bg-amber-500/20 text-amber-300 text-xs font-bold rounded-full shrink-0 border border-amber-500/30">

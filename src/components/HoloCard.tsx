@@ -28,12 +28,12 @@ interface ThemeConfig {
 }
 
 const quiet: ThemeConfig = {
-  defaultGlow: 'rgba(237, 233, 227, 0.2)',
-  defaultBorder: 'border-[#EDE9E3]/10',
-  hoverBorder: 'border-[#EDE9E3]/40',
+  defaultGlow: 'rgba(232, 235, 242, 0.2)',
+  defaultBorder: 'border-[#E8EBF2]/10',
+  hoverBorder: 'border-[#E8EBF2]/40',
   hoverShadow: 'shadow-none',
-  topSheen: 'from-transparent via-[#EDE9E3]/30 to-transparent',
-  glassGradient: '#121110',
+  topSheen: 'from-transparent via-[#E8EBF2]/30 to-transparent',
+  glassGradient: '#0B0D12',
   accentRgb: '255, 255, 255',
 };
 
@@ -122,7 +122,7 @@ export const HoloCard: React.FC<HoloCardProps> = ({
           transform: isHovered
             ? `rotateX(${tilt.x.toFixed(2)}deg) rotateY(${tilt.y.toFixed(2)}deg) translateY(-4px)`
             : 'rotateX(0deg) rotateY(0deg) translateY(0px)',
-          background: '#121110',
+          background: '#0B0D12',
           backdropFilter: undefined,
           WebkitBackdropFilter: undefined,
           transition: isHovered
@@ -132,7 +132,7 @@ export const HoloCard: React.FC<HoloCardProps> = ({
         }}
         className={`relative w-full h-full rounded-xl sm:rounded-2xl border transition-colors duration-300 will-change-transform ${
           glassy
-            ? 'shadow-[0_8px_32px_rgba(12, 11, 10,0.37),inset_0_1px_1px_rgba(237, 233, 227,0.22)]'
+            ? 'shadow-[0_8px_32px_rgba(6, 8, 12,0.37),inset_0_1px_1px_rgba(232, 235, 242,0.22)]'
             : 'bg-[#130722]'
         } ${
           isHovered
@@ -150,7 +150,7 @@ export const HoloCard: React.FC<HoloCardProps> = ({
           className="absolute inset-0 rounded-[inherit] pointer-events-none z-30 mix-blend-overlay transition-opacity duration-150"
           style={{
             opacity: glare.opacity,
-            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(237, 233, 227, 0.4) 0%, rgba(237, 233, 227, 0.05) 45%, transparent 75%)`,
+            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(232, 235, 242, 0.4) 0%, rgba(232, 235, 242, 0.05) 45%, transparent 75%)`,
           }}
         />
 

@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { ButterButton } from '../ButterButton';
+import { ArrowRight } from 'lucide-react';
 
 const prefersReduced = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -52,10 +54,10 @@ export const Magnetic: React.FC<{ children: React.ReactNode; className?: string 
 };
 
 const ACCENTS = [
-  { name: 'Blue', value: '#3B82F6' },
+  { name: 'Blue', value: '#4F7CFF' },
   { name: 'Sage', value: '#7C9A82' },
   { name: 'Clay', value: '#C2785C' },
-  { name: 'Ink', value: '#EDE9E3' },
+  { name: 'Ink', value: '#E8EBF2' },
 ];
 const RADII = [
   { name: 'Sharp', value: 2 },
@@ -76,8 +78,8 @@ export const TokenPlayground: React.FC<{ title: string; body: string; cta: strin
 
   const Group = <T extends { name: string }>({ label, items, active, onPick }: { label: string; items: T[]; active: T; onPick: (t: T) => void }) => (
     <div role="radiogroup" aria-label={label} className="flex items-center justify-between gap-3">
-      <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#6E6A63]">{label}</span>
-      <div className="flex gap-1 p-1 rounded-full border border-[#2A2825] bg-[#16151A]">
+      <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">{label}</span>
+      <div className="flex gap-1 p-1 rounded-full border border-[#232837] bg-[#11141B]">
         {items.map((it) => (
           <button
             key={it.name}
@@ -86,7 +88,7 @@ export const TokenPlayground: React.FC<{ title: string; body: string; cta: strin
             aria-checked={active.name === it.name}
             onClick={() => onPick(it)}
             className={`px-3 h-7 rounded-full text-[12px] transition-colors duration-150 cursor-pointer ${
-              active.name === it.name ? 'bg-[#2A2825] text-[#EDE9E3]' : 'text-[#9A958D] hover:text-[#EDE9E3]'
+              active.name === it.name ? 'bg-[#232837] text-[#E8EBF2]' : 'text-[#8B93A7] hover:text-[#E8EBF2]'
             }`}
           >
             {it.name}
@@ -97,27 +99,27 @@ export const TokenPlayground: React.FC<{ title: string; body: string; cta: strin
   );
 
   return (
-    <div className="lux-playground grid md:grid-cols-2 gap-6 md:gap-10 items-center p-5 sm:p-8 rounded-[12px] border border-[#2A2825] bg-[#16151A]">
+    <div className="lux-playground lux-card-surface grid md:grid-cols-2 gap-6 md:gap-10 items-center p-5 sm:p-8 rounded-[12px] border border-[#232837] bg-[#11141B]">
       <div className="space-y-4 order-2 md:order-1">
-        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#6E6A63]">Design tokens · try it</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">Design tokens · try it</p>
         <Group label="Accent" items={ACCENTS} active={accent} onPick={setAccent} />
         <Group label="Type" items={TYPES} active={type} onPick={setType} />
         <Group label="Radius" items={RADII} active={radius} onPick={setRadius} />
       </div>
       <div
-        className="order-1 md:order-2 p-6 border border-[#2A2825] bg-[#121110] transition-all duration-200"
+        className="order-1 md:order-2 p-6 border border-[#232837] bg-[#0B0D12] transition-all duration-200"
         style={{ borderRadius: radius.value + 6, fontFamily: type.value }}
         aria-live="polite"
       >
         <div className="flex items-center gap-2 mb-5">
           <span className="w-2 h-2 rounded-full transition-colors duration-200" style={{ background: accent.value }} />
-          {meta && <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#6E6A63]">{meta}</span>}
+          {meta && <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">{meta}</span>}
         </div>
-        <p className="text-[22px] leading-[1.2] tracking-[-0.02em] text-[#EDE9E3]">{title}</p>
-        <p className="mt-3 text-[14px] leading-relaxed text-[#9A958D]">{body}</p>
+        <p className="text-[22px] leading-[1.2] tracking-[-0.02em] text-[#E8EBF2]">{title}</p>
+        <p className="mt-3 text-[14px] leading-relaxed text-[#8B93A7]">{body}</p>
         <span
           className="mt-6 inline-flex items-center h-10 px-5 text-[13px] font-medium transition-all duration-200"
-          style={{ background: accent.value, color: accent.name === 'Ink' ? '#121110' : '#EDE9E3', borderRadius: radius.value }}
+          style={{ background: accent.value, color: accent.name === 'Ink' ? '#0B0D12' : '#E8EBF2', borderRadius: radius.value }}
         >
           {cta}
         </span>
@@ -146,32 +148,32 @@ export const BeforeAfter: React.FC<{ title: string; subtitle: string; cta: strin
       </div>
       <p className="relative mt-6 text-[28px] sm:text-[44px] font-black italic uppercase leading-none text-[#22D3EE] tracking-tight">{title}</p>
       <p className="relative mt-3 text-[11px] text-[#C4B5FD] max-w-xs line-clamp-2">{subtitle}</p>
-      <span className="relative mt-5 inline-block px-4 py-2 text-[11px] font-black uppercase bg-gradient-to-r from-[#F472B6] to-[#7C3AED] text-[#EDE9E3] rounded-sm">{cta}!!!</span>
+      <span className="relative mt-5 inline-block px-4 py-2 text-[11px] font-black uppercase bg-gradient-to-r from-[#F472B6] to-[#7C3AED] text-[#E8EBF2] rounded-sm">{cta}!!!</span>
     </div>
   );
   const After = (
-    <div className="absolute inset-0 p-6 sm:p-10 bg-[#16151A]" aria-hidden="true">
-      <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#6E6A63]">Studio</p>
-      <p className="mt-6 text-[28px] sm:text-[44px] font-medium leading-[1] tracking-[-0.035em] text-[#EDE9E3]">{title}</p>
-      <p className="mt-4 text-[13px] text-[#9A958D] max-w-sm line-clamp-2">{subtitle}</p>
-      <span className="mt-6 inline-flex items-center h-10 px-5 rounded-full bg-[#3B82F6] text-[#EDE9E3] text-[13px]">{cta} →</span>
+    <div className="absolute inset-0 p-6 sm:p-10 bg-[#11141B]" aria-hidden="true">
+      <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">Studio</p>
+      <p className="mt-6 text-[28px] sm:text-[44px] font-medium leading-[1] tracking-[-0.035em] text-[#E8EBF2]">{title}</p>
+      <p className="mt-4 text-[13px] text-[#8B93A7] max-w-sm line-clamp-2">{subtitle}</p>
+      <span className="mt-6 inline-flex items-center h-10 px-5 rounded-full bg-[#4F7CFF] text-[#E8EBF2] text-[13px]">{cta} →</span>
     </div>
   );
   return (
     <div className="space-y-4">
       <div
         ref={wrap}
-        className="lux-ba relative h-[300px] sm:h-[420px] rounded-[12px] border border-[#2A2825] overflow-hidden select-none touch-none cursor-ew-resize"
+        className="lux-ba relative h-[300px] sm:h-[420px] rounded-[12px] border border-[#232837] overflow-hidden select-none touch-none cursor-ew-resize"
         onPointerDown={(e) => { (e.target as HTMLElement).setPointerCapture?.(e.pointerId); drag(e.clientX); }}
         onPointerMove={(e) => { if (e.buttons) drag(e.clientX); }}
       >
         {After}
         <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>{Before}</div>
-        <div className="absolute inset-y-0 w-px bg-[#EDE9E3]/80" style={{ left: `${pos}%` }}>
-          <span className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#EDE9E3] text-[#121110] grid place-items-center text-[13px]">⇆</span>
+        <div className="absolute inset-y-0 w-px bg-[#E8EBF2]/80" style={{ left: `${pos}%` }}>
+          <span className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#E8EBF2] text-[#0B0D12] grid place-items-center text-[13px]">⇆</span>
         </div>
-        <span className="absolute top-3 left-3 font-mono text-[10px] uppercase tracking-[0.12em] px-2 py-1 rounded-full bg-[#121110]/70 text-[#EDE9E3]">Before</span>
-        <span className="absolute top-3 right-3 font-mono text-[10px] uppercase tracking-[0.12em] px-2 py-1 rounded-full bg-[#121110]/70 text-[#EDE9E3]">After</span>
+        <span className="absolute top-3 left-3 font-mono text-[10px] uppercase tracking-[0.12em] px-2 py-1 rounded-full bg-[#0B0D12]/70 text-[#E8EBF2]">Before</span>
+        <span className="absolute top-3 right-3 font-mono text-[10px] uppercase tracking-[0.12em] px-2 py-1 rounded-full bg-[#0B0D12]/70 text-[#E8EBF2]">After</span>
       </div>
       <input
         type="range"
@@ -206,42 +208,46 @@ export const ScopeConfigurator: React.FC<{
               type="button"
               aria-pressed={on}
               onClick={() => toggle(it.title)}
-              className={`lux-card text-left flex items-center justify-between gap-4 p-5 rounded-[10px] border transition-colors duration-150 cursor-pointer ${
-                on ? 'border-[#3B82F6]/60 bg-[#1C1B1F]' : 'border-[#2A2825] bg-[#16151A] hover:border-[#3A3733]'
+              className={`lux-card lux-tilt text-left flex items-center justify-between gap-4 p-5 rounded-[12px] border transition-colors duration-150 cursor-pointer ${
+                on ? 'border-[#4F7CFF]/60 bg-[#171B24]' : 'border-[#232837] bg-[#11141B] hover:border-[#2F3547]'
               }`}
             >
               <span className="flex items-baseline gap-4">
-                <span className="font-mono text-[11px] text-[#6E6A63]">{String(i + 1).padStart(2, '0')}</span>
+                <span className="font-mono text-[11px] text-[#5E667A]">{String(i + 1).padStart(2, '0')}</span>
                 <span>
-                  <span className="block text-[17px] text-[#EDE9E3] tracking-[-0.01em]">{it.title}</span>
-                  <span className="block mt-1 text-[13px] text-[#9A958D]">{it.detail}</span>
+                  <span className="block text-[17px] text-[#E8EBF2] tracking-[-0.01em]">{it.title}</span>
+                  <span className="block mt-1 text-[13px] text-[#8B93A7]">{it.detail}</span>
                 </span>
               </span>
-              <span className={`w-5 h-5 rounded-full border grid place-items-center text-[11px] ${on ? 'bg-[#3B82F6] border-[#3B82F6] text-[#EDE9E3]' : 'border-[#3A3733] text-transparent'}`}>✓</span>
+              <span className={`w-5 h-5 rounded-full border grid place-items-center text-[11px] ${on ? 'bg-[#4F7CFF] border-[#4F7CFF] text-[#E8EBF2]' : 'border-[#2F3547] text-transparent'}`}>✓</span>
             </button>
           );
         })}
       </div>
-      <div className="lg:col-span-5 p-6 rounded-[12px] border border-[#2A2825] bg-[#16151A] self-start lg:sticky lg:top-24" aria-live="polite">
-        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#6E6A63]">Your scope</p>
+      <div className="lux-card-surface lg:col-span-5 p-6 rounded-[12px] border border-[#232837] bg-[#11141B] self-start lg:sticky lg:top-24" aria-live="polite">
+        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">Your scope</p>
         <ul className="mt-4 space-y-2 min-h-[48px]">
-          {picked.length === 0 && <li className="text-[13px] text-[#6E6A63]">—</li>}
+          {picked.length === 0 && <li className="text-[13px] text-[#5E667A]">—</li>}
           {picked.map((t) => (
-            <li key={t} className="flex items-center justify-between text-[14px] text-[#EDE9E3] border-b border-[#2A2825] pb-2">
+            <li key={t} className="flex items-center justify-between text-[14px] text-[#E8EBF2] border-b border-[#232837] pb-2">
               {t}
-              <span className="font-mono text-[11px] text-[#9A958D]">{items.find((x) => x.title === t)?.detail}</span>
+              <span className="font-mono text-[11px] text-[#8B93A7]">{items.find((x) => x.title === t)?.detail}</span>
             </li>
           ))}
         </ul>
-        {notice && <p className="mt-5 text-[13px] text-[#9A958D] tabular-nums">{notice}</p>}
-        <button
-          type="button"
-          onClick={onCta}
-          disabled={picked.length === 0}
-          className="mt-6 w-full h-11 rounded-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:opacity-40 text-[#EDE9E3] text-[13px] font-medium tracking-wide uppercase transition-colors duration-150 cursor-pointer"
-        >
-          {cta} →
-        </button>
+        {notice && <p className="mt-5 text-[13px] text-[#8B93A7] tabular-nums">{notice}</p>}
+        <div className="mt-6">
+          <ButterButton
+            variant="outline"
+            size="lg"
+            onClick={onCta}
+            icon={<ArrowRight className="w-4 h-4" />}
+            iconPosition="right"
+            className="lux-primary w-full justify-center uppercase tracking-wider !py-3.5 text-xs sm:text-sm"
+          >
+            {cta}
+          </ButterButton>
+        </div>
       </div>
     </div>
   );
@@ -271,7 +277,7 @@ export const ProjectTile: React.FC<{
       <div
         ref={ref}
         onPointerMove={move}
-        className={`relative overflow-hidden rounded-[12px] border border-[#2A2825] bg-[#1C1B1F] ${large ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}
+        className={`lux-tilt relative overflow-hidden rounded-[12px] border border-[#232837] bg-[#171B24] ${large ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}
       >
         {image && !broken ? (
           <img
@@ -283,27 +289,27 @@ export const ProjectTile: React.FC<{
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center">
-            <span className="text-[28px] tracking-[-0.03em] text-[#3A3733]">{title}</span>
+            <span className="text-[28px] tracking-[-0.03em] text-[#2F3547]">{title}</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#121110]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D12]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <span className="lux-view-chip">View</span>
       </div>
       <div className="mt-4 flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-[18px] sm:text-[20px] tracking-[-0.02em] text-[#EDE9E3] truncate">{title}</p>
-          {description && <p className="mt-1 text-[14px] text-[#9A958D] line-clamp-2">{description}</p>}
+          <p className="text-[18px] sm:text-[20px] tracking-[-0.02em] text-[#E8EBF2] truncate">{title}</p>
+          {description && <p className="mt-1 text-[14px] text-[#8B93A7] line-clamp-2">{description}</p>}
           {tags.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-1.5">
               {tags.slice(0, 4).map((t) => (
-                <span key={t} className="px-2 py-0.5 rounded-full border border-[#2A2825] text-[11px] text-[#9A958D]">{t}</span>
+                <span key={t} className="px-2 py-0.5 rounded-full border border-[#232837] text-[11px] text-[#8B93A7]">{t}</span>
               ))}
             </div>
           )}
         </div>
         <div className="shrink-0 text-right">
-          {category && <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#6E6A63]">{category}</p>}
-          {year && <p className="mt-1 font-mono text-[11px] text-[#6E6A63]">{year}</p>}
+          {category && <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">{category}</p>}
+          {year && <p className="mt-1 font-mono text-[11px] text-[#5E667A]">{year}</p>}
         </div>
       </div>
     </button>

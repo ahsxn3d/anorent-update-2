@@ -75,14 +75,14 @@ export const KineticHeroTitle: React.FC<KineticHeroTitleProps> = ({
 
   return (
     <motion.div style={reduced ? undefined : { y, opacity }} className="will-change-transform">
-      <h1 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.95] tracking-[-0.04em] text-white">
+      <h1 className="font-display text-[clamp(3.15rem,8.4vw,7.6rem)] leading-[0.86] tracking-[-0.065em] text-white">
         <RevealLine text={line1} start={0.02} show={show} reduced={reduced} />
         <RevealLine
           text={line2}
           start={0.22}
           show={show}
           reduced={reduced}
-          className="lux-serif text-[#A1A1A1] text-[0.7em] mt-[0.08em]"
+          className="text-white/38 text-[0.62em] mt-[0.08em]"
         />
         <RevealLine text={line3} start={0.42} show={show} reduced={reduced} className="mt-[0.06em]" />
       </h1>

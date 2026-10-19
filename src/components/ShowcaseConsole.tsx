@@ -67,11 +67,11 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
     >
       {/* AMBIENT BACKGROUND GLOW */}
       <div className="flex items-center justify-between gap-2 sm:gap-4 px-1 sm:px-2">
-        <p className="text-[11px] tracking-[0.2em] uppercase text-[#EDE9E3]/45">
+        <p className="text-[11px] tracking-[0.2em] uppercase text-[#E8EBF2]/45">
           {String(activeIndex + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
-          <span className="ml-3 text-[#EDE9E3]/80">{projects[activeIndex]?.title}</span>
+          <span className="ml-3 text-[#E8EBF2]/80">{projects[activeIndex]?.title}</span>
         </p>
-        <p className="text-[11px] tracking-[0.16em] uppercase text-[#EDE9E3]/35">
+        <p className="text-[11px] tracking-[0.16em] uppercase text-[#E8EBF2]/35">
           {projects[activeIndex]?.category}
         </p>
       </div>
@@ -139,10 +139,10 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
                 onClick={() => {
                   if (!isCenter) changeSlide(idx, idx > activeIndex ? 'right' : 'left');
                 }}
-                className={`absolute top-0 w-[92%] sm:w-[560px] lg:w-[680px] h-[335px] sm:h-[460px] rounded-2xl sm:rounded-[28px] p-3.5 sm:p-5 bg-[#121110]/75 border transition-colors duration-300 overflow-hidden shadow-2xl flex flex-col justify-between ${
+                className={`absolute top-0 w-[92%] sm:w-[560px] lg:w-[680px] h-[335px] sm:h-[460px] rounded-2xl sm:rounded-[28px] p-3.5 sm:p-5 bg-[#0B0D12]/75 border transition-colors duration-300 overflow-hidden shadow-2xl flex flex-col justify-between ${
                   isCenter
-                    ? 'border-[#EDE9E3]/70 cursor-default'
-                    : 'border-[#EDE9E3]/15 hover:border-[#EDE9E3]/40 cursor-pointer'
+                    ? 'border-[#E8EBF2]/70 cursor-default'
+                    : 'border-[#E8EBF2]/15 hover:border-[#E8EBF2]/40 cursor-pointer'
                 }`}
                 style={{
                   transformStyle: 'preserve-3d',
@@ -150,7 +150,7 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
                 }}
               >
                 {/* Media Banner */}
-                <div className="relative w-full h-32 sm:h-52 rounded-xl sm:rounded-2xl overflow-hidden border border-[#EDE9E3]/10 bg-[#121110] shrink-0">
+                <div className="relative w-full h-32 sm:h-52 rounded-xl sm:rounded-2xl overflow-hidden border border-[#E8EBF2]/10 bg-[#0B0D12] shrink-0">
                   <img
                     src={project.thumbnailUrl || project.coverImageUrl}
                     alt={project.title}
@@ -158,11 +158,11 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E0F1E] via-transparent to-[#121110]/30 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E0F1E] via-transparent to-[#0B0D12]/30 pointer-events-none" />
 
                   {/* Badges */}
                   <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex items-center gap-1.5 sm:gap-2">
-                    <span className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#121110]/70 border border-[#EDE9E3]/20 text-[9px] sm:text-[10px] font-mono text-[#EDE9E3] uppercase tracking-wider">
+                    <span className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#0B0D12]/70 border border-[#E8EBF2]/20 text-[9px] sm:text-[10px] font-mono text-[#E8EBF2] uppercase tracking-wider">
                       {project.category}
                     </span>
                     <span className="px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-[8px] sm:text-[9px] font-mono font-bold text-emerald-300">
@@ -171,7 +171,7 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
                   </div>
 
                   <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
-                    <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-[#121110]/80 border border-[#EDE9E3]/15 text-[9px] sm:text-[10px] font-mono text-emerald-400 font-bold">
+                    <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-[#0B0D12]/80 border border-[#E8EBF2]/15 text-[9px] sm:text-[10px] font-mono text-emerald-400 font-bold">
                       {project.fpsBenchmark || 60} FPS
                     </span>
                   </div>
@@ -180,10 +180,10 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
                 {/* Project Metadata */}
                 <div className="space-y-1 sm:space-y-2 mt-1 sm:mt-2">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-display text-sm sm:text-xl font-extrabold text-[#EDE9E3] tracking-tight truncate">
+                    <h3 className="font-display text-sm sm:text-xl font-extrabold text-[#E8EBF2] tracking-tight truncate">
                       {project.title}
                     </h3>
-                    <span className="text-[10px] sm:text-[11px] font-mono text-[#EDE9E3]/45 shrink-0">
+                    <span className="text-[10px] sm:text-[11px] font-mono text-[#E8EBF2]/45 shrink-0">
                       {project.auditScore || 100}
                     </span>
                   </div>
@@ -197,7 +197,7 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
                     {(project.techStack || []).slice(0, 3).map((t, i) => (
                       <span
                         key={i}
-                        className="px-2 py-0.5 rounded-full bg-[#EDE9E3]/5 border border-[#EDE9E3]/15 text-[9px] sm:text-[10px] font-mono text-[#EDE9E3]/70"
+                        className="px-2 py-0.5 rounded-full bg-[#E8EBF2]/5 border border-[#E8EBF2]/15 text-[9px] sm:text-[10px] font-mono text-[#E8EBF2]/70"
                       >
                         {t}
                       </span>
@@ -206,7 +206,7 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
                 </div>
 
                 {/* Bottom Action Pill Buttons (Center card only) */}
-                <div className="pt-2 sm:pt-3 border-t border-[#EDE9E3]/10 flex items-center gap-2 sm:gap-3">
+                <div className="pt-2 sm:pt-3 border-t border-[#E8EBF2]/10 flex items-center gap-2 sm:gap-3">
                   {isCenter ? (
                     <>
                       <ButterButton
@@ -235,7 +235,7 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
                     </>
                   ) : (
                     <div className="w-full text-center py-0.5">
-                      <span className="text-[10px] sm:text-[11px] font-mono text-[#EDE9E3]/45 uppercase tracking-wider">
+                      <span className="text-[10px] sm:text-[11px] font-mono text-[#E8EBF2]/45 uppercase tracking-wider">
                         Select
                       </span>
                     </div>
@@ -253,7 +253,7 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
           variant="outline"
           size="sm"
           onClick={() => changeSlide(activeIndex - 1, 'left')}
-          className="!px-3 sm:!px-5 !py-1 sm:!py-2 text-slate-300 hover:text-[#EDE9E3] text-[10px] sm:text-xs"
+          className="!px-3 sm:!px-5 !py-1 sm:!py-2 text-slate-300 hover:text-[#E8EBF2] text-[10px] sm:text-xs"
         >
           <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
           <span className="font-bold">PREV</span>
@@ -267,8 +267,8 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
               onClick={() => changeSlide(idx, idx > activeIndex ? 'right' : 'left')}
               className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 activeIndex === idx
-                  ? 'w-6 sm:w-8 bg-[#EDE9E3]'
-                  : 'w-1.5 sm:w-2 bg-[#EDE9E3]/20 hover:bg-[#EDE9E3]/40'
+                  ? 'w-6 sm:w-8 bg-[#E8EBF2]'
+                  : 'w-1.5 sm:w-2 bg-[#E8EBF2]/20 hover:bg-[#E8EBF2]/40'
               }`}
             />
           ))}
@@ -279,7 +279,7 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
           variant="outline"
           size="sm"
           onClick={() => changeSlide(activeIndex + 1, 'right')}
-          className="!px-3 sm:!px-5 !py-1 sm:!py-2 text-slate-300 hover:text-[#EDE9E3] text-[10px] sm:text-xs"
+          className="!px-3 sm:!px-5 !py-1 sm:!py-2 text-slate-300 hover:text-[#E8EBF2] text-[10px] sm:text-xs"
         >
           <span className="font-bold">NEXT</span>
           <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-0.5 sm:mr-1" />

@@ -84,7 +84,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="lux-hero-grid" aria-hidden="true" />
         <HeroSpotlight />
         <div className="relative max-w-[1200px] w-full mx-auto">
-          <p className="mb-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase text-[#9A958D]"><span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" aria-hidden="true" />
+          <p className="mb-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase text-[#8B93A7]"><span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" aria-hidden="true" />
             {finalBadgeText}
           </p>
 
@@ -95,7 +95,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             isReady={isLoaded}
           />
 
-          <p className="mt-8 max-w-xl text-[16px] sm:text-[18px] leading-relaxed text-[#EDE9E3]/62">
+          <p className="mt-8 max-w-xl text-[16px] sm:text-[18px] leading-relaxed text-[#E8EBF2]/62">
             {finalBioSubtext}
           </p>
 
@@ -135,10 +135,10 @@ export const HomePage: React.FC<HomePageProps> = ({
             </ButterButton>
           </div>
 
-          <p className="mt-4 text-xs sm:text-sm text-[#EDE9E3]/40">{finalPricingNotice}</p>
+          <p className="mt-4 text-xs sm:text-sm text-[#E8EBF2]/40">{finalPricingNotice}</p>
         </div>
 
-        <div className="relative max-w-[1200px] w-full mx-auto lux-stats mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-5 border border-[#2A2825] rounded-[10px] overflow-hidden bg-[#121110]/60 [&>*]:p-5 [&>*]:border-[#2A2825] [&>*:not(:last-child)]:sm:border-r [&>*]:max-sm:border-b">
+        <div className="relative max-w-[1200px] w-full mx-auto lux-stats mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-5 border border-[#232837] rounded-[10px] overflow-hidden bg-[#0B0D12]/60 [&>*]:p-5 [&>*]:border-[#232837] [&>*:not(:last-child)]:sm:border-r [&>*]:max-sm:border-b">
           {SERVICES.map(([index, title, detail]) => (
             <button
               key={title}
@@ -149,18 +149,18 @@ export const HomePage: React.FC<HomePageProps> = ({
               }}
               className="text-left group transition-transform duration-500 ease-out hover:-translate-y-0.5"
             >
-              <span className="block text-[10px] tracking-[0.18em] uppercase text-[#EDE9E3]/35">{index}</span>
-              <span className="mt-1 block text-sm sm:text-base text-[#EDE9E3]/80 group-hover:text-[#EDE9E3] transition-colors duration-500">{title}</span>
-              <span className="mt-1 block text-xs text-[#EDE9E3]/40 group-hover:text-[#EDE9E3]/70 transition-colors duration-500">{detail}</span>
+              <span className="block text-[10px] tracking-[0.18em] uppercase text-[#E8EBF2]/35">{index}</span>
+              <span className="mt-1 block text-sm sm:text-base text-[#E8EBF2]/80 group-hover:text-[#E8EBF2] transition-colors duration-500">{title}</span>
+              <span className="mt-1 block text-xs text-[#E8EBF2]/40 group-hover:text-[#E8EBF2]/70 transition-colors duration-500">{detail}</span>
             </button>
           ))}
           <div className="hidden sm:block">
-            <span className="block text-[10px] tracking-[0.18em] uppercase text-[#EDE9E3]/35">Response</span>
-            <span className="mt-1 block font-display text-2xl text-[#EDE9E3]">{finalLatency}</span>
+            <span className="block text-[10px] tracking-[0.18em] uppercase text-[#E8EBF2]/35">Response</span>
+            <span className="mt-1 block font-display text-2xl text-[#E8EBF2]">{finalLatency}</span>
           </div>
           <div className="hidden sm:block">
-            <span className="block text-[10px] tracking-[0.18em] uppercase text-[#EDE9E3]/35">Uptime</span>
-            <span className="mt-1 block font-display text-2xl text-[#EDE9E3]">{finalUptime}</span>
+            <span className="block text-[10px] tracking-[0.18em] uppercase text-[#E8EBF2]/35">Uptime</span>
+            <span className="mt-1 block font-display text-2xl text-[#E8EBF2]">{finalUptime}</span>
           </div>
         </div>
       </section>
@@ -169,18 +169,18 @@ export const HomePage: React.FC<HomePageProps> = ({
       {products && products.length > 0 && (
         <section className="relative left-1/2 -translate-x-1/2 w-screen max-w-[100vw] px-6 lg:px-8 space-y-10 sm:space-y-12 ">
           <ScrollReveal direction="up" delay={0.05} distance={20}>
-            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-[#EDE9E3]/10 pb-5">
+            <div className="lux-sh flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-[#E8EBF2]/10 pb-5">
               <div className="space-y-0.5 sm:space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">
+                  <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#5E667A]">
                     Curated Assets & Systems
                   </span>
-                  <span className="text-[11px] tracking-[0.16em] uppercase text-[#EDE9E3]/30">
+                  <span className="text-[11px] tracking-[0.16em] uppercase text-[#E8EBF2]/30">
                     Featured
                   </span>
                 </div>
                 <div className="mask-container">
-                  <h2 className="cyber-reveal-line font-display text-4xl sm:text-6xl text-[#EDE9E3]" style={{ animationDelay: '0.15s' }}>
+                  <h2 className="lux-sh-title cyber-reveal-line font-display text-4xl sm:text-6xl text-[#E8EBF2]" style={{ animationDelay: '0.15s' }}>
                     Featured Digital Deployments
                   </h2>
                 </div>
@@ -205,7 +205,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           {/* AUTONOMOUS HUD SHOWCASE CONSOLE */}
           <ScrollReveal direction="up" delay={0.1} distance={24}>
-            <ShowcaseConsole
+            <div className="lux-depth"><ShowcaseConsole
               projects={products}
               onInspect={(project) => {
                 const orig = products.find((x) => x.id === project.id);
@@ -217,41 +217,44 @@ export const HomePage: React.FC<HomePageProps> = ({
                   }
                 }
               }}
-            />
+            /></div>
           </ScrollReveal>
         </section>
       )}
 
       {/* BEFORE / AFTER + SCOPE CONFIGURATOR */}
       <section className="space-y-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#2A2825] pb-6">
+        <div className="lux-sh flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#232837] pb-5">
           <div>
-            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">Before / After</p>
-            <h2 className="mt-3 text-[32px] sm:text-[48px] leading-[1.02] tracking-[-0.035em] text-[#EDE9E3]">{finalLine3}</h2>
+            <p className="lux-sh-eyebrow">Before / After</p>
+            <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">{finalLine3}</h2>
           </div>
-          <p className="max-w-md text-[15px] text-[#9A958D]">{finalBioSubtext}</p>
+          <p className="max-w-md text-[15px] text-[#8B93A7]">{finalBioSubtext}</p>
         </div>
         <div className="lux-depth"><BeforeAfter title={finalLine1} subtitle={finalBioSubtext} cta={finalPrimaryCtaText} /></div>
       </section>
 
       {/* PINNED 3D UI STACK */}
-      <section className="lux-stack-stage relative h-[460px] sm:h-[560px] overflow-visible" aria-label="Services">
-        <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">{finalBadgeText}</p>
-        <div className="lux-stack-inner absolute inset-x-0 top-20 bottom-0 flex items-center justify-center [perspective:1400px] [transform-style:preserve-3d]">
+      <section className="lux-stack-stage relative h-[540px] sm:h-[680px] overflow-visible" aria-label="Services">
+        <div className="lux-sh border-b border-[#232837] pb-5">
+          <p className="lux-sh-eyebrow">Services</p>
+          <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">{finalLine2}</h2>
+        </div>
+        <div className="lux-stack-inner absolute inset-x-0 top-32 sm:top-40 bottom-0 flex items-center justify-center [perspective:1400px] [transform-style:preserve-3d]">
           {[...SERVICES, ['04', finalLine2, finalPricingNotice]].map(([index, title, detail], i) => (
             <div
               key={index}
-              className="lux-stack-card absolute w-[230px] sm:w-[280px] h-[300px] sm:h-[340px] rounded-[14px] border border-[#2A2825] bg-[#16151A] p-6 flex flex-col justify-between will-change-transform"
+              className="lux-stack-card lux-card-surface absolute w-[230px] sm:w-[280px] h-[300px] sm:h-[340px] rounded-[12px] border border-[#232837] bg-[#11141B] p-6 flex flex-col justify-between will-change-transform"
               style={{ zIndex: 10 - i }}
             >
-              <span className="font-mono text-[11px] text-[#6E6A63]">{index}</span>
+              <span className="font-mono text-[11px] text-[#5E667A]">{index}</span>
               <div>
-                <div className="h-24 mb-6 rounded-[8px] border border-[#2A2825] bg-[#1C1B1F] grid grid-cols-3 gap-2 p-3">
-                  <span className="col-span-2 rounded bg-[#2A2825]" /><span className={`rounded ${i === 0 ? 'bg-[#3B82F6]' : 'bg-[#2A2825]'}`} />
-                  <span className="rounded bg-[#2A2825]" /><span className="col-span-2 rounded bg-[#2A2825]/60" />
+                <div className="h-24 mb-6 rounded-[8px] border border-[#232837] bg-[#171B24] grid grid-cols-3 gap-2 p-3">
+                  <span className="col-span-2 rounded bg-[#232837]" /><span className={`rounded ${i === 0 ? 'bg-[#4F7CFF]' : 'bg-[#232837]'}`} />
+                  <span className="rounded bg-[#232837]" /><span className="col-span-2 rounded bg-[#232837]/60" />
                 </div>
-                <p className="text-[20px] tracking-[-0.02em] text-[#EDE9E3] leading-tight">{title}</p>
-                <p className="mt-2 text-[13px] text-[#9A958D] line-clamp-2">{detail}</p>
+                <p className="text-[20px] tracking-[-0.02em] text-[#E8EBF2] leading-tight">{title}</p>
+                <p className="mt-2 text-[13px] text-[#8B93A7] line-clamp-2">{detail}</p>
               </div>
             </div>
           ))}
@@ -259,8 +262,9 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       <section className="space-y-10">
-        <div className="border-b border-[#2A2825] pb-6">
-          <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">{finalBadgeText}</p>
+        <div className="lux-sh border-b border-[#232837] pb-5">
+          <p className="lux-sh-eyebrow">Scope</p>
+          <h2 className="lux-sh-title font-display text-4xl sm:text-6xl text-[#E8EBF2]">{finalPrimaryCtaText}</h2>
         </div>
         <ScopeConfigurator
           items={SERVICES.map(([, title, detail]) => ({ title, detail }))}
@@ -277,15 +281,15 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* REVIEWS AND RATING SECTION (SCROLL TRIGGERED) */}
       <section className="pt-2 sm:pt-6">
         <ScrollReveal direction="up" delay={0.1} distance={20}>
-          <ReviewsDisplay reviews={reviews} />
+          <div className="lux-depth"><ReviewsDisplay reviews={reviews} /></div>
         </ScrollReveal>
       </section>
 
       {/* CLOSING CTA */}
-      <section className="lux-closing border-t border-[#2A2825] pt-24 sm:pt-32 text-left">
-        <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#6E6A63]">{finalBadgeText}</p>
+      <section className="lux-closing border-t border-[#232837] pt-24 sm:pt-32 text-left">
+        <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#5E667A]">{finalBadgeText}</p>
         <div className="mt-6 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-          <p className="max-w-2xl text-[22px] sm:text-[32px] leading-[1.2] tracking-[-0.02em] text-[#EDE9E3]">{finalBioSubtext}</p>
+          <p className="max-w-2xl text-[22px] sm:text-[32px] leading-[1.2] tracking-[-0.02em] text-[#E8EBF2]">{finalBioSubtext}</p>
           <div className="flex flex-col items-start gap-3 shrink-0">
             <Magnetic>
 <ButterButton
@@ -304,7 +308,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               {finalPrimaryCtaText}
             </ButterButton>
 </Magnetic>
-            <p className="text-xs text-[#6E6A63]">{finalPricingNotice}</p>
+            <p className="text-xs text-[#5E667A]">{finalPricingNotice}</p>
           </div>
         </div>
         <div className="mt-16 sm:mt-20">

@@ -26,12 +26,12 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
 
   return (
     <SmoothScroll>
-      <div className="relative min-h-screen bg-[#121110] text-[#EDE9E3] flex flex-col">
+      <div className="relative min-h-screen bg-[#0B0D12] text-[#E8EBF2] flex flex-col">
         <FogPlanes />
         <div className="lux-grain" aria-hidden="true" />
 
         <motion.div
-          className="fixed top-0 left-0 right-0 h-px bg-[#3B82F6] origin-left z-[200] pointer-events-none"
+          className="fixed top-0 left-0 right-0 h-px lux-grad origin-left z-[200] pointer-events-none"
           style={{ scaleX }}
         />
 

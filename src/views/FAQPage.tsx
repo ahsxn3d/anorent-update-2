@@ -152,9 +152,9 @@ export const FAQPage: React.FC<FAQPageProps> = ({
       {/* 1. HERO HEADER WITH AWWWARDS-GRADE ANIMATED DISPLAY */}
       {/* ========================================================= */}
       <ScrollReveal direction="down" delay={0.05} distance={20}>
-        <div className="lux-page-head flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-10 border-b border-[#2A2825] pt-10 sm:pt-20 pb-10 sm:pb-14">
+        <div className="lux-page-head flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-10 border-b border-[#232837] pt-10 sm:pt-20 pb-10 sm:pb-14">
           <div className="space-y-1.5 sm:space-y-2.5 max-w-2xl">
-            <div className="lux-eyebrow inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.12em] text-[#6E6A63] mb-4">
+            <div className="lux-eyebrow inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A] mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>DIRECT ARCHITECT DISPATCH // TRANSPARENT PROTOCOL</span>
             </div>
@@ -164,7 +164,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
               text="KNOWLEDGE VAULT & PROTOCOLS"
               highlightWords={['KNOWLEDGE', 'PROTOCOLS']}
               gradientTheme="pure-purple"
-              className="font-display text-2xl sm:text-5xl lg:text-6xl font-black text-[#EDE9E3] tracking-tight uppercase"
+              className="font-display text-2xl sm:text-5xl lg:text-6xl font-black text-[#E8EBF2] tracking-tight uppercase"
               staggerDelay={0.02}
               initialDelay={0.1}
             />
@@ -206,7 +206,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
       {/* 2. LUXURY TELEMETRY STATUS PILLS (EXPENSIVE AESTHETIC) */}
       {/* ========================================================= */}
       <ScrollReveal direction="up" delay={0.1} distance={16}>
-        <div className="grid grid-cols-2 lg:grid-cols-1 gap-px bg-[#2A2825] border border-[#2A2825] rounded-[12px] overflow-hidden lux-faq-stats">
+        <div className="grid grid-cols-2 lg:grid-cols-1 gap-px bg-[#232837] border border-[#232837] rounded-[12px] overflow-hidden lux-faq-stats">
           
           <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#131422]/90 backdrop-blur-2xl border border-purple-500/30 shadow-xl flex items-center gap-2.5 sm:gap-3">
             <div className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shrink-0">
@@ -216,7 +216,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
               <span className="text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-emerald-400 block">
                 IP Ownership
               </span>
-              <h4 className="font-bold text-xs sm:text-sm text-[#EDE9E3] truncate">100% Code Transfer</h4>
+              <h4 className="font-bold text-xs sm:text-sm text-[#E8EBF2] truncate">100% Code Transfer</h4>
             </div>
           </div>
 
@@ -228,7 +228,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
               <span className="text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-purple-300 block">
                 Average SLA
               </span>
-              <h4 className="font-bold text-xs sm:text-sm text-[#EDE9E3] truncate">&lt; 1-2h Response</h4>
+              <h4 className="font-bold text-xs sm:text-sm text-[#E8EBF2] truncate">&lt; 1-2h Response</h4>
             </div>
           </div>
 
@@ -240,7 +240,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
               <span className="text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-cyan-300 block">
                 Performance
               </span>
-              <h4 className="font-bold text-xs sm:text-sm text-[#EDE9E3] truncate">60 FPS GPU Profiling</h4>
+              <h4 className="font-bold text-xs sm:text-sm text-[#E8EBF2] truncate">60 FPS GPU Profiling</h4>
             </div>
           </div>
 
@@ -252,7 +252,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
               <span className="text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-amber-300 block">
                 Security
               </span>
-              <h4 className="font-bold text-xs sm:text-sm text-[#EDE9E3] truncate">Fiverr Pro Escrow</h4>
+              <h4 className="font-bold text-xs sm:text-sm text-[#E8EBF2] truncate">Fiverr Pro Escrow</h4>
             </div>
           </div>
 
@@ -270,7 +270,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                 <Terminal className="w-3.5 h-3.5 text-cyan-300" />
                 <span>Custom Engineering Scoping</span>
               </div>
-              <h3 className="font-display font-black text-base sm:text-2xl text-[#EDE9E3]">
+              <h3 className="font-display font-black text-base sm:text-2xl text-[#E8EBF2]">
                 Have a specialized 3D WebGL or architectural requirement?
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
@@ -317,14 +317,14 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                   id={`faq-filter-${cat.name.toLowerCase().replace(/\s+/g, '-')}`}
                   className={`relative px-3 py-1.5 text-xs font-bold rounded-full transition-colors duration-200 cursor-pointer select-none shrink-0 flex items-center gap-1.5 ${
                     isActive
-                      ? 'text-[#EDE9E3] font-extrabold'
-                      : 'text-slate-300 hover:text-[#EDE9E3] font-semibold'
+                      ? 'text-[#E8EBF2] font-extrabold'
+                      : 'text-slate-300 hover:text-[#E8EBF2] font-semibold'
                   }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activeFaqCategoryBubble"
-                      className="absolute inset-0 bg-gradient-to-r from-[#8B00EE] via-[#A855F7] to-[#7C3AED] rounded-full shadow-[0_0_22px_rgba(168,85,247,0.75),inset_0_1px_1px_rgba(237, 233, 227,0.4)] z-0"
+                      className="absolute inset-0 bg-gradient-to-r from-[#8B00EE] via-[#A855F7] to-[#7C3AED] rounded-full shadow-[0_0_22px_rgba(168,85,247,0.75),inset_0_1px_1px_rgba(232, 235, 242,0.4)] z-0"
                       transition={{
                         type: 'spring',
                         stiffness: 350,
@@ -344,13 +344,13 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                           bounce: 0.45,
                         }}
                       />
-                      <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-[#EDE9E3]/25 to-transparent rounded-t-full pointer-events-none" />
+                      <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-[#E8EBF2]/25 to-transparent rounded-t-full pointer-events-none" />
                     </motion.div>
                   )}
-                  <Icon className={`w-3.5 h-3.5 relative z-10 ${isActive ? 'text-[#EDE9E3]' : 'text-[#C084FC]'}`} />
+                  <Icon className={`w-3.5 h-3.5 relative z-10 ${isActive ? 'text-[#E8EBF2]' : 'text-[#C084FC]'}`} />
                   <span className="relative z-10 whitespace-nowrap text-xs">{cat.label}</span>
                   <span className={`relative z-10 text-[9px] px-1.5 py-0.2 rounded-full font-mono font-extrabold ${
-                    isActive ? 'bg-[#EDE9E3]/30 text-[#EDE9E3]' : 'bg-[#EDE9E3]/10 text-slate-400'
+                    isActive ? 'bg-[#E8EBF2]/30 text-[#E8EBF2]' : 'bg-[#E8EBF2]/10 text-slate-400'
                   }`}>
                     {count}
                   </span>
@@ -367,13 +367,13 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                 sound.playClick();
                 setIsDropdownOpen(!isDropdownOpen);
               }}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full bg-[#0A0B14]/90 border border-purple-400/40 text-[#EDE9E3] cursor-pointer shadow-lg hover:border-purple-300 transition-colors"
+              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full bg-[#0A0B14]/90 border border-purple-400/40 text-[#E8EBF2] cursor-pointer shadow-lg hover:border-purple-300 transition-colors"
             >
               <div className="flex items-center gap-2">
                 <div className="w-5 h-5 rounded-full bg-[#8B00EE]/30 flex items-center justify-center text-[#C084FC]">
                   {React.createElement(activeCategoryObj.icon, { className: 'w-3 h-3 text-[#C084FC]' })}
                 </div>
-                <span className="text-xs font-bold text-[#EDE9E3]">
+                <span className="text-xs font-bold text-[#E8EBF2]">
                   {activeCategoryObj.label}
                 </span>
               </div>
@@ -381,7 +381,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                 <span className="px-2 py-0.5 rounded-full bg-[#8B00EE]/30 text-[10px] font-mono text-purple-200">
                   {getCategoryCount(activeCategoryObj.name)} items
                 </span>
-                <ChevronDown className={`w-3.5 h-3.5 text-purple-300 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-[#EDE9E3]' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 text-purple-300 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-[#E8EBF2]' : ''}`} />
               </div>
             </motion.button>
 
@@ -393,7 +393,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96, y: -6 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="absolute left-0 right-0 top-full mt-1.5 overflow-hidden bg-[#100420]/95 backdrop-blur-2xl rounded-2xl border border-purple-400/60 shadow-[0_20px_50px_rgba(12, 11, 10,0.95),0_0_25px_rgba(139,0,238,0.5)] p-1.5 space-y-1 z-50"
+                  className="absolute left-0 right-0 top-full mt-1.5 overflow-hidden bg-[#100420]/95 backdrop-blur-2xl rounded-2xl border border-purple-400/60 shadow-[0_20px_50px_rgba(6, 8, 12,0.95),0_0_25px_rgba(139,0,238,0.5)] p-1.5 space-y-1 z-50"
                 >
                   {categories.map((cat) => {
                     const isSelected = selectedCategory === cat.name;
@@ -405,16 +405,16 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                         onClick={() => handleSelectCategory(cat.name)}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-[#EDE9E3] shadow-md'
-                            : 'text-slate-300 hover:bg-purple-950/60 hover:text-[#EDE9E3]'
+                            ? 'bg-gradient-to-r from-[#8B00EE] to-[#A855F7] text-[#E8EBF2] shadow-md'
+                            : 'text-slate-300 hover:bg-purple-950/60 hover:text-[#E8EBF2]'
                         }`}
                       >
                         <div className="flex items-center gap-2.5">
-                          <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#EDE9E3]' : 'text-[#C084FC]'}`} />
+                          <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#E8EBF2]' : 'text-[#C084FC]'}`} />
                           <span>{cat.label}</span>
                         </div>
                         <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full ${
-                          isSelected ? 'bg-[#EDE9E3]/30 text-[#EDE9E3]' : 'bg-purple-950/80 text-purple-300'
+                          isSelected ? 'bg-[#E8EBF2]/30 text-[#E8EBF2]' : 'bg-purple-950/80 text-purple-300'
                         }`}>
                           {count}
                         </span>
@@ -434,7 +434,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
               placeholder="Search knowledge..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8.5 pr-7 py-1 h-8 bg-[#0A0B14]/90 border border-purple-500/35 rounded-full text-xs font-medium text-[#EDE9E3] placeholder-slate-400 focus:outline-none focus:border-[#A855F7]/90 focus:shadow-[0_0_12px_rgba(139,0,238,0.3)] transition-all shadow-inner"
+              className="w-full pl-8.5 pr-7 py-1 h-8 bg-[#0A0B14]/90 border border-purple-500/35 rounded-full text-xs font-medium text-[#E8EBF2] placeholder-slate-400 focus:outline-none focus:border-[#A855F7]/90 focus:shadow-[0_0_12px_rgba(139,0,238,0.3)] transition-all shadow-inner"
             />
             {searchQuery && (
               <button
@@ -442,7 +442,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                   sound.playClick();
                   setSearchQuery('');
                 }}
-                className="absolute right-3 lg:right-2.5 p-1 rounded-full text-slate-400 hover:text-[#EDE9E3] transition-colors cursor-pointer"
+                className="absolute right-3 lg:right-2.5 p-1 rounded-full text-slate-400 hover:text-[#E8EBF2] transition-colors cursor-pointer"
                 aria-label="Clear search"
               >
                 <X className="w-3 h-3" />
@@ -459,7 +459,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
       {filteredFaqs.length === 0 ? (
         <div className="text-center py-12 px-4 bg-[#131422]/60 rounded-3xl border border-purple-500/20 backdrop-blur-xl space-y-3">
           <HelpCircle className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
-          <h3 className="font-display text-lg font-bold text-[#EDE9E3]">No answers matched your query</h3>
+          <h3 className="font-display text-lg font-bold text-[#E8EBF2]">No answers matched your query</h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto">
             Try adjusting your search terms or select &apos;All Knowledge&apos; from the categories above.
           </p>
@@ -469,7 +469,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
               setSearchQuery('');
               setSelectedCategory('All');
             }}
-            className="px-4 py-2 bg-[#8B00EE] hover:bg-[#A855F7] text-[#EDE9E3] text-xs font-bold rounded-full transition-all shadow-md mt-2 cursor-pointer"
+            className="px-4 py-2 bg-[#8B00EE] hover:bg-[#A855F7] text-[#E8EBF2] text-xs font-bold rounded-full transition-all shadow-md mt-2 cursor-pointer"
           >
             Reset Filters
           </button>
@@ -489,9 +489,9 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                 distance={14}
               >
                 <div
-                  className={`relative overflow-hidden rounded-xl sm:rounded-2xl border transition-all duration-300 backdrop-blur-2xl ${
+                  className={`lux-flip relative overflow-hidden rounded-xl sm:rounded-2xl border transition-all duration-300 backdrop-blur-2xl ${
                     isExpanded
-                      ? 'bg-[#131422]/95 border-purple-400/80 shadow-[0_10px_30px_rgba(12, 11, 10,0.8),0_0_25px_rgba(139,0,238,0.25)]'
+                      ? 'bg-[#131422]/95 border-purple-400/80 shadow-[0_10px_30px_rgba(6, 8, 12,0.8),0_0_25px_rgba(139,0,238,0.25)]'
                       : 'bg-[#131422]/80 border-purple-500/25 hover:border-purple-400/60 shadow-lg'
                   }`}
                 >
@@ -514,7 +514,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
 
                       {/* Question Text */}
                       <h3 className={`font-bold text-xs sm:text-base leading-snug transition-colors ${
-                        isExpanded ? 'text-[#EDE9E3] font-extrabold' : 'text-slate-200 group-hover:text-[#EDE9E3]'
+                        isExpanded ? 'text-[#E8EBF2] font-extrabold' : 'text-slate-200 group-hover:text-[#E8EBF2]'
                       }`}>
                         {item.question}
                       </h3>
@@ -524,8 +524,8 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                     <div
                       className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all shrink-0 border ${
                         isExpanded
-                          ? 'bg-[#8B00EE] text-[#EDE9E3] border-purple-300 shadow-[0_0_12px_rgba(139,0,238,0.6)] rotate-180'
-                          : 'bg-[#0A0B14]/80 text-purple-300 border-purple-500/30 group-hover:border-purple-400 group-hover:text-[#EDE9E3]'
+                          ? 'bg-[#8B00EE] text-[#E8EBF2] border-purple-300 shadow-[0_0_12px_rgba(139,0,238,0.6)] rotate-180'
+                          : 'bg-[#0A0B14]/80 text-purple-300 border-purple-500/30 group-hover:border-purple-400 group-hover:text-[#E8EBF2]'
                       }`}
                     >
                       <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300" />
@@ -545,7 +545,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                         <div className="px-3.5 sm:px-5 pb-4 sm:pb-5 pt-1 sm:pt-2 space-y-3.5 border-t border-purple-500/20">
                           
                           {/* Rich Answer Text */}
-                          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium bg-[#0A0B14]/60 p-3 sm:p-4 rounded-xl border border-[#EDE9E3]/5 shadow-inner">
+                          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium bg-[#0A0B14]/60 p-3 sm:p-4 rounded-xl border border-[#E8EBF2]/5 shadow-inner">
                             {item.answer}
                           </p>
 
@@ -563,7 +563,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                               {/* Copy Answer Button */}
                               <button
                                 onClick={(e) => handleCopyAnswer(item.id, item.answer, e)}
-                                className="px-2.5 py-1 rounded-full bg-[#0A0B14]/90 hover:bg-[#131422] border border-purple-500/30 text-slate-300 hover:text-[#EDE9E3] text-[10px] font-mono font-semibold flex items-center gap-1 transition-all cursor-pointer shadow-sm"
+                                className="px-2.5 py-1 rounded-full bg-[#0A0B14]/90 hover:bg-[#131422] border border-purple-500/30 text-slate-300 hover:text-[#E8EBF2] text-[10px] font-mono font-semibold flex items-center gap-1 transition-all cursor-pointer shadow-sm"
                                 title="Copy answer"
                               >
                                 {isCopied ? (
@@ -585,7 +585,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                                 className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer border ${
                                   hasVoted
                                     ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
-                                    : 'bg-[#0A0B14]/90 border-purple-500/30 text-purple-200 hover:border-purple-400 hover:text-[#EDE9E3] shadow-sm'
+                                    : 'bg-[#0A0B14]/90 border-purple-500/30 text-purple-200 hover:border-purple-400 hover:text-[#E8EBF2] shadow-sm'
                                 }`}
                               >
                                 <ThumbsUp className={`w-3 h-3 ${hasVoted ? 'text-emerald-400' : 'text-purple-300'}`} />
