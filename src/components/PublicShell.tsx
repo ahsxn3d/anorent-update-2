@@ -1,19 +1,18 @@
 'use client';
 
 import React from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { SmoothScroll } from './SmoothScroll';
-import { FogPlanes } from './FogPlanes';
+import { RevealObserver } from './site/RevealObserver';
+import { interTight, instrumentSerif } from './site/fonts';
 import { Page } from '../types';
+import './site/site.css';
 
 export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
-  const pathname = usePathname();
-  // The homepage paints its own flat ink ground, so the animated fog canvas is not mounted there
-  const isHome = pathname === '/';
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -28,28 +27,16 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
 
   return (
     <SmoothScroll>
-      <div className="relative min-h-screen bg-black text-[#f4f4f4] flex flex-col selection:bg-white selection:text-black">
-        {!isHome && <FogPlanes />}
-        {!isHome && <div className="lux-grain" aria-hidden="true" />}
-
-        <motion.div
-          className="fixed top-0 left-0 right-0 h-px bg-white origin-left z-[200] pointer-events-none"
-          style={{ scaleX }}
-        />
+      <div className={`ah-site ${interTight.variable} ${instrumentSerif.variable}`}>
+        <div className="ah-grain" aria-hidden="true" />
+        <motion.div className="ah-progress" style={{ scaleX }} aria-hidden="true" />
 
         <Navbar />
 
-        <main className="flex-1 w-full max-w-6xl mx-auto px-5 sm:px-8 pt-8 sm:pt-14 relative z-10">
-          <motion.div
-            initial={isHome ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {children}
-          </motion.div>
-        </main>
+        <main className="ah-main">{children}</main>
 
         <Footer setCurrentPage={go} />
+        <RevealObserver />
       </div>
     </SmoothScroll>
   );

@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#051236',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -64,8 +64,12 @@ export default function RootLayout({
         <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <script
+          // flags JS before first paint so reveal states only hide content when they can also show it
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('ah-js')" }}
+        />
       </head>
-      <body className="bg-black text-[#f4f4f4] antialiased selection:bg-white selection:text-black overflow-x-clip min-h-screen">
+      <body className="bg-[#051236] text-[#fffde2] antialiased overflow-x-clip min-h-screen">
         {children}
       </body>
     </html>

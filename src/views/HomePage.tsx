@@ -8,9 +8,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { Page, DeploymentProduct, ReviewItem, HeroContent } from '../types';
 import { DeploymentModal } from '../components/DeploymentModal';
-import { KineticHeroTitle } from '../components/KineticHeroTitle';
+import { BlurText } from '../components/site/BlurText';
 import { sound } from '../utils/audio';
-import { interTight, instrumentSerif } from '../components/home/fonts';
 import '../components/home/home.css';
 
 if (typeof window !== 'undefined') {
@@ -66,8 +65,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   headlineLine2,
   headlineLine3,
   bioSubtext,
-  isLoaded = true,
-}) => {
+  }) => {
   const router = useRouter();
   const root = useRef<HTMLDivElement>(null);
   const [selectedProduct, setSelectedProduct] = useState<DeploymentProduct | null>(null);
@@ -148,6 +146,14 @@ export const HomePage: React.FC<HomePageProps> = ({
             scrollTrigger: { trigger: '.ah-hero', start: 'top top', end: 'bottom 30%', scrub: true },
           });
 
+          // Hero title: drifts up and thins out as the reel rises over it
+          gsap.to('.ah-hero-h1', {
+            yPercent: -16,
+            opacity: 0.25,
+            ease: 'none',
+            scrollTrigger: { trigger: '.ah-hero', start: 'top top', end: 'bottom top', scrub: true },
+          });
+
           // Reel: the project deck lifts out of a 3D tilt and fans out into a flat row
           const reel = document.querySelector<HTMLElement>('.ah-reel-track');
           const cards = gsap.utils.toArray<HTMLElement>('.ah-reel-card');
@@ -187,9 +193,10 @@ export const HomePage: React.FC<HomePageProps> = ({
           // Statement: word-by-word reading reveal
           gsap.fromTo(
             '.ah-word',
-            { opacity: 0.12 },
+            { opacity: 0.12, filter: 'blur(6px)' },
             {
               opacity: 1,
+              filter: 'blur(0px)',
               ease: 'none',
               stagger: 0.08,
               scrollTrigger: {
@@ -374,9 +381,10 @@ export const HomePage: React.FC<HomePageProps> = ({
   const total = products?.length || 0;
 
   return (
-    <div ref={root} className={`ah-home ${interTight.variable} ${instrumentSerif.variable}`}>
+    <div ref={root} className="ah-home">
       {/* ============================ 01 HERO ============================ */}
       <section className="ah-hero ah-bleed">
+        <div className="ah-glow" aria-hidden="true" />
         <div className="ah-hero-top ah-hero-chrome ah-load" style={{ animationDelay: '0.1s' }}>
           <p className="ah-label">{finalBadgeText}</p>
           <p className="ah-label ah-hero-telemetry">
@@ -386,7 +394,18 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         <div className="ah-hero-title">
-          <KineticHeroTitle line1={finalLine1} line2={finalLine2} line3={finalLine3} isReady={isLoaded} />
+          <h1 className="ah-hero-h1" aria-label={`${finalLine1} ${finalLine2} ${finalLine3}`}>
+            <BlurText as="span" load text={finalLine1} delay={0.05} className="ah-hero-l1" />
+            <BlurText as="span" load text={finalLine2} delay={0.05} offset={finalLine1.split(/\s+/).length + 1} className="ah-hero-l2" />
+            <BlurText
+              as="span"
+              load
+              text={finalLine3}
+              delay={0.05}
+              offset={finalLine1.split(/\s+/).length + finalLine2.split(/\s+/).length + 2}
+              className="ah-hero-l3"
+            />
+          </h1>
         </div>
 
         <div className="ah-hero-foot ah-hero-chrome">
@@ -480,7 +499,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ========================== 03 SERVICES =========================== */}
-      <section className="ah-section ah-services ah-bleed" aria-label="Services">
+      <section className="ah-section ah-services ah-light ah-bleed" aria-label="Services">
         <div className="ah-grid">
           <p className="ah-chapter">
             <span className="ah-serif">02</span>
@@ -624,7 +643,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* =========================== 05 REVIEWS =========================== */}
       {reviews && reviews.length > 0 && (
-        <section className="ah-reviews ah-bleed" aria-label="Client Reviews">
+        <section className="ah-reviews ah-cobalt-ground ah-bleed" aria-label="Client Reviews">
           <div className="ah-reviews-track" style={{ ['--ah-count' as string]: reviews.length } as React.CSSProperties}>
             <div className="ah-reviews-stage">
               <div className="ah-grid ah-reviews-head">
@@ -673,6 +692,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* ============================ 06 CTA ============================== */}
       <section className="ah-section ah-cta ah-bleed" aria-label="Start a project">
+        <div className="ah-glow ah-glow-low ah-glow-warm" aria-hidden="true" />
         <div className="ah-grid">
           <p className="ah-chapter">
             <span className="ah-serif">05</span>

@@ -2,13 +2,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-import { Mail, Copy, Check, Send, Sparkles, MessageCircle, Clock, Zap, Layers, ArrowUpRight, Twitter, ChevronDown, DollarSign, Shield } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Page, ReviewItem, ContactSubmission } from '../types';
 import { AddReviewForm } from '../components/ReviewsSection';
-import { ButterButton } from '../components/ButterButton';
-import { ScrollReveal } from '../components/ScrollReveal';
-import { GsapPlayfulText } from '../components/GsapPlayfulText';
+import { BlurText, Arrow } from '../components/site/BlurText';
 
 interface ContactPageProps {
   setCurrentPage?: (page: Page) => void;
@@ -145,520 +143,283 @@ export const ContactPage: React.FC<ContactPageProps> = ({
     }, 3500);
   };
 
+  const channels = [
+    {
+      key: 'fiverr',
+      card: 'Card 02',
+      tag: 'Escrow',
+      name: 'Fiverr',
+      blurb: 'Hire via verified Fiverr Pro milestone escrow with 100% protection.',
+      k1: 'Escrow Advantage',
+      v1: 'Funds held safely in escrow.',
+      k2: 'Verified',
+      v2: 'Fiverr Pro',
+      href: fiverrUrl || 'https://www.fiverr.com/ahsxn_dev',
+      aria: 'Order on Fiverr Pro',
+      cta: 'FIVERR',
+    },
+    {
+      key: 'dribbble',
+      card: 'Card 03',
+      tag: '40+ Shots',
+      name: 'Dribbble',
+      blurb: 'Explore UI design concepts, motion prototypes, and component systems.',
+      k1: 'Featured Works',
+      v1: 'Dashboards, motion & UI suites.',
+      k2: 'Portfolio',
+      v2: 'Dribbble Pro',
+      href: dribbbleUrl || 'https://dribbble.com/ahsxn_dev',
+      aria: 'View Dribbble Portfolio',
+      cta: 'DRIBBBLE',
+    },
+    {
+      key: 'twitter',
+      card: 'Card 04',
+      tag: 'Open DMs',
+      name: 'Twitter',
+      blurb: 'Connect on Twitter / X for live code updates and open DMs.',
+      k1: 'Handle',
+      v1: '@Ahsanwebdesign',
+      k2: 'Status',
+      v2: 'Open DMs',
+      href: twitterUrl || 'https://x.com/Ahsanwebdesign',
+      aria: 'Connect on Twitter / X',
+      cta: 'TWITTER',
+    },
+    {
+      key: 'whatsapp',
+      card: 'Card 05',
+      tag: 'Instant',
+      name: 'WhatsApp',
+      blurb: 'Instant mobile messaging for real-time project inquiries.',
+      k1: 'Direct Line',
+      v1: '03284992759',
+      k2: 'Status',
+      v2: 'Online',
+      href: 'https://wa.me/923284992759',
+      aria: 'Direct WhatsApp Message',
+      cta: 'WHATSAPP',
+    },
+  ];
+
   return (
-    <div className="min-h-screen text-white space-y-10 sm:space-y-12 my-4 pb-16">
-      
-      {/* STEP 1: HERO HEADER WITH SCROLL REVEAL & GSAP PLAYFUL TYPOGRAPHY */}
-      <ScrollReveal direction="down" delay={0.05} distance={24}>
-        <div className="space-y-3.5 border-b border-purple-500/20 pb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#8B00EE]/15 border border-[#8B00EE]/35 rounded-full text-xs font-black tracking-widest text-[#C084FC] uppercase shadow-md backdrop-blur-md">
-            <Zap className="w-3.5 h-3.5 text-[#C084FC] animate-pulse" />
-            <span>Anorix Studio • Official Contact Portals</span>
+    <div className="ah-page ah-contact">
+      {/* STEP 1: HERO */}
+      <section className="ah-phero">
+        <div className="ah-glow ah-glow-warm" aria-hidden="true" />
+        <div className="ah-grid">
+          <p className="ah-chapter">
+            <span className="ah-pill"><span className="ah-pill-dot" />Anorix Studio • Official Contact Portals</span>
+          </p>
+          <div className="ah-phero-title ah-ct-hero-title" style={{ gridColumn: '1 / -1' }}>
+            <BlurText as="h1" load text="LET'S BUILD TOGETHER." serif={['TOGETHER.']} className="ah-d1" />
           </div>
-          
-          <GsapPlayfulText
-            as="h1"
-            text="LET'S BUILD TOGETHER."
-            highlightWords={["LET'S", "BUILD"]}
-            gradientTheme="pure-purple"
-            className="font-display text-4xl sm:text-6xl lg:text-8xl font-black text-white tracking-tight uppercase leading-none"
-            staggerDelay={0.03}
-            initialDelay={0.1}
-          />
-
-          <GsapPlayfulText
-            as="p"
-            text="Reach out via any of our official channels: Direct Email, Fiverr Pro, Dribbble, Twitter, or WhatsApp."
-            highlightWords={['Direct Email', 'Fiverr Pro', 'Dribbble', 'Twitter', 'WhatsApp']}
-            gradientTheme="purple-cyan"
-            className="text-sm sm:text-base text-slate-300 max-w-3xl font-medium leading-relaxed"
-            staggerDelay={0.012}
-            initialDelay={0.2}
-          />
+          <div style={{ gridColumn: '1 / -1' }}>
+            <BlurText
+              load
+              delay={0.35}
+              text="Reach out via any of our official channels: Direct Email, Fiverr Pro, Dribbble, Twitter, or WhatsApp."
+              className="ah-lede"
+            />
+          </div>
         </div>
-      </ScrollReveal>
+      </section>
 
-      {/* STEP 2: UNIFIED 2-IN-1 ROW CONTACT CARDS GRID */}
-      <div className="grid grid-cols-2 gap-2.5 sm:gap-6 items-stretch">
-        
-        {/* ================= CARD 1: DIRECT EMAIL (FULL ROW - 2 COLS) ================= */}
-        <ScrollReveal direction="up" delay={0.1} distance={20} className="col-span-2 h-full">
-          <div className="bg-[#131422]/90 backdrop-blur-2xl border border-[#A855F7]/80 shadow-[0_0_30px_rgba(139,0,238,0.3)] lg:border-purple-500/30 lg:shadow-2xl lg:hover:shadow-[0_0_35px_rgba(139,0,238,0.35)] lg:hover:border-[#A855F7]/80 transition-all duration-300 rounded-xl sm:rounded-3xl p-3.5 sm:p-6 lg:p-8 space-y-3 sm:space-y-6 flex flex-col justify-between h-full">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-purple-500/20 pb-3 sm:pb-5 gap-2.5 sm:gap-3">
-              <div className="space-y-0.5 sm:space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 sm:px-2.5 py-0.5 bg-[#8B00EE]/25 text-[#C084FC] text-[8px] sm:text-[10px] font-mono font-bold rounded-full uppercase tracking-wider border border-[#8B00EE]/40 shadow-[0_0_10px_rgba(139,0,238,0.3)]">
-                    Card 01
-                  </span>
-                  <span className="text-xs text-slate-500">•</span>
-                  <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
-                    <Mail className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-[#C084FC]" />
-                    <span>Direct Email</span>
-                  </h2>
-                </div>
-                <p className="text-[10px] sm:text-xs text-slate-300 font-medium">
-                  Direct transmission line to <strong className="text-white font-mono">ahsxn3d@gmail.com</strong>
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  onPointerDown={() => handleCopy('ahsxn3d@gmail.com', 'direct-email')}
-                  className="px-2.5 sm:px-3 py-1 sm:py-2 bg-[#8B00EE]/25 hover:bg-[#8B00EE]/40 border border-[#8B00EE]/50 text-[9px] sm:text-xs font-mono font-bold text-white rounded-lg sm:rounded-xl flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer shadow-[0_0_12px_rgba(139,0,238,0.25)] hover:scale-105"
-                >
-                  {copiedField === 'direct-email' ? <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400" /> : <Copy className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C084FC]" />}
-                  <span>{copiedField === 'direct-email' ? 'Copied!' : 'Copy Email'}</span>
-                </button>
-              </div>
+      {/* STEP 2: CARD 01, DIRECT EMAIL BRIEF */}
+      <section className="ah-ct-brief ah-light" aria-label="Direct Email">
+        <div className="ah-grid">
+          <div className="ah-ct-brief-head">
+            <span className="ah-label">Card 01</span>
+            <BlurText as="h2" text="Direct Email" serif={['Email']} className="ah-d2" />
+            <p className="ah-body" style={{ margin: 0 }}>
+              Direct transmission line to <strong style={{ color: 'var(--ah-text)', fontWeight: 500 }}>ahsxn3d@gmail.com</strong>
+            </p>
+            <div>
+              <button
+                type="button"
+                onPointerDown={() => handleCopy('ahsxn3d@gmail.com', 'direct-email')}
+                className="ah-btn ah-btn-ghost ah-btn-sm"
+              >
+                {copiedField === 'direct-email' ? 'Copied!' : 'Copy Email'}
+              </button>
             </div>
+          </div>
 
-            {submittedSuccess ? (
-              <div className="p-5 sm:p-8 text-center bg-[#8B00EE]/20 rounded-xl sm:rounded-2xl border border-[#8B00EE]/40 space-y-2 sm:space-y-3 my-auto shadow-inner">
-                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-[#C084FC] mx-auto animate-bounce" />
-                <h3 className="font-display text-base sm:text-lg font-extrabold text-white uppercase tracking-wider">
-                  Direct Email Transmitted!
-                </h3>
-                <p className="text-[11px] sm:text-xs text-slate-300 max-w-md mx-auto font-medium">
-                  Your project parameters have been dispatched directly. SLA reply guaranteed within &lt;24 hours.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmitBrief} className="space-y-2.5 sm:space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4">
-                  <div>
-                    <label className="block text-[9px] sm:text-xs font-mono font-extrabold text-[#C084FC] uppercase tracking-wider mb-1">
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Marcus Aurelius"
-                      value={clientName}
-                      onChange={(e) => setClientName(e.target.value)}
-                      className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[9px] sm:text-xs font-mono font-extrabold text-[#C084FC] uppercase tracking-wider mb-1">
-                      Your Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="e.g. marcus@hyperion.io"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
-                    />
-                  </div>
-                </div>
-
-                {/* BESPOKE IN-FLOW CYBERPUNK BUDGET TIER SELECTOR */}
-                <div className="space-y-1.5" ref={budgetDropdownRef}>
-                  <div className="flex items-center justify-between">
-                    <label className="block text-[9px] sm:text-xs font-mono font-extrabold text-[#C084FC] uppercase tracking-wider">
-                      Budget Tier & Sprint Scope
-                    </label>
-                    <span className="text-[8px] sm:text-[10px] text-slate-400 font-normal">Fixed Scope & Escrow Protected</span>
-                  </div>
-                  
-                  {/* Selected Tier Banner / Expansion Toggle Button */}
-                  <button
-                    type="button"
-                    onClick={() => setIsBudgetOpen(!isBudgetOpen)}
-                    className={`w-full px-3 sm:px-4 py-2 sm:py-2.5 bg-[#0A0B14] hover:bg-[#110624] border ${
-                      isBudgetOpen
-                        ? 'border-[#A855F7] shadow-[0_0_20px_rgba(139,0,238,0.35)] ring-1 ring-[#A855F7]/60'
-                        : 'border-purple-500/35 hover:border-purple-400/60'
-                    } rounded-lg sm:rounded-xl text-left flex items-center justify-between gap-2 transition-all duration-200 cursor-pointer shadow-xs`}
-                  >
-                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                      <div className="px-2 py-0.5 bg-[#8B00EE]/30 border border-[#8B00EE]/50 text-purple-200 text-[10px] sm:text-xs font-mono font-black rounded-md shrink-0 shadow-[0_0_8px_rgba(139,0,238,0.3)]">
-                        {selectedBudgetObj.range}
-                      </div>
-                      <div className="truncate flex items-center gap-1.5">
-                        <span className="text-xs sm:text-sm font-bold text-white truncate">
-                          {selectedBudgetObj.value.replace(/^[^(]+\(([^)]+)\)$/, '$1')}
-                        </span>
-                        {selectedBudgetObj.badge && (
-                          <span className={`hidden xs:inline-block px-1.5 py-0.2 rounded-full text-[8px] sm:text-[9px] font-mono font-bold shrink-0 ${
-                            selectedBudgetObj.isPopular
-                              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                              : 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                          }`}>
-                            {selectedBudgetObj.badge}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 shrink-0 text-[#C084FC]">
-                      <span className="text-[9px] sm:text-[10px] font-mono text-purple-300/80 hidden xs:inline">
-                        {isBudgetOpen ? 'Close Tiers' : 'Change Tier'}
-                      </span>
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform duration-200 ${
-                          isBudgetOpen ? 'rotate-180 text-pink-400' : 'text-purple-400'
-                        }`}
-                      />
-                    </div>
-                  </button>
-
-                  {/* In-Flow Animated Cyber Tier Matrix (Never clips or overlaps sibling sections) */}
-                  <AnimatePresence initial={false}>
-                    {isBudgetOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.22, ease: 'easeOut' }}
-                        className="overflow-hidden"
-                      >
-                        <div className="bg-[#090314]/95 border border-purple-500/45 rounded-xl sm:rounded-2xl p-2 sm:p-2.5 space-y-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(139,0,238,0.25)] mt-1.5">
-                          <div className="px-2 py-1 text-[9px] font-mono font-bold tracking-widest text-slate-400 uppercase border-b border-purple-500/20 flex items-center justify-between">
-                            <span>SELECT YOUR ESTIMATED SPRINT TIER</span>
-                            <span className="text-purple-400">100% ESCROW SECURED</span>
-                          </div>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-0.5">
-                            {BUDGET_OPTIONS.map((opt) => {
-                              const isSelected = budgetTier === opt.value;
-                              return (
-                                <div
-                                  key={opt.value}
-                                  onClick={() => {
-                                    setBudgetTier(opt.value);
-                                    setIsBudgetOpen(false);
-                                  }}
-                                  className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl cursor-pointer transition-all duration-150 flex items-start justify-between gap-2.5 border ${
-                                    isSelected
-                                      ? 'bg-gradient-to-br from-[#8B00EE]/35 to-purple-900/30 border-[#A855F7] shadow-[0_0_15px_rgba(139,0,238,0.35)] ring-1 ring-[#A855F7]/40'
-                                      : 'bg-[#0E071A]/70 hover:bg-[#1A0C2E]/80 border-purple-500/20 hover:border-purple-400/50'
-                                  }`}
-                                >
-                                  <div className="space-y-1 min-w-0 flex-1">
-                                    <div className="flex items-center gap-1.5 flex-wrap">
-                                      <span className={`px-2 py-0.5 rounded-md font-mono text-[10px] sm:text-xs font-black ${
-                                        isSelected
-                                          ? 'bg-[#8B00EE] text-white shadow-[0_0_10px_rgba(139,0,238,0.5)]'
-                                          : 'bg-white/10 text-purple-300'
-                                      }`}>
-                                        {opt.range}
-                                      </span>
-                                      <span className="font-bold text-xs text-white">
-                                        {opt.value.replace(/^[^(]+\(([^)]+)\)$/, '$1')}
-                                      </span>
-                                    </div>
-                                    <p className="text-[9.5px] sm:text-[10.5px] text-slate-300 leading-tight">
-                                      {opt.scope}
-                                    </p>
-                                    {opt.badge && (
-                                      <div className="pt-0.5">
-                                        <span className={`inline-block px-1.5 py-0.2 rounded-full text-[8px] sm:text-[9px] font-mono font-bold ${
-                                          opt.isPopular
-                                            ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                                            : 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                                        }`}>
-                                          {opt.badge}
-                                        </span>
-                                      </div>
-                                    )}
-                                  </div>
-
-                                  <div className="shrink-0 pt-0.5">
-                                    {isSelected ? (
-                                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.4)]">
-                                        <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                                      </div>
-                                    ) : (
-                                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-purple-500/30" />
-                                    )}
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <div>
-                  <label className="block text-[9px] sm:text-xs font-mono font-extrabold text-[#C084FC] uppercase tracking-wider mb-1">
-                    Project Brief & Objectives
-                  </label>
-                  <textarea
-                    rows={2}
-                    placeholder="Describe your vision and requirements..."
-                    value={projectBrief}
-                    onChange={(e) => setProjectBrief(e.target.value)}
-                    className="w-full px-3 py-1.5 sm:py-2.5 bg-[#0A0B14]/80 border border-purple-500/30 rounded-lg sm:rounded-xl text-xs font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/70 transition-all shadow-xs"
+          {submittedSuccess ? (
+            <div className="ah-ct-form ah-success" data-r="blur">
+              <span className="ah-pill"><span className="ah-pill-dot" />SLA</span>
+              <h3 className="ah-d3">Direct Email Transmitted!</h3>
+              <p className="ah-lede">
+                Your project parameters have been dispatched directly. SLA reply guaranteed within &lt;24 hours.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmitBrief} className="ah-ct-form">
+              <div className="ah-ct-2">
+                <label className="ah-field">
+                  <span className="ah-field-label">Your Name *</span>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Marcus Aurelius"
+                    value={clientName}
+                    onChange={(e) => setClientName(e.target.value)}
+                    className="ah-input"
                   />
+                </label>
+                <label className="ah-field">
+                  <span className="ah-field-label">Your Email Address *</span>
+                  <input
+                    type="email"
+                    required
+                    placeholder="e.g. marcus@hyperion.io"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="ah-input"
+                  />
+                </label>
+              </div>
+
+              {/* BUDGET TIER SELECTOR */}
+              <div className="ah-field" ref={budgetDropdownRef}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+                  <span className="ah-field-label">Budget Tier & Sprint Scope</span>
+                  <span className="ah-field-label" style={{ color: 'var(--ah-faint)' }}>Fixed Scope & Escrow Protected</span>
                 </div>
-
-                <ButterButton
-                  variant="primary"
-                  size="md"
-                  type="submit"
-                  id="submit-direct-email-btn"
-                  icon={<Send className="w-3.5 h-3.5" />}
-                  iconPosition="right"
-                  className="w-full uppercase tracking-widest font-black text-center justify-center py-2 sm:py-3"
+                <button
+                  type="button"
+                  onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+                  className={`ah-tier-toggle ${isBudgetOpen ? 'is-open' : ''}`}
+                  aria-expanded={isBudgetOpen}
                 >
-                  SEND DIRECT EMAIL BRIEF
-                </ButterButton>
-              </form>
-            )}
+                  <span style={{ display: 'flex', alignItems: 'baseline', gap: 14, minWidth: 0, flexWrap: 'wrap' }}>
+                    <span className="ah-tier-range">{selectedBudgetObj.range}</span>
+                    <span className="ah-tier-name">{selectedBudgetObj.value.replace(/^[^(]+\(([^)]+)\)$/, '$1')}</span>
+                    {selectedBudgetObj.badge && <span className="ah-tier-badge ah-dim">{selectedBudgetObj.badge}</span>}
+                  </span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 'none' }} className="ah-field-label">
+                    <span className="ah-hide-sm">{isBudgetOpen ? 'Close Tiers' : 'Change Tier'}</span>
+                    <ChevronDown className="w-4 h-4" />
+                  </span>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isBudgetOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div style={{ display: 'grid', gap: 10, paddingTop: 14 }}>
+                        <div className="ah-field-label" style={{ display: 'flex', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
+                          <span>SELECT YOUR ESTIMATED SPRINT TIER</span>
+                          <span style={{ color: 'var(--ah-signal)' }}>100% ESCROW SECURED</span>
+                        </div>
+                        <div className="ah-tiers">
+                          {BUDGET_OPTIONS.map((opt) => {
+                            const isSelected = budgetTier === opt.value;
+                            return (
+                              <button
+                                type="button"
+                                key={opt.value}
+                                onClick={() => {
+                                  setBudgetTier(opt.value);
+                                  setIsBudgetOpen(false);
+                                }}
+                                className={`ah-tier ${isSelected ? 'is-on' : ''}`}
+                                aria-pressed={isSelected}
+                              >
+                                <span className="ah-tier-top">
+                                  <span className="ah-tier-range">{opt.range}</span>
+                                  {opt.badge && <span className="ah-tier-badge">{opt.badge}</span>}
+                                </span>
+                                <span className="ah-tier-name">{opt.value.replace(/^[^(]+\(([^)]+)\)$/, '$1')}</span>
+                                <span className="ah-tier-scope">{opt.scope}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <label className="ah-field">
+                <span className="ah-field-label">Project Brief & Objectives</span>
+                <textarea
+                  rows={2}
+                  placeholder="Describe your vision and requirements..."
+                  value={projectBrief}
+                  onChange={(e) => setProjectBrief(e.target.value)}
+                  className="ah-input"
+                />
+              </label>
+
+              <button type="submit" id="submit-direct-email-btn" className="ah-btn ah-btn-primary ah-btn-block" style={{ height: 58 }}>
+                <span>SEND DIRECT EMAIL BRIEF</span>
+                <Arrow className="ah-btn-arrow" />
+              </button>
+            </form>
+          )}
+        </div>
+      </section>
+
+      {/* CARDS 02-05: CHANNELS */}
+      <section className="ah-section" style={{ paddingBottom: 0 }} aria-label="Channels">
+        <div className="ah-channels">
+          {channels.map((c, i) => (
+            <article key={c.key} className={`ah-chan channel-${c.key}-ah`} data-r="" style={{ ['--d' as string]: `${(i % 2) * 0.08}s` } as React.CSSProperties}>
+              <div className="ah-chan-top">
+                <span className="ah-label">{c.card}</span>
+                <span className="ah-pill"><span className="ah-pill-dot" />{c.tag}</span>
+              </div>
+              <h2 className="ah-chan-name">{c.name}</h2>
+              <p className="ah-body" style={{ margin: 0, maxWidth: '40ch' }}>{c.blurb}</p>
+              <dl className="ah-chan-kv" style={{ margin: 0 }}>
+                <div><dt className="ah-label">{c.k1}</dt><dd>{c.v1}</dd></div>
+                <div><dt className="ah-label">{c.k2}</dt><dd>{c.v2}</dd></div>
+              </dl>
+              <div>
+                <a href={c.href} target="_blank" rel="noopener noreferrer" aria-label={c.aria} className="ah-btn ah-btn-ghost">
+                  <span>{c.cta}</span>
+                  <Arrow className="ah-btn-arrow" />
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* STEP 4: STUDIO TELEMETRY CLOCK */}
+      <section className="ah-section" aria-label="Studio Telemetry">
+        <div className="ah-wrap ah-clock">
+          <div style={{ display: 'grid', gap: 18 }}>
+            <span className="ah-pill" style={{ justifySelf: 'start' }}><span className="ah-pill-dot" />Studio Telemetry • Live Clock</span>
+            <BlurText as="h3" text="Real-Time Calendar & Telemetry System" serif={['Telemetry System']} className="ah-d2" />
+            <p className="ah-lede">
+              Synchronized studio system clock displaying exact hours, minutes, seconds, day, month, and year.
+            </p>
           </div>
-        </ScrollReveal>
-
-        {/* ================= CARD 2: FIVERR (COL 1 OF ROW 2) ================= */}
-        <ScrollReveal direction="up" delay={0.14} distance={20} className="col-span-1 h-full">
-          <div className="channel-fiverr bg-[#131422]/90 backdrop-blur-2xl border border-emerald-500/80 rounded-xl sm:rounded-3xl p-3 sm:p-6 lg:p-7 space-y-2.5 sm:space-y-5 flex flex-col justify-between h-full">
-            <div className="space-y-1.5 sm:space-y-2.5 border-b border-purple-500/20 pb-2 sm:pb-4">
-              <div className="flex items-center justify-between">
-                <span className="px-2 sm:px-2.5 py-0.5 bg-emerald-500/25 text-emerald-300 text-[8px] sm:text-[10px] font-mono font-bold rounded-full uppercase tracking-wider border border-emerald-500/40 shadow-[0_0_8px_rgba(16,185,129,0.3)]">
-                  Card 02
-                </span>
-                <span className="text-[8px] sm:text-[10px] font-mono text-emerald-400 font-bold uppercase truncate">Escrow</span>
-              </div>
-              
-              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
-                <Layers className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
-                <span className="truncate">Fiverr</span>
-              </h2>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-medium line-clamp-2 sm:line-clamp-none">
-                Hire via verified Fiverr Pro milestone escrow with 100% protection.
-              </p>
-            </div>
-
-            <div className="space-y-1.5 sm:space-y-3 my-auto py-1 sm:py-2">
-              <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-emerald-500/30 space-y-0.5 sm:space-y-1 shadow-xs">
-                <span className="text-[8px] sm:text-[10px] font-mono text-emerald-400 uppercase block font-bold">Escrow Advantage</span>
-                <p className="text-[10px] sm:text-xs font-semibold text-white truncate">Funds held safely in escrow.</p>
-              </div>
-
-              <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-emerald-500/30 flex items-center justify-between shadow-xs">
-                <span className="text-[10px] sm:text-xs font-bold text-slate-400">Verified</span>
-                <span className="px-2 py-0.5 bg-emerald-500/25 text-emerald-300 text-[8px] sm:text-[10px] font-mono font-extrabold uppercase rounded-full border border-emerald-500/40">
-                  Fiverr Pro
-                </span>
-              </div>
-            </div>
-
-            <ButterButton
-              variant="emerald"
-              size="sm"
-              href={fiverrUrl || 'https://www.fiverr.com/ahsxn_dev'}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Order on Fiverr Pro"
-              icon={<ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
-              iconPosition="right"
-              className="w-full uppercase tracking-wider font-extrabold text-center justify-center text-[10px] sm:text-xs py-1.5 sm:py-2.5"
-            >
-              FIVERR
-            </ButterButton>
-          </div>
-        </ScrollReveal>
-
-        {/* ================= CARD 3: DRIBBBLE (COL 2 OF ROW 2) ================= */}
-        <ScrollReveal direction="up" delay={0.16} distance={20} className="col-span-1 h-full">
-          <div className="channel-dribbble bg-[#131422]/90 backdrop-blur-2xl border border-pink-500/80 rounded-xl sm:rounded-3xl p-3 sm:p-6 lg:p-7 space-y-2.5 sm:space-y-5 flex flex-col justify-between h-full">
-            <div className="space-y-1.5 sm:space-y-2.5 border-b border-purple-500/20 pb-2 sm:pb-4">
-              <div className="flex items-center justify-between">
-                <span className="px-2 sm:px-2.5 py-0.5 bg-pink-500/25 text-pink-300 text-[8px] sm:text-[10px] font-mono font-bold rounded-full uppercase tracking-wider border border-pink-500/40 shadow-[0_0_8px_rgba(236,72,153,0.3)]">
-                  Card 03
-                </span>
-                <span className="text-[8px] sm:text-[10px] font-mono text-pink-400 font-bold uppercase truncate">40+ Shots</span>
-              </div>
-
-              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
-                <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-pink-400 shrink-0" />
-                <span className="truncate">Dribbble</span>
-              </h2>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-medium line-clamp-2 sm:line-clamp-none">
-                Explore UI design concepts, motion prototypes, and component systems.
-              </p>
-            </div>
-
-            <div className="space-y-1.5 sm:space-y-3 my-auto py-1 sm:py-2">
-              <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-pink-500/30 space-y-0.5 sm:space-y-1 shadow-xs">
-                <span className="text-[8px] sm:text-[10px] font-mono text-pink-400 uppercase block font-bold">Featured Works</span>
-                <p className="text-[10px] sm:text-xs font-semibold text-white truncate">Dashboards, motion & UI suites.</p>
-              </div>
-
-              <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-pink-500/30 flex items-center justify-between shadow-xs">
-                <span className="text-[10px] sm:text-xs font-bold text-slate-400">Portfolio</span>
-                <span className="px-2 py-0.5 bg-pink-500/25 text-pink-300 text-[8px] sm:text-[10px] font-mono font-extrabold uppercase rounded-full border border-pink-500/40">
-                  Dribbble Pro
-                </span>
-              </div>
-            </div>
-
-            <ButterButton
-              variant="pink"
-              size="sm"
-              href={dribbbleUrl || 'https://dribbble.com/ahsxn_dev'}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="View Dribbble Portfolio"
-              icon={<ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
-              iconPosition="right"
-              className="w-full uppercase tracking-wider font-extrabold text-center justify-center text-[10px] sm:text-xs py-1.5 sm:py-2.5"
-            >
-              DRIBBBLE
-            </ButterButton>
-          </div>
-        </ScrollReveal>
-
-        {/* ================= CARD 4: TWITTER (COL 1 OF ROW 3) ================= */}
-        <ScrollReveal direction="up" delay={0.18} distance={20} className="col-span-1 h-full">
-          <div className="channel-twitter bg-[#131422]/90 backdrop-blur-2xl border border-white/80 rounded-xl sm:rounded-3xl p-3 sm:p-6 lg:p-7 space-y-2.5 sm:space-y-5 flex flex-col justify-between h-full">
-            <div className="space-y-1.5 sm:space-y-2.5 border-b border-purple-500/20 pb-2 sm:pb-4">
-              <div className="flex items-center justify-between">
-                <span className="px-2 sm:px-2.5 py-0.5 bg-blue-500/25 text-blue-300 text-[8px] sm:text-[10px] font-mono font-bold rounded-full uppercase tracking-wider border border-blue-500/40 shadow-[0_0_8px_rgba(59,130,246,0.3)]">
-                  Card 04
-                </span>
-                <span className="text-[8px] sm:text-[10px] font-mono text-blue-400 font-bold uppercase truncate">Open DMs</span>
-              </div>
-
-              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
-                <Twitter className="w-4 h-4 sm:w-6 sm:h-6 text-white shrink-0" />
-                <span className="truncate">Twitter</span>
-              </h2>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-medium line-clamp-2 sm:line-clamp-none">
-                Connect on Twitter / X for live code updates and open DMs.
-              </p>
-            </div>
-
-            <div className="space-y-1.5 sm:space-y-3 my-auto py-1 sm:py-2">
-              <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-blue-500/30 space-y-0.5 sm:space-y-1 shadow-xs">
-                <span className="text-[8px] sm:text-[10px] font-mono text-blue-400 uppercase block font-bold">Handle</span>
-                <p className="text-[10px] sm:text-xs font-mono font-extrabold text-white truncate">@Ahsanwebdesign</p>
-              </div>
-
-              <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-blue-500/30 flex items-center justify-between shadow-xs">
-                <span className="text-[10px] sm:text-xs font-bold text-slate-400">Status</span>
-                <span className="px-2 py-0.5 bg-blue-500/25 text-blue-300 text-[8px] sm:text-[10px] font-mono font-extrabold uppercase rounded-full border border-blue-500/40">
-                  Open DMs
-                </span>
-              </div>
-            </div>
-
-            <ButterButton
-              variant="blue"
-              size="sm"
-              href={twitterUrl || 'https://x.com/Ahsanwebdesign'}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Connect on Twitter / X"
-              icon={<ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
-              iconPosition="right"
-              className="w-full uppercase tracking-wider font-extrabold text-center justify-center text-[10px] sm:text-xs py-1.5 sm:py-2.5"
-            >
-              TWITTER
-            </ButterButton>
-          </div>
-        </ScrollReveal>
-
-        {/* ================= CARD 5: WHATSAPP (COL 2 OF ROW 3) ================= */}
-        <ScrollReveal direction="up" delay={0.20} distance={20} className="col-span-1 h-full">
-          <div className="channel-whatsapp bg-[#131422]/90 backdrop-blur-2xl border border-emerald-500/80 rounded-xl sm:rounded-3xl p-3 sm:p-6 lg:p-7 space-y-2.5 sm:space-y-5 flex flex-col justify-between h-full">
-            <div className="space-y-1.5 sm:space-y-2.5 border-b border-purple-500/20 pb-2 sm:pb-4">
-              <div className="flex items-center justify-between">
-                <span className="px-2 sm:px-2.5 py-0.5 bg-emerald-500/25 text-emerald-300 text-[8px] sm:text-[10px] font-mono font-bold rounded-full uppercase tracking-wider border border-emerald-500/40 shadow-[0_0_8px_rgba(37,211,102,0.3)]">
-                  Card 05
-                </span>
-                <span className="text-[8px] sm:text-[10px] font-mono text-emerald-400 font-bold uppercase truncate">Instant</span>
-              </div>
-
-              <h2 className="font-display text-sm sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
-                <MessageCircle className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-400 shrink-0" />
-                <span className="truncate">WhatsApp</span>
-              </h2>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-medium line-clamp-2 sm:line-clamp-none">
-                Instant mobile messaging for real-time project inquiries.
-              </p>
-            </div>
-
-            <div className="space-y-1.5 sm:space-y-3 my-auto py-1 sm:py-2">
-              <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-purple-500/20 space-y-0.5 sm:space-y-1 shadow-xs">
-                <span className="text-[8px] sm:text-[10px] font-mono text-emerald-400 uppercase block font-bold">Direct Line</span>
-                <p className="text-[10px] sm:text-xs font-mono font-extrabold text-white truncate">03284992759</p>
-              </div>
-
-              <div className="p-2 sm:p-3.5 bg-[#0A0B14]/80 rounded-lg sm:rounded-2xl border border-purple-500/20 flex items-center justify-between shadow-xs">
-                <span className="text-[10px] sm:text-xs font-bold text-slate-400">Status</span>
-                <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 text-[8px] sm:text-[10px] font-mono font-extrabold uppercase rounded-full border border-emerald-500/30">
-                  Online
-                </span>
-              </div>
-            </div>
-
-            <ButterButton
-              variant="emerald"
-              size="sm"
-              href="https://wa.me/923284992759"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Direct WhatsApp Message"
-              icon={<ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
-              iconPosition="right"
-              className="w-full uppercase tracking-wider font-extrabold text-center justify-center text-[10px] sm:text-xs py-1.5 sm:py-2.5"
-            >
-              WHATSAPP
-            </ButterButton>
-          </div>
-        </ScrollReveal>
-
-      </div>
-
-      {/* STEP 4: SYSTEM TELEMETRY & FULL LIVE CLOCK / CALENDAR BLOCK */}
-      <ScrollReveal direction="up" delay={0.15} distance={24}>
-        <div className="bg-[#131422]/90 backdrop-blur-2xl border border-purple-500/30 shadow-2xl hover:shadow-[0_0_35px_rgba(139,0,238,0.3)] hover:border-[#A855F7]/70 transition-all duration-300 rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 space-y-4">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6 w-full">
-            <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#8B00EE]/20 border border-[#8B00EE]/40 text-[#C084FC] text-[9px] sm:text-[10px] font-mono font-bold rounded-full uppercase tracking-wider">
-                <Clock className="w-3.5 h-3.5 text-[#C084FC]" />
-                <span>Studio Telemetry • Live Clock</span>
-              </div>
-              <h3 className="font-display text-lg sm:text-xl lg:text-2xl font-black text-white uppercase tracking-wide">
-                Real-Time Calendar & Telemetry System
-              </h3>
-              <p className="text-xs text-slate-300 font-medium">
-                Synchronized studio system clock displaying exact hours, minutes, seconds, day, month, and year.
-              </p>
-            </div>
-
-            {/* Live Digital Clock Box */}
-            <div className="p-3.5 sm:p-4 bg-[#0A0B14]/80 border border-purple-500/30 rounded-2xl flex flex-row justify-between items-center w-full lg:w-auto gap-4 sm:gap-6 shadow-inner shrink-0">
-              <div className="text-left sm:text-center font-mono">
-                <span className="text-[9px] sm:text-xs text-[#C084FC] block font-bold uppercase tracking-widest">EXACT CLOCK (UTC)</span>
-                <span className="text-base sm:text-xl lg:text-2xl font-mono font-black text-white tracking-wider sm:tracking-widest">
-                  {hours}:{minutes}:{seconds}
-                </span>
-              </div>
-              <div className="h-6 sm:h-8 w-[1px] bg-purple-500/30 shrink-0" />
-              <div className="text-right sm:text-center font-mono">
-                <span className="text-[9px] sm:text-xs text-[#C084FC] block font-bold uppercase tracking-widest">CALENDAR DATE</span>
-                <span className="text-xs sm:text-sm lg:text-base font-mono font-bold text-white">
-                  {dayName}, {monthName} {dayNum}, {year}
-                </span>
-              </div>
-            </div>
+          <div style={{ display: 'grid', gap: 14 }} data-r="blur">
+            <span className="ah-label">EXACT CLOCK (UTC)</span>
+            <span className="ah-clock-digits" suppressHydrationWarning>
+              {hours}<i>:</i>{minutes}<i>:</i>{seconds}
+            </span>
+            <span className="ah-label">CALENDAR DATE</span>
+            <span suppressHydrationWarning style={{ fontSize: 18 }}>
+              {dayName}, {monthName} {dayNum}, {year}
+            </span>
           </div>
         </div>
-      </ScrollReveal>
+      </section>
 
-      {/* STEP 5: REVIEW FORM SECTION WITH SCROLL REVEAL */}
-      <ScrollReveal direction="up" delay={0.2} distance={24}>
+      {/* STEP 5: REVIEW FORM */}
+      <section className="ah-ct-brief ah-light" aria-label="Add Review or Rating" style={{ borderRadius: 'clamp(16px, 2vw, 28px) clamp(16px, 2vw, 28px) 0 0' }}>
         <AddReviewForm onAddReview={onAddReview || (() => {})} />
-      </ScrollReveal>
-
-
+      </section>
     </div>
   );
 };

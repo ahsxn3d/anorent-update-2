@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 
-import { Star, MessageSquare, Sparkles, Check, Send } from 'lucide-react';
+import { Star, Check, Send } from 'lucide-react';
 import { ReviewItem } from '../types';
-import { ButterButton } from './ButterButton';
 
 interface ReviewsDisplayProps {
   reviews: ReviewItem[];
@@ -163,121 +162,92 @@ export const AddReviewForm: React.FC<AddReviewFormProps> = ({ onAddReview }) => 
   };
 
   return (
-    <div className="bg-[#0c0919]/90 text-white rounded-2xl border border-white/10 p-4 sm:p-6 md:p-8 space-y-4 md:space-y-6 backdrop-blur-xl">
-      
+    <div className="ah-grid ah-rf-wrap" style={{ rowGap: 48 }}>
       {/* HEADER */}
-      <div className="space-y-1.5 md:space-y-2 border-b border-white/10 pb-3 md:pb-4">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-white/5 border border-white/10 rounded-full text-[10px] md:text-xs font-mono font-bold text-purple-300 uppercase">
-          <MessageSquare className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-400" />
-          <span>Feedback Channel</span>
-        </div>
-        <h2 className="font-display text-lg sm:text-2xl md:text-3xl font-extrabold text-white tracking-wide uppercase">
-          Add Review or Rating
+      <div className="ah-ct-brief-head">
+        <span className="ah-label">Feedback Channel</span>
+        <h2 className="ah-d2">
+          Add Review <span className="ah-serif">or Rating</span>
         </h2>
-        <p className="text-[11px] md:text-xs text-zinc-400">
+        <p className="ah-body" style={{ margin: 0 }}>
           Share your experience working directly with Ahsan on your build.
         </p>
       </div>
 
       {submitted ? (
-        <div className="p-6 md:p-8 text-center bg-purple-950/40 rounded-xl border border-purple-500/30 space-y-3 my-3">
-          <Check className="w-8 h-8 md:w-10 md:h-10 text-emerald-400 mx-auto animate-bounce" />
-          <h3 className="font-display text-lg md:text-xl font-extrabold text-white uppercase tracking-wider">
-            Review Published!
-          </h3>
-          <p className="text-xs text-zinc-300">
-            Thank you for your feedback. It has been added to the showcase.
-          </p>
+        <div className="ah-ct-form ah-success">
+          <span className="ah-pill" style={{ justifySelf: 'start' }}><span className="ah-pill-dot" /><Check className="w-3 h-3" /></span>
+          <h3 className="ah-d3">Review Published!</h3>
+          <p className="ah-lede">Thank you for your feedback. It has been added to the showcase.</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-            <div>
-              <label className="block text-[10px] md:text-xs font-mono text-zinc-300 uppercase tracking-wider mb-1">
-                Your Full Name *
-              </label>
+        <form onSubmit={handleSubmit} className="ah-ct-form">
+          <div className="ah-ct-2">
+            <label className="ah-field">
+              <span className="ah-field-label">Your Full Name *</span>
               <input
                 type="text"
                 required
                 placeholder="e.g. Sarah Jenkins"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs md:text-sm font-sans text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
+                className="ah-input"
               />
-            </div>
+            </label>
 
-            <div>
-              <label className="block text-[10px] md:text-xs font-mono text-zinc-300 uppercase tracking-wider mb-1">
-                Your Email Address *
-              </label>
+            <label className="ah-field">
+              <span className="ah-field-label">Your Email Address *</span>
               <input
                 type="email"
                 required
                 placeholder="e.g. sarah@techcorp.io"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs md:text-sm font-sans text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
+                className="ah-input"
               />
-            </div>
+            </label>
           </div>
 
           {/* STAR RATING SELECTOR */}
-          <div>
-            <label className="block text-[10px] md:text-xs font-mono text-zinc-300 uppercase tracking-wider mb-1">
-              Rating Stars (1 to 5) *
-            </label>
-            <div className="flex items-center gap-1.5 md:gap-2">
+          <div className="ah-field">
+            <span className="ah-field-label">Rating Stars (1 to 5) *</span>
+            <div className="ah-stars-pick">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
                   type="button"
                   onClick={() => setRating(star)}
-                  className={`p-1.5 md:p-2 rounded-lg transition-all cursor-pointer ${
-                    rating >= star
-                      ? 'bg-amber-400/20 text-amber-400 border border-amber-400/40'
-                      : 'bg-white/5 text-zinc-600 border border-white/10 hover:bg-white/10'
-                  }`}
+                  className={`ah-star-btn ${rating >= star ? 'is-on' : ''}`}
+                  aria-label={`${star} star${star > 1 ? 's' : ''}`}
                 >
-                  <Star className={`w-4 h-4 md:w-5 md:h-5 ${rating >= star ? 'fill-amber-400 text-amber-400' : ''}`} />
+                  <Star className="w-4 h-4" fill={rating >= star ? 'currentColor' : 'none'} />
                 </button>
               ))}
-              <span className="text-[11px] md:text-xs font-bold text-amber-300 ml-1.5 font-mono">
+              <span className="ah-field-label" style={{ marginLeft: 8, color: 'var(--ah-text)' }}>
                 {rating} / 5 Stars
               </span>
             </div>
           </div>
 
           {/* REVIEW TEXTAREA */}
-          <div>
-            <label className="block text-[10px] md:text-xs font-mono text-zinc-300 uppercase tracking-wider mb-1">
-              Your Review / Feedback *
-            </label>
+          <label className="ah-field">
+            <span className="ah-field-label">Your Review / Feedback *</span>
             <textarea
               rows={3}
               required
               placeholder="Tell us about the project quality, performance metrics, design aesthetics, or delivery time..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="w-full px-3 md:px-4 py-2 md:py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs md:text-sm font-sans text-white placeholder-zinc-500 focus:outline-none focus:border-purple-400 transition-all"
+              className="ah-input"
             />
-          </div>
+          </label>
 
-          <ButterButton
-            variant="primary"
-            size="lg"
-            type="submit"
-            id="post-review-btn"
-            icon={<Send className="w-4 h-4" />}
-            iconPosition="right"
-            className="w-full uppercase tracking-wider font-extrabold"
-          >
-            Post Review
-          </ButterButton>
-
+          <button type="submit" id="post-review-btn" className="ah-btn ah-btn-primary ah-btn-block" style={{ height: 58 }}>
+            <span>Post Review</span>
+            <Send className="w-4 h-4" />
+          </button>
         </form>
       )}
-
     </div>
   );
 };

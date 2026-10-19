@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X } from 'lucide-react';
 import { Page } from '../types';
 import { sound } from '../utils/audio';
 
@@ -12,10 +11,9 @@ interface NavbarProps {
   setCurrentPage?: (page: Page) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({
-  currentPage: propCurrentPage,
-  setCurrentPage,
-}) => {
+const pad = (n: number) => String(n).padStart(2, '0');
+
+export const Navbar: React.FC<NavbarProps> = ({ currentPage: propCurrentPage, setCurrentPage }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,6 +25,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.documentElement.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   let activePage: Page = 'home';
   if (propCurrentPage) {
@@ -61,34 +66,64 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const menuItems = [...navItems, { id: 'contact' as Page, label: 'Contact', href: '/contact' }];
+
   return (
-    <header className="sticky top-0 z-[100] w-full">
-      <div
-        className={`relative h-14 sm:h-[4.25rem] px-5 sm:px-8 lg:px-10 flex items-center border-b transition-colors duration-500 ${
-          scrolled || isMobileMenuOpen
-            ? 'bg-black/80 backdrop-blur-xl border-white/10'
-            : 'bg-black/35 backdrop-blur-md border-transparent'
-        }`}
-      >
-        <button
-          onClick={() => handleNavClick({ id: 'home', href: '/' })}
-          className="relative z-10 text-[15px] tracking-[-0.04em] text-white hover:opacity-60 transition-opacity duration-500 cursor-pointer"
-        >
-          Anorix
+    <header className={`ah-nav ${scrolled ? 'is-scrolled' : ''} ${isMobileMenuOpen ? 'is-open' : ''}`}>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            className="ah-menu md:hidden"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="ah-glow" aria-hidden="true" />
+            <ul className="ah-menu-list">
+              {menuItems.map((item, i) => (
+                <motion.li
+                  key={item.id}
+                  initial={{ opacity: 0, y: 28, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 0.8, delay: 0.18 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => handleNavClick(item)}
+                    className={`ah-menu-item ${activePage === item.id ? 'is-active' : ''}`}
+                  >
+                    <small>{pad(i + 1)}</small>
+                    <span>{item.label}</span>
+                  </button>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="ah-menu-foot ah-label">
+              <span>Anorix</span>
+              <span>© 2026</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="ah-nav-bar">
+        <button type="button" onClick={() => handleNavClick({ id: 'home', href: '/' })} className="ah-logo" aria-label="Anorix home">
+          Anor<i>ix</i>
         </button>
 
-        <nav className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-8">
+        <nav className="ah-nav-links" aria-label="Primary">
           {navItems.map((item) => {
             const isActive = activePage === item.id;
             return (
               <button
+                type="button"
                 key={item.id}
                 onClick={() => handleNavClick(item)}
                 id={`nav-link-${item.id}`}
                 onMouseEnter={() => sound.playHover()}
-                className={`lux-link text-[13px] tracking-[-0.01em] cursor-pointer transition-colors duration-500 ${
-                  isActive ? 'text-white' : 'text-white/40 hover:text-white'
-                }`}
+                className={`ah-nav-link ${isActive ? 'is-active' : ''}`}
+                aria-current={isActive ? 'page' : undefined}
               >
                 {item.label}
               </button>
@@ -96,15 +131,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        <div className="ml-auto relative z-10 flex items-center gap-2">
+        <div className="ah-nav-right">
           <button
+            type="button"
             onClick={() => handleNavClick({ id: 'contact', href: '/contact' })}
             id="nav-contact-cta-btn"
-            className="hidden sm:inline-flex items-center h-9 px-4 rounded-full bg-white text-black text-[13px] tracking-[-0.01em] hover:bg-[#e8e8e8] transition-colors duration-500 cursor-pointer"
+            className="ah-nav-cta"
           >
             Contact
           </button>
           <button
+            type="button"
             onClick={() => {
               sound.playClick();
               setIsMobileMenuOpen((prev) => !prev);
@@ -112,41 +149,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             id="mobile-nav-dropdown-toggle"
             aria-label="Toggle Page Menu"
             aria-expanded={isMobileMenuOpen}
-            className="md:hidden inline-flex items-center justify-center w-9 h-9 text-white/80 hover:text-white cursor-pointer"
+            className="ah-burger"
           >
-            {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            <span />
+            <span />
           </button>
         </div>
       </div>
-
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden absolute left-0 right-0 top-full bg-black/95 backdrop-blur-xl border-b border-white/10"
-          >
-            <div className="px-5 py-2 flex flex-col">
-              {[...navItems, { id: 'contact' as Page, label: 'Contact', href: '/contact' }].map((item) => {
-                const isActive = activePage === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNavClick(item)}
-                    className={`flex items-center justify-between py-3.5 border-b border-white/8 text-left text-[16px] tracking-[-0.03em] cursor-pointer ${
-                      isActive ? 'text-white' : 'text-white/50'
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 };

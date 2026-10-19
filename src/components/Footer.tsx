@@ -37,62 +37,64 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
   };
 
   return (
-    <footer className="relative z-20 w-full mt-24 sm:mt-32 border-t border-white/10">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
-          <div className="md:col-span-5 space-y-5">
-            <p className="text-[15px] tracking-[-0.04em] text-white">Anorix</p>
-            <p className="text-sm text-white/55 leading-relaxed max-w-sm">
-              &ldquo;Where Cyberpunk Aesthetics Meet High-Performance Web Engineering.&rdquo;
-            </p>
-            <p className="text-xs text-white/35">
-              © 2026 ANORIX STUDIO. All rights reserved.
-            </p>
-          </div>
-
-          <div className="md:col-span-4 grid grid-cols-2 gap-8">
-            <div>
-              <p className="text-[11px] tracking-[0.18em] uppercase text-white/35 mb-4">Pages</p>
-              <ul className="space-y-2.5 text-sm text-white/70">
-                <li><button onClick={() => go('home')} className="lux-link cursor-pointer">Home</button></li>
-                <li><button onClick={() => go('deployments')} className="lux-link cursor-pointer">Deployments</button></li>
-                <li><button onClick={() => go('about')} className="lux-link cursor-pointer">About Studio</button></li>
-                <li><button onClick={() => go('faq')} className="lux-link cursor-pointer">FAQ & Guides</button></li>
-                <li><button onClick={() => go('contact')} className="lux-link cursor-pointer">Direct Contact Portals</button></li>
-              </ul>
-            </div>
-            <div>
-              <p className="text-[11px] tracking-[0.18em] uppercase text-white/35 mb-4">Channels</p>
-              <ul className="space-y-2.5 text-sm text-white/70">
-                <li>
-                  <a href="https://www.fiverr.com/ahsxn_dev" target="_blank" rel="noopener noreferrer" className="lux-link">
-                    Fiverr Pro
-                  </a>
-                </li>
-                <li>
-                  <a href="https://dribbble.com/ahsxn_dev" target="_blank" rel="noopener noreferrer" className="lux-link">
-                    Dribbble
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="md:col-span-3">
-            <p className="text-[11px] tracking-[0.18em] uppercase text-white/35 mb-4">Studio time</p>
-            <p suppressHydrationWarning className="text-3xl tracking-[-0.04em] text-white tabular-nums">
-              {formattedTime}
-            </p>
-            <p suppressHydrationWarning className="mt-2 text-sm text-white/45">
-              {formattedDate}
-            </p>
-          </div>
+    <footer className="ah-footer">
+      <div className="ah-glow ah-glow-low ah-glow-warm" aria-hidden="true" />
+      <div className="ah-footer-grid">
+        <div className="ah-footer-lede">
+          <p className="ah-label" style={{ marginBottom: 20 }}>Anorix</p>
+          <p className="ah-footer-quote">
+            &ldquo;Where Cyberpunk Aesthetics Meet <em>High-Performance</em> Web Engineering.&rdquo;
+          </p>
+          <p className="ah-label" style={{ marginTop: 28, color: 'var(--ah-faint)' }}>
+            © 2026 ANORIX STUDIO. All rights reserved.
+          </p>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[11px] tracking-[0.14em] uppercase text-white/30">
-          <span>Anorix Architecture // Modern Portfolio Showcase</span>
-          <span>Powered by Anorix Core Engine</span>
+        <div className="ah-footer-col">
+          <p className="ah-label" style={{ marginBottom: 18 }}>Pages</p>
+          <ul>
+            <li><button type="button" onClick={() => go('home')}>Home</button></li>
+            <li><button type="button" onClick={() => go('deployments')}>Deployments</button></li>
+            <li><button type="button" onClick={() => go('about')}>About Studio</button></li>
+            <li><button type="button" onClick={() => go('faq')}>FAQ & Guides</button></li>
+            <li><button type="button" onClick={() => go('contact')}>Direct Contact Portals</button></li>
+          </ul>
         </div>
+
+        <div className="ah-footer-col">
+          <p className="ah-label" style={{ marginBottom: 18 }}>Channels</p>
+          <ul>
+            <li>
+              <a href="https://www.fiverr.com/ahsxn_dev" target="_blank" rel="noopener noreferrer">
+                Fiverr Pro
+              </a>
+            </li>
+            <li>
+              <a href="https://dribbble.com/ahsxn_dev" target="_blank" rel="noopener noreferrer">
+                Dribbble
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="ah-footer-col is-time">
+          <p className="ah-label" style={{ marginBottom: 18 }}>Studio time</p>
+          <p suppressHydrationWarning className="ah-footer-time">
+            {formattedTime}
+          </p>
+          <p suppressHydrationWarning className="ah-dim" style={{ marginTop: 10, fontSize: 14 }}>
+            {formattedDate}
+          </p>
+        </div>
+      </div>
+
+      <span className="ah-footer-word" aria-hidden="true" data-r="blur">
+        Anor<i>ix</i>
+      </span>
+
+      <div className="ah-footer-base ah-label">
+        <span>Anorix Architecture // Modern Portfolio Showcase</span>
+        <span>Powered by Anorix Core Engine</span>
       </div>
     </footer>
   );
