@@ -4,9 +4,11 @@ import './globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '500', '600'],
   variable: '--font-sans',
   display: 'swap',
+  preload: false,
+  adjustFontFallback: true,
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -14,6 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500'],
   variable: '--font-mono',
   display: 'swap',
+  preload: true, // hero labels
 });
 
 export const metadata: Metadata = {
@@ -32,14 +35,7 @@ export const metadata: Metadata = {
     'Ahsan',
   ],
   authors: [{ name: 'Ahsan' }],
-  icons: {
-    icon: [
-      { url: '/icon.png', type: 'image/png' },
-      { url: '/favicon.ico' },
-    ],
-    apple: [{ url: '/apple-touch-icon.png' }],
-    shortcut: ['/favicon.ico'],
-  },
+  // favicon.ico, icon.svg, apple-icon.png, opengraph-image.jpg and manifest come from app/ file conventions
 };
 
 export const viewport: Viewport = {
@@ -61,9 +57,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <script
           // flags JS before first paint so reveal states only hide content when they can also show it
           dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('ah-js')" }}

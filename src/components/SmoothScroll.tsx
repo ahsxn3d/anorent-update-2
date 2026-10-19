@@ -1,60 +1,54 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import type Lenis from 'lenis';
+import { loadGsap, whenInteract } from './site/gsap';
 
 export let lenisInstance: Lenis | null = null;
 
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     const isTouchDevice =
-      typeof window !== 'undefined' &&
-      ('ontouchstart' in window ||
-        navigator.maxTouchPoints > 0 ||
-        window.matchMedia('(pointer: coarse)').matches ||
-        window.innerWidth < 768);
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.innerWidth < 768;
 
-    // On mobile touch devices, use 100% native inertial touch scrolling (zero frame drops / touch hijacking)
-    if (isTouchDevice) {
-      return;
-    }
+    // Touch devices keep 100% native inertial scrolling
+    if (isTouchDevice || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // Luxury Awwwards-grade smooth scroll initialization for desktop mouse/wheel devices
-    const lenis = new Lenis({
-      duration: 0.8,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      syncTouch: false,
-      infinite: false,
+    let cancelled = false;
+    let cleanup = () => {};
+
+    // Lenis + the GSAP ticker arrive on the first scroll intent; native scroll works until then
+    whenInteract().then(async () => {
+      const [{ default: LenisCtor }, { gsap, ScrollTrigger }] = await Promise.all([import('lenis'), loadGsap()]);
+      if (cancelled) return;
+      const lenis = new LenisCtor({
+        duration: 0.8,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1.0,
+        syncTouch: false,
+        infinite: false,
+      });
+      lenisInstance = lenis;
+      lenis.on('scroll', () => ScrollTrigger.update());
+      const update = (time: number) => lenis.raf(time * 1000);
+      gsap.ticker.add(update);
+      gsap.ticker.lagSmoothing(500, 33);
+      cleanup = () => {
+        gsap.ticker.remove(update);
+        lenis.destroy();
+        lenisInstance = null;
+      };
     });
-
-    lenisInstance = lenis;
-
-    // Connect Lenis scroll updates to GSAP ScrollTrigger
-    lenis.on('scroll', () => {
-      ScrollTrigger.update();
-    });
-
-    const updateLenis = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(updateLenis);
-    gsap.ticker.lagSmoothing(500, 33);
 
     return () => {
-      gsap.ticker.remove(updateLenis);
-      lenis.destroy();
-      lenisInstance = null;
+      cancelled = true;
+      cleanup();
     };
   }, []);
 

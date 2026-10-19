@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { DeploymentProduct } from '../types';
 import { sound } from '../utils/audio';
@@ -120,8 +121,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         aria-label={`Inspect ${product.title}`}
       >
         <span className="ah-work-zoom">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={product.thumbnailUrl} alt={product.title} loading="lazy" decoding="async" width={1200} height={900} />
+          <Image src={product.thumbnailUrl} alt={product.title} width={1200} height={900} sizes="(min-width: 900px) 46vw, 100vw" />
         </span>
         <span className="ah-work-top">
           <span className="ah-chip">{product.category}</span>

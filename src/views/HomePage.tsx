@@ -1,20 +1,20 @@
 'use client';
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import { useRouter } from 'next/navigation';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import { Page, DeploymentProduct, ReviewItem, HeroContent } from '../types';
-import { DeploymentModal } from '../components/DeploymentModal';
+import { loadGsap, whenInteract } from '../components/site/gsap';
+import { HeroBlob } from '../components/site/HeroBlob';
+
+// The project modal (and its animation library) only loads when a project is opened
+const DeploymentModal = dynamic(() => import('../components/DeploymentModal').then((m) => m.DeploymentModal), { ssr: false });
 import { BlurText } from '../components/site/BlurText';
 import { sound } from '../utils/audio';
 import '../components/home/home.css';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
-}
 
 interface HomePageProps {
   setCurrentPage?: (page: Page) => void;
@@ -109,6 +109,13 @@ export const HomePage: React.FC<HomePageProps> = ({
     [finalBioSubtext, heroContent?.highlightWords]
   );
 
+  // up to 8 distinct technologies from the projects, floated around the statement
+  const annotations = useMemo(() => {
+    const seen = new Set<string>();
+    (products || []).forEach((p) => (p.techStack || []).forEach((t) => seen.add(t)));
+    return Array.from(seen).slice(0, 8);
+  }, [products]);
+
   const avgRating = reviews.length > 0
     ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
     : '5.0';
@@ -125,8 +132,16 @@ export const HomePage: React.FC<HomePageProps> = ({
   /* Scroll choreography: transform + opacity only, Lenis-synced via the */
   /* shared SmoothScroll ticker. Nothing runs with reduced motion.        */
   /* ------------------------------------------------------------------ */
-  useGSAP(
-    () => {
+  useEffect(() => {
+    let cancelled = false;
+    let teardown = () => {};
+    whenInteract()
+      .then(loadGsap)
+      .then(({ gsap, ScrollTrigger }) => {
+        if (cancelled || !root.current) return;
+        let inner: void | (() => void);
+        const ctx = gsap.context(() => {
+          inner = (() => {
       const mm = gsap.matchMedia();
 
       mm.add(
@@ -374,9 +389,18 @@ export const HomePage: React.FC<HomePageProps> = ({
         window.clearTimeout(t);
         mm.revert();
       };
-    },
-    { scope: root, dependencies: [products.length, reviews.length] }
-  );
+          })();
+        }, root);
+        teardown = () => {
+          if (typeof inner === 'function') inner();
+          ctx.revert();
+        };
+      });
+    return () => {
+      cancelled = true;
+      teardown();
+    };
+  }, [products.length, reviews.length]);
 
   const total = products?.length || 0;
 
@@ -385,6 +409,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* ============================ 01 HERO ============================ */}
       <section className="ah-hero ah-bleed">
         <div className="ah-glow" aria-hidden="true" />
+        <HeroBlob />
         <div className="ah-hero-top ah-hero-chrome ah-load" style={{ animationDelay: '0.1s' }}>
           <p className="ah-label">{finalBadgeText}</p>
           <p className="ah-label ah-hero-telemetry">
@@ -448,6 +473,23 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* ticker: the existing service names, squared-media style */}
+      <div className="ah-ticker ah-bleed" aria-hidden="true">
+        <div className="ah-ticker-track">
+          {[0, 1].map((rep) => (
+            <span key={rep} className="ah-ticker-run">
+              {services.concat(services).map(([, title, detail], k) => (
+                <span key={`${rep}-${k}`} className="ah-ticker-item">
+                  <span>{title}</span>
+                  <i className="ah-serif">{detail}</i>
+                  <b className="ah-ticker-sep" />
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* ============================== REEL ============================= */}
       {products && products.length > 0 && (
         <section className="ah-reel ah-bleed" aria-label="Selected work">
@@ -463,10 +505,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     onClick={() => inspect(project)}
                     aria-label={`Inspect ${project.title}`}
                   >
-                    {image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={image} alt="" width={1376} height={768} loading="lazy" decoding="async" />
-                    ) : null}
+                    {image ? <Image src={image} alt="" width={1376} height={768} sizes="(min-width: 900px) 34vw, 82vw" /> : null}
                     <span className="ah-reel-tag">
                       <span className="ah-serif">{pad(i + 1)}</span>
                       <span>{project.title.split(' | ')[0]}</span>
@@ -482,6 +521,11 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* ========================== 02 STATEMENT ========================== */}
       <section className="ah-section ah-statement ah-bleed" aria-label="Statement">
+        <div className="ah-notes" aria-hidden="true">
+          {annotations.map((t, k) => (
+            <span key={t} className={`ah-note ah-note-${k}`}>{t}</span>
+          ))}
+        </div>
         <div className="ah-grid">
           <p className="ah-chapter">
             <span className="ah-serif">01</span>
@@ -595,15 +639,13 @@ export const HomePage: React.FC<HomePageProps> = ({
                     >
                       <span className="ah-case-media">
                         {image ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
+                          <Image
                             className="ah-case-img"
                             src={image}
                             alt={project.title}
                             width={1376}
                             height={768}
-                            loading="lazy"
-                            decoding="async"
+                            sizes="(min-width: 900px) 64vw, 100vw"
                           />
                         ) : null}
                       </span>
@@ -735,10 +777,12 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* LIVE INTERACTIVE DEPLOYMENT INSPECTOR MODAL */}
-      <DeploymentModal
-        product={selectedProduct}
-        onClose={() => setSelectedProduct(null)}
-      />
+      {selectedProduct && (
+        <DeploymentModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { Wordmark } from './site/Logo';
 import { useRouter } from 'next/navigation';
 import { Page } from '../types';
 
@@ -88,8 +89,8 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
         </div>
       </div>
 
-      <span className="ah-footer-word" aria-hidden="true" data-r="blur">
-        Anor<i>ix</i>
+      <span className="ah-footer-mark" aria-hidden="true" data-r="draw">
+        <Wordmark />
       </span>
 
       <div className="ah-footer-base ah-label">

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ThumbsUp, Sparkles, Search, X, ShieldCheck, Zap, Cpu, Clock, Copy, Check, Terminal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'motion/react';
+import { Collapse } from '../components/site/Collapse';
 import { FAQItem, FaqHeaderConfig, Page } from '../types';
 import { BlurText, Arrow } from '../components/site/BlurText';
 import { sound } from '../utils/audio';
@@ -255,15 +255,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                   <span className="ah-acc-ico" aria-hidden="true" />
                 </button>
 
-                <AnimatePresence initial={false}>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0, filter: 'blur(8px)' }}
-                      animate={{ height: 'auto', opacity: 1, filter: 'blur(0px)' }}
-                      exit={{ height: 0, opacity: 0, filter: 'blur(8px)' }}
-                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                      style={{ overflow: 'hidden' }}
-                    >
+                <Collapse open={isExpanded} blur ms={500}>
                       <div className="ah-acc-panel">
                         <div>
                           <p className="ah-acc-a">{item.answer}</p>
@@ -294,9 +286,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                           </div>
                         </div>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                    </Collapse>
               </li>
             );
           })}

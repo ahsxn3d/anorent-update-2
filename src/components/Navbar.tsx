@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'motion/react';
 import { Page } from '../types';
 import { sound } from '../utils/audio';
+import { Monogram, Wordmark } from './site/Logo';
 
 interface NavbarProps {
   currentPage?: Page;
@@ -70,46 +70,36 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage: propCurrentPage, se
 
   return (
     <header className={`ah-nav ${scrolled ? 'is-scrolled' : ''} ${isMobileMenuOpen ? 'is-open' : ''}`}>
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className="ah-menu md:hidden"
-            initial={{ clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ clipPath: 'inset(0 0 0% 0)' }}
-            exit={{ clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="ah-glow" aria-hidden="true" />
-            <ul className="ah-menu-list">
-              {menuItems.map((item, i) => (
-                <motion.li
-                  key={item.id}
-                  initial={{ opacity: 0, y: 28, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 0.8, delay: 0.18 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => handleNavClick(item)}
-                    className={`ah-menu-item ${activePage === item.id ? 'is-active' : ''}`}
-                  >
-                    <small>{pad(i + 1)}</small>
-                    <span>{item.label}</span>
-                  </button>
-                </motion.li>
-              ))}
-            </ul>
-            <div className="ah-menu-foot ah-label">
-              <span>Anorix</span>
-              <span>© 2026</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        className={`ah-menu md:hidden ${isMobileMenuOpen ? 'is-open' : ''}`}
+        inert={!isMobileMenuOpen}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <div className="ah-glow" aria-hidden="true" />
+        <ul className="ah-menu-list">
+          {menuItems.map((item, i) => (
+            <li key={item.id} style={{ '--i': i } as React.CSSProperties}>
+              <button
+                type="button"
+                onClick={() => handleNavClick(item)}
+                className={`ah-menu-item ${activePage === item.id ? 'is-active' : ''}`}
+              >
+                <small>{pad(i + 1)}</small>
+                <span>{item.label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="ah-menu-foot ah-label">
+          <span>Anorix</span>
+          <span>© 2026</span>
+        </div>
+      </div>
 
       <div className="ah-nav-bar">
         <button type="button" onClick={() => handleNavClick({ id: 'home', href: '/' })} className="ah-logo" aria-label="Anorix home">
-          Anor<i>ix</i>
+          <Monogram />
+          <Wordmark />
         </button>
 
         <nav className="ah-nav-links" aria-label="Primary">

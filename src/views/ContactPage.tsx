@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { Collapse } from '../components/site/Collapse';
 import { Page, ReviewItem, ContactSubmission } from '../types';
 import { AddReviewForm } from '../components/ReviewsSection';
 import { BlurText, Arrow } from '../components/site/BlurText';
@@ -303,15 +303,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   </span>
                 </button>
 
-                <AnimatePresence initial={false}>
-                  {isBudgetOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                      style={{ overflow: 'hidden' }}
-                    >
+                <Collapse open={isBudgetOpen} ms={400}>
                       <div style={{ display: 'grid', gap: 10, paddingTop: 14 }}>
                         <div className="ah-field-label" style={{ display: 'flex', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
                           <span>SELECT YOUR ESTIMATED SPRINT TIER</span>
@@ -342,9 +334,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           })}
                         </div>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                    </Collapse>
               </div>
 
               <label className="ah-field">

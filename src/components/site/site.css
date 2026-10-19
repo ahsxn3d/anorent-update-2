@@ -18,6 +18,8 @@
    sky       #B1D7ED  fal cobalt-chapter capture                  glow highlight only
    ========================================================================== */
 
+/* public site runs on one sans family: Inter Tight (display + text), so Inter is never downloaded */
+.ah-site { --font-sans: var(--font-ah-display); }
 .ah-site {
   --ah-midnight: #051236;
   --ah-night: #10174b;
@@ -297,6 +299,18 @@ body:has(.ah-site) ::selection {
   justify-content: space-between;
   background: var(--ah-midnight);
   overflow: hidden;
+}
+.ah-menu {
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition: clip-path 0.7s var(--ah-ease), visibility 0s linear 0.7s;
+}
+.ah-menu.is-open { clip-path: inset(0 0 0% 0); visibility: visible; transition: clip-path 0.7s var(--ah-ease), visibility 0s; }
+.ah-menu-list li { opacity: 0; transform: translateY(28px); filter: blur(10px); transition: opacity 0.3s, transform 0.3s, filter 0.3s; }
+.ah-menu.is-open .ah-menu-list li {
+  opacity: 1; transform: none; filter: blur(0);
+  transition: opacity 0.8s var(--ah-ease), transform 0.8s var(--ah-ease), filter 0.8s var(--ah-ease);
+  transition-delay: calc(0.18s + var(--i) * 0.06s);
 }
 .ah-menu-list { list-style: none; margin: 0; padding: 0; position: relative; z-index: 1; }
 .ah-menu-item {
@@ -1280,3 +1294,41 @@ button.ah-chip:hover { background: rgba(5, 18, 54, 0.9); }
   @keyframes ah-404-foot { from { opacity: 0; } to { opacity: 1; } }
   @keyframes ah-404-in { from { opacity: 0; filter: blur(18px); transform: translateY(0.06em); } to { opacity: 1; filter: blur(0); transform: none; } }
 }
+
+/* ===================== identity: wordmark + monogram ===================== */
+.ah-wm, .ah-mono { display: block; overflow: visible; }
+.ah-wm-dot { fill: var(--ah-coral); transform-box: fill-box; transform-origin: 50% 50%; }
+.ah-wm-acc { stroke: var(--ah-coral); }
+.ah-light .ah-wm-dot { fill: var(--ah-signal, #ff4949); }
+.ah-logo { display: inline-flex; align-items: center; gap: 10px; line-height: 0; }
+.ah-logo .ah-mono { width: 26px; height: 26px; }
+.ah-logo .ah-wm { width: 82px; height: auto; }
+.ah-logo .ah-wm-dot { transition: transform 0.5s var(--ah-ease); }
+.ah-logo:hover .ah-wm-dot { transform: translateY(-2.5px) rotate(45deg); }
+.ah-logo:hover .ah-mono .ah-wm-dot { transform: rotate(45deg) scale(1.15); }
+.ah-logo:focus-visible { outline: 1px solid var(--ah-coral); outline-offset: 6px; border-radius: 4px; }
+.ah-footer-mark { position: relative; z-index: 1; display: block; margin: clamp(56px, 7vw, 110px) 0 0; color: var(--ah-cream); }
+.ah-footer-mark .ah-wm { width: 100%; height: auto; }
+.ah-footer-mark .ah-wm-ink { stroke-width: 4.4; }
+@media (prefers-reduced-motion: no-preference) {
+  .ah-js .ah-draw :is(path) { stroke-dasharray: 1 1; }
+  .ah-js .ah-logo .ah-draw path { animation: ah-draw 1.1s var(--ah-ease) calc(0.15s + var(--i) * 0.08s) both; }
+  .ah-js .ah-logo .ah-draw .ah-wm-dot { animation: ah-dot 0.7s var(--ah-ease) calc(0.75s + var(--i) * 0.12s) both; }
+  .ah-js .ah-footer-mark .ah-draw path { stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--ah-ease) calc(var(--i) * 0.1s); }
+  .ah-js .ah-footer-mark .ah-draw .ah-wm-dot { transform: scale(0); transition: transform 0.8s var(--ah-ease) calc(0.9s + var(--i) * 0.15s); }
+  .ah-js .ah-footer-mark.is-in .ah-draw path { stroke-dashoffset: 0; }
+  .ah-js .ah-footer-mark.is-in .ah-draw .ah-wm-dot { transform: none; }
+  @keyframes ah-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes ah-dot { from { transform: scale(0) rotate(-90deg); } to { transform: none; } }
+}
+
+/* disclosure (replaces motion AnimatePresence height tweens) */
+.ah-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows var(--ah-c-ms, 0.5s) var(--ah-ease), opacity var(--ah-c-ms, 0.5s) var(--ah-ease), filter var(--ah-c-ms, 0.5s) var(--ah-ease);
+}
+.ah-collapse.is-blur { filter: blur(8px); }
+.ah-collapse.is-open { grid-template-rows: 1fr; opacity: 1; filter: none; }
+.ah-collapse-in { min-height: 0; overflow: hidden; }

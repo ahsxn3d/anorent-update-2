@@ -2,23 +2,20 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { motion, useScroll, useSpring } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { SmoothScroll } from './SmoothScroll';
 import { RevealObserver } from './site/RevealObserver';
+import { ScrollProgress } from './site/ScrollProgress';
+import { CursorChip } from './site/CursorChip';
+import { RouteCurtain } from './site/RouteCurtain';
 import { interTight, instrumentSerif } from './site/fonts';
 import { Page } from '../types';
 import './site/site.css';
+import './site/motion.css';
 
 export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
-  });
 
   const go = (page: Page) => {
     router.push(page === 'home' ? '/' : `/${page}`);
@@ -29,7 +26,7 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
     <SmoothScroll>
       <div className={`ah-site ${interTight.variable} ${instrumentSerif.variable}`}>
         <div className="ah-grain" aria-hidden="true" />
-        <motion.div className="ah-progress" style={{ scaleX }} aria-hidden="true" />
+        <ScrollProgress />
 
         <Navbar />
 
@@ -37,6 +34,8 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
 
         <Footer setCurrentPage={go} />
         <RevealObserver />
+        <CursorChip />
+        <RouteCurtain />
       </div>
     </SmoothScroll>
   );

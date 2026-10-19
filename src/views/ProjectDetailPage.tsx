@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 import { ArrowLeft } from 'lucide-react';
@@ -106,12 +107,18 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
       </section>
 
       {/* BIG FULL-SIZE HIGH-RES THUMBNAIL FRAME */}
-      <div className="ah-pd-media" data-r="media">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.thumbnailUrl} alt={product.title} loading="eager" decoding="async" width={1600} height={900} />
-        <div className="ah-pd-overlay">
-          <span className="ah-chip"><span className="ah-pill-dot" />LIVE 60FPS SHADER ENGINE</span>
-          <span className="ah-chip ah-hide-sm">HTTPS://ANORIX.STUDIO</span>
+      <div className="ah-pd-seq">
+        <div className="ah-pd-sticky">
+          <div className="ah-pd-media" data-r="media">
+            <Image src={product.thumbnailUrl} alt={product.title} width={1600} height={900} sizes="100vw" loading="eager" className="ah-pd-shot" />
+            {product.coverImageUrl && product.coverImageUrl !== product.thumbnailUrl ? (
+              <Image src={product.coverImageUrl} alt="" width={1600} height={900} sizes="100vw" className="ah-pd-shot ah-pd-shot-2" />
+            ) : null}
+            <div className="ah-pd-overlay">
+              <span className="ah-chip"><span className="ah-pill-dot" />LIVE 60FPS SHADER ENGINE</span>
+              <span className="ah-chip ah-hide-sm">HTTPS://ANORIX.STUDIO</span>
+            </div>
+          </div>
         </div>
       </div>
 
