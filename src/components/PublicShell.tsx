@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -12,6 +12,7 @@ import { Page } from '../types';
 
 export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -31,22 +32,16 @@ export const PublicShell: React.FC<{ children: React.ReactNode }> = ({ children 
         <div className="lux-grain" aria-hidden="true" />
 
         <motion.div
-          className="fixed top-0 left-0 right-0 h-px lux-grad origin-left z-[200] pointer-events-none"
+          className="fixed top-0 left-0 right-0 h-px bg-[#4F7CFF] origin-left z-[200] pointer-events-none"
           style={{ scaleX }}
         />
 
         <ScrollDepth />
         <Navbar />
 
-        <main className="flex-1 w-full max-w-[1200px] mx-auto px-6 lg:px-8 pt-8 sm:pt-14 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            data-page-root
-          >
-            {children}
-          </motion.div>
+        <main data-route={pathname} className="flex-1 w-full max-w-[1200px] mx-auto px-6 lg:px-8 pt-8 sm:pt-14 relative z-10">
+          {/* No page-level fade: content paints with the HTML (fast LCP); sections bring their own entrances. */}
+          <div data-page-root>{children}</div>
         </main>
 
         <Footer setCurrentPage={go} />

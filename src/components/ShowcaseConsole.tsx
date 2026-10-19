@@ -265,6 +265,8 @@ export const ShowcaseConsole: React.FC<ShowcaseConsoleProps> = ({
             <button
               key={p.id}
               onClick={() => changeSlide(idx, idx > activeIndex ? 'right' : 'left')}
+              aria-label={`Show ${p.title}`}
+              aria-current={idx === activeIndex ? 'true' : undefined}
               className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 activeIndex === idx
                   ? 'w-6 sm:w-8 bg-[#E8EBF2]'

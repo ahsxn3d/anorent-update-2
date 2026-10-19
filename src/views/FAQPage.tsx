@@ -205,7 +205,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
       {/* ========================================================= */}
       {/* 2. LUXURY TELEMETRY STATUS PILLS (EXPENSIVE AESTHETIC) */}
       {/* ========================================================= */}
-      <ScrollReveal direction="up" delay={0.1} distance={16}>
+      <div data-fx="rise">
         <div className="grid grid-cols-2 lg:grid-cols-1 gap-px bg-[#232837] border border-[#232837] rounded-[12px] overflow-hidden lux-faq-stats">
           
           <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#131422]/90 backdrop-blur-2xl border border-purple-500/30 shadow-xl flex items-center gap-2.5 sm:gap-3">
@@ -257,12 +257,12 @@ export const FAQPage: React.FC<FAQPageProps> = ({
           </div>
 
         </div>
-      </ScrollReveal>
+      </div>
 
       {/* ========================================================= */}
       {/* 5. DIRECT CUSTOM SCOPING / INQUIRY TERMINAL (BOTTOM CTA) */}
       {/* ========================================================= */}
-      <ScrollReveal direction="up" delay={0.2} distance={20}>
+      <div data-fx="rise">
         <div className="p-4 sm:p-8 bg-gradient-to-br from-[#180A30] via-[#100720] to-[#0A0B14] rounded-2xl sm:rounded-3xl border border-purple-400/40 shadow-2xl space-y-4">
           <div className="flex flex-col gap-5">
             <div className="space-y-1.5 max-w-xl">
@@ -295,13 +295,13 @@ export const FAQPage: React.FC<FAQPageProps> = ({
             </div>
           </div>
         </div>
-      </ScrollReveal>
+      </div>
         </aside>
         <div className="lux-faq-main min-w-0 lg:col-span-8 space-y-8 order-1 lg:order-2">
       {/* ========================================================= */}
       {/* 3. COMPACT STRAIGHT-LINE BUBBLE CATEGORY BAR & SEARCH */}
       {/* ========================================================= */}
-      <ScrollReveal direction="up" delay={0.14} distance={16} className="relative z-40">
+      <div data-fx="rise" className="relative z-40">
         <div className="relative z-40 flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-2 p-1.5 sm:p-2 bg-[#131422]/90 backdrop-blur-2xl rounded-full border border-purple-500/30 shadow-xl max-xl:rounded-2xl">
           
           {/* DESKTOP (xl+) CATEGORY FILTER CHIPS */}
@@ -451,13 +451,13 @@ export const FAQPage: React.FC<FAQPageProps> = ({
           </div>
 
         </div>
-      </ScrollReveal>
+      </div>
 
       {/* ========================================================= */}
       {/* 4. BESPOKE HOLOGRAPHIC ACCORDION CARDS (EXPENSIVE & RICH) */}
       {/* ========================================================= */}
       {filteredFaqs.length === 0 ? (
-        <div className="text-center py-12 px-4 bg-[#131422]/60 rounded-3xl border border-purple-500/20 backdrop-blur-xl space-y-3">
+        <div data-fx="rise" className="text-center py-12 px-4 bg-[#131422]/60 rounded-3xl border border-purple-500/20 backdrop-blur-xl space-y-3">
           <HelpCircle className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
           <h3 className="font-display text-lg font-bold text-[#E8EBF2]">No answers matched your query</h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto">
@@ -475,20 +475,16 @@ export const FAQPage: React.FC<FAQPageProps> = ({
           </button>
         </div>
       ) : (
-        <div className="space-y-3 sm:space-y-4">
-          {filteredFaqs.map((item, index) => {
+        <div className="space-y-3 sm:space-y-4" data-fx="cards">
+          {filteredFaqs.map((item) => {
             const isExpanded = expandedIds.includes(item.id);
             const hasVoted = votedIds.includes(item.id);
             const isCopied = copiedId === item.id;
 
             return (
-              <ScrollReveal
-                key={item.id}
-                direction="up"
-                delay={Math.min(0.25, index * 0.05)}
-                distance={14}
-              >
+              <div key={item.id}>
                 <div
+                  data-fx-item
                   className={`lux-flip relative overflow-hidden rounded-xl sm:rounded-2xl border transition-all duration-300 backdrop-blur-2xl ${
                     isExpanded
                       ? 'bg-[#131422]/95 border-purple-400/80 shadow-[0_10px_30px_rgba(6, 8, 12,0.8),0_0_25px_rgba(139,0,238,0.25)]'
@@ -600,7 +596,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({
                     )}
                   </AnimatePresence>
                 </div>
-              </ScrollReveal>
+              </div>
             );
           })}
         </div>

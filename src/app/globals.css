@@ -641,3 +641,64 @@ input::placeholder, textarea::placeholder { color: var(--fg-subtle) !important; 
 .lux-primary .butter-button-wipe { background: var(--accent-grad) !important; }
 @media (prefers-reduced-motion: reduce) { .lux-tilt, [class*="channel-"] { transform: none !important; } }
 .lux-sh { max-width: 1200px; margin-left: auto !important; margin-right: auto !important; width: 100%; }
+
+/* ================= Calm base + motion-safe layer (Dev Buddy spec) — 2026-10-19b =================
+   Visual only. Every animated element has exactly one transform owner (GSAP in ScrollDepth);
+   CSS hovers use the separate `translate` property so they never fight a GSAP transform. */
+:root { --accent-grad: #4F7CFF; --card-line: rgba(232, 235, 242, 0.08); --card-line-hover: rgba(79, 124, 255, 0.4); }
+.lux-grad { background: #4F7CFF !important; }
+
+/* type: Inter body, Inter Tight display (h1 rules untouched so hero/page-title animations keep their fonts) */
+body { font-family: var(--font-body), Inter, system-ui, -apple-system, sans-serif; }
+h2, h3, h2.font-display, h3.font-display, .lux-sh-title { font-family: var(--font-sans), system-ui, sans-serif; font-weight: 500 !important; letter-spacing: -0.03em; }
+.lux-page-head p { font-family: var(--font-sans), system-ui, sans-serif; }
+.lux-sh-eyebrow, .lux-eyebrow { letter-spacing: .08em !important; }
+.lux-sh-eyebrow::before { background: #4F7CFF; }
+.lux-sh-title { line-height: 1.02; }
+
+/* layout helpers */
+.lux-bleed { width: 100vw; max-width: 100vw; margin-left: calc(50% - 50vw); }
+@media (min-width: 1024px) {
+  .lux-hpin-track { padding-left: max(32px, calc((100vw - 1200px) / 2 + 32px)); padding-right: max(32px, calc((100vw - 1200px) / 2 + 32px)); }
+}
+
+/* cards: one surface, hairline, radius 16, no shadow or glass; hover = accent hairline + 2px lift */
+.lux-card-surface, .lux-card, .lux-panel {
+  background-color: #11141B !important; border: 1px solid var(--card-line) !important; border-radius: 16px !important; box-shadow: none !important;
+  transition-property: border-color, background-color, translate; transition-duration: 200ms; transition-timing-function: var(--lux-ease);
+}
+.lux-card:hover, .lux-panel:hover, .lux-tile:hover .lux-tile-media { border-color: var(--card-line-hover) !important; translate: 0 -2px; transform: none; }
+.lux-card.is-on { border-color: rgba(79, 124, 255, 0.6) !important; background-color: #171B24 !important; }
+.lux-tile-media { transition: border-color 200ms var(--lux-ease), translate 200ms var(--lux-ease); }
+[id^="product-card"]:hover { transform: none; translate: 0 -2px; }
+[id^="product-card"] { transition-property: border-color, translate; }
+
+/* never transition `transform` on anything GSAP may drive */
+[class*="rounded-xl"][class*="border"], [class*="rounded-2xl"][class*="border"], [class*="rounded-3xl"][class*="border"] { transition-property: border-color, background-color, translate; }
+[data-fx], [data-fx-item], [data-fx-panel], [data-fx-inner], .lux-flip { transition-property: border-color, background-color, color, translate !important; }
+.channel-fiverr:hover, .channel-whatsapp:hover, .channel-dribbble:hover, .channel-twitter:hover { transform: none; translate: 0 -2px; }
+.channel-fiverr, .channel-whatsapp, .channel-dribbble, .channel-twitter { transition: border-color 200ms var(--lux-ease), background-color 200ms var(--lux-ease), translate 200ms var(--lux-ease); }
+.lux-tilt, [class*="channel-"] { transform-style: flat; will-change: auto; }
+
+/* no glass while scrolling: backdrop blur over moving content is the most expensive thing on a page */
+main [class*="backdrop-blur"], footer [class*="backdrop-blur"] { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+
+/* buttons: one accent primary (dark text, 48px pill), bordered secondary, 2px accent focus ring */
+.lux-primary { background: #4F7CFF !important; border: 1px solid #4F7CFF !important; color: #0B0D12 !important; min-height: 48px; border-radius: 999px !important; }
+.lux-primary span, .lux-primary:not(:hover) span, .lux-primary:hover span, .lux-primary svg { color: #0B0D12 !important; }
+.lux-primary .butter-button-wipe { background: #6B91FF !important; }
+.lux-primary:hover { background: #6B91FF !important; border-color: #6B91FF !important; }
+.lux-nav-cta { border: 1px solid #2F3547; color: #E8EBF2; background: transparent; }
+.lux-nav-cta:hover { border-color: var(--card-line-hover); }
+:is(a, button, input, textarea, select, summary, [tabindex]):focus-visible { outline: 2px solid #4F7CFF !important; outline-offset: 2px; }
+
+/* horizontal services pin */
+.lux-hpin-track { perspective: none; }
+@media (max-width: 1023px) { .lux-hpin { overflow: visible; } }
+/* hover:none screens whose button wipe is not active (e.g. stylus/fine-pointer tablets) keep light text on the dark fill */
+@media (hover: none) {
+  .butter-button:not(.lux-primary):not(:has(.butter-button-wipe[style*="170%"])) span,
+  .butter-button:not(.lux-primary):not(:has(.butter-button-wipe[style*="170%"])) svg { color: var(--fg) !important; }
+}
+/* Contact and About keep their exact text metrics (and so their wrapping, placement and spacing) */
+main[data-route="/contact"], main[data-route="/about"] { font-family: var(--font-sans), Inter, system-ui, -apple-system, sans-serif; }

@@ -316,6 +316,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
                 strokeWidth="2"
                 strokeLinecap="round"
                 transform={`rotate(${hourAngle} 24 24)`}
+                suppressHydrationWarning
               />
               {/* Minute Hand */}
               <line
@@ -327,6 +328,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 transform={`rotate(${minuteAngle} 24 24)`}
+                suppressHydrationWarning
               />
               {/* Second Hand (Ticking) */}
               <line
@@ -338,6 +340,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
                 strokeWidth="1"
                 strokeLinecap="round"
                 transform={`rotate(${secondAngle} 24 24)`}
+                suppressHydrationWarning
               />
               {/* Center Pivot Point */}
               <circle cx="24" cy="24" r="2.5" fill="#10B981" />
@@ -351,7 +354,7 @@ export const AboutStatsMatrix: React.FC<AboutStatsMatrixProps> = ({ setCurrentPa
               <Globe className="w-3 h-3 shrink-0 text-emerald-400" />
               <span>Timezone: UTC+5 (Live)</span>
             </div>
-            <div className="font-mono text-sm sm:text-base font-black text-[#E8EBF2] tracking-widest mt-0.5">
+            <div suppressHydrationWarning className="font-mono text-sm sm:text-base font-black text-[#E8EBF2] tracking-widest mt-0.5">
               {formattedUtc5}
             </div>
             <div className="text-[9px] sm:text-[10px] font-mono text-slate-400 flex items-center gap-1.5 mt-0.5">

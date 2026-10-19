@@ -66,8 +66,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div
         className={`relative h-14 sm:h-[4.25rem] px-5 sm:px-8 lg:px-10 flex items-center border-b transition-colors duration-500 ${
           scrolled || isMobileMenuOpen
-            ? 'bg-[#0B0D12]/80 backdrop-blur-xl border-[#E8EBF2]/10'
-            : 'bg-[#0B0D12]/35 backdrop-blur-md border-transparent'
+            ? 'bg-[#0B0D12]/95 border-[#E8EBF2]/10'
+            : 'bg-[#0B0D12]/60 border-transparent'
         }`}
       >
         <button
@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={() => handleNavClick({ id: 'contact', href: '/contact' })}
             id="nav-contact-cta-btn"
-            className="inline-flex items-center h-9 px-4 rounded-full bg-[#4F7CFF] text-[#E8EBF2] text-[13px] tracking-[-0.01em] hover:bg-[#3D68F0] transition-colors duration-200 cursor-pointer"
+            className="lux-nav-cta inline-flex items-center h-9 px-4 rounded-full text-[13px] tracking-[-0.01em] transition-colors duration-200 cursor-pointer"
           >
             Contact
           </button>
@@ -126,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden absolute left-0 right-0 top-full bg-[#0B0D12]/95 backdrop-blur-md border-b border-[#E8EBF2]/10"
+            className="md:hidden absolute left-0 right-0 top-full bg-[#0B0D12] border-b border-[#E8EBF2]/10"
           >
             <div className="px-5 py-2 flex flex-col">
               {[...navItems, { id: 'contact' as Page, label: 'Contact', href: '/contact' }].map((item) => {

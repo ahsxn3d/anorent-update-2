@@ -11,13 +11,9 @@ export function FogPlanes() {
     const context = canvas.getContext('2d');
     if (!context) return;
 
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let frame = 0;
-    let time = 0;
-    let px = 0;
-    let py = 0;
-    let tx = 0;
-    let ty = 0;
+    const time = 0;
+    const px = 0;
+    const py = 0;
     let width = 0;
     let height = 0;
 
@@ -76,37 +72,14 @@ export function FogPlanes() {
       context.fillRect(0, 0, width, height);
     };
 
-    const tick = () => {
-      if (document.hidden || window.scrollY > window.innerHeight * 2.2) {
-        frame = window.requestAnimationFrame(tick);
-        return;
-      }
-      px += (tx - px) * 0.035;
-      py += (ty - py) * 0.035;
-      time += 0.016;
-      const fade = Math.min(1, window.scrollY / (window.innerHeight * 1.1));
-      canvas.style.opacity = String(1 - fade * 0.55);
-      paint();
-      frame = window.requestAnimationFrame(tick);
-    };
-
-    const onMove = (event: PointerEvent) => {
-      tx = event.clientX / window.innerWidth - 0.5;
-      ty = event.clientY / window.innerHeight - 0.5;
-    };
-
+    // Static paint: the fog is drawn once (and on resize), never per frame, so it costs nothing while scrolling.
+    const onResize = () => { resize(); paint(); };
     resize();
     paint();
-    window.addEventListener('resize', resize);
-    if (!reduce) {
-      window.addEventListener('pointermove', onMove);
-      frame = window.requestAnimationFrame(tick);
-    }
+    window.addEventListener('resize', onResize);
 
     return () => {
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('pointermove', onMove);
-      window.cancelAnimationFrame(frame);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 

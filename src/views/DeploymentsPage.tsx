@@ -197,7 +197,7 @@ export const DeploymentsPage: React.FC<DeploymentsPageProps> = ({
       {/* ========================================================= */}
       {/* COMPACT STRAIGHT-LINE FILTER SYSTEM & TINY CIRCULAR SEARCH */}
       {/* ========================================================= */}
-      <ScrollReveal direction="up" delay={0.08} distance={16} className="relative z-40">
+      <div data-fx="rise" className="relative z-40">
         <div className="relative z-40 flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-2.5 p-1.5 sm:p-2 bg-[#131422]/90 backdrop-blur-2xl rounded-full border border-purple-500/30 shadow-xl max-xl:rounded-2xl">
           
           {/* DESKTOP (xl+): COMPACT STRAIGHT-LINE BUBBLE FILTER SYSTEM */}
@@ -347,11 +347,11 @@ export const DeploymentsPage: React.FC<DeploymentsPageProps> = ({
           </div>
 
         </div>
-      </ScrollReveal>
+      </div>
 
       {/* 3D HOLOCARD PRODUCT SHOWCASE */}
       {products.length === 0 ? (
-        <div className="text-center py-14 sm:py-20 px-6 bg-[#131422]/70 rounded-3xl border border-purple-500/30 backdrop-blur-2xl space-y-4 max-w-2xl mx-auto shadow-2xl">
+        <div data-fx="rise" className="text-center py-14 sm:py-20 px-6 bg-[#131422]/70 rounded-3xl border border-purple-500/30 backdrop-blur-2xl space-y-4 max-w-2xl mx-auto shadow-2xl">
           <div className="w-14 h-14 mx-auto rounded-2xl bg-[#8B00EE]/20 border border-purple-400/40 flex items-center justify-center text-[#C084FC] shadow-[0_0_25px_rgba(139,0,238,0.4)]">
             <Box className="w-7 h-7 animate-pulse" />
           </div>
@@ -402,7 +402,7 @@ export const DeploymentsPage: React.FC<DeploymentsPageProps> = ({
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-14 sm:gap-y-20 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-14 sm:gap-y-20 pt-4">
           {filteredProducts.map((item, idx) => (
             <div key={item.id} className={idx === 0 ? 'md:col-span-2' : 'col-span-1'}>
               <ProjectTile

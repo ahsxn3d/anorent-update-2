@@ -20,7 +20,6 @@ import {
 import { useRouter } from 'next/navigation';
 import { DeploymentProduct, Page } from '../types';
 import { ButterButton } from '../components/ButterButton';
-import { ScrollReveal } from '../components/ScrollReveal';
 import { sound } from '../utils/audio';
 
 interface ProjectDetailPageProps {
@@ -123,15 +122,17 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
       <div className="space-y-6 sm:space-y-8">
         
         {/* BIG FULL-SIZE HIGH-RES THUMBNAIL FRAME */}
-        <ScrollReveal direction="down" delay={0.05} distance={20}>
-          <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-purple-500/40 bg-[#080210] shadow-[0_20px_60px_rgba(6, 8, 12,0.9),0_0_40px_rgba(139,0,238,0.25)]">
-            <img
-              src={product.thumbnailUrl}
-              alt={product.title}
-              loading="eager"
-              decoding="async"
-              className="w-full h-auto max-h-[560px] object-cover object-center"
-            />
+        <div>
+          <div data-fx="media" className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-purple-500/40 bg-[#080210] shadow-[0_20px_60px_rgba(6, 8, 12,0.9),0_0_40px_rgba(139,0,238,0.25)]">
+            <div data-fx-inner>
+              <img
+                src={product.thumbnailUrl}
+                alt={product.title}
+                loading="eager"
+                decoding="async"
+                className="w-full h-auto max-h-[560px] object-cover object-center"
+              />
+            </div>
 
             {/* Subtle Gradient Rim */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B14] via-transparent to-[#0B0D12]/20 pointer-events-none" />
@@ -149,7 +150,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
               </span>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
 
         {/* ------------------------------------------------------------- */}
         {/* PRODUCT DETAILS & COMPLETE DESCRIPTION (NO CUTOFFS) */}
@@ -157,7 +158,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* LEFT 8 COLS: Title, Full Description & Tech Stack */}
-          <div className="lg:col-span-8 space-y-6">
+          <div className="lg:col-span-8 space-y-6" data-fx="rise">
             
             <div className="lux-detail-main py-2 space-y-6">
               
@@ -231,7 +232,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
           <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
             
             {/* Action Box */}
-            <div className="p-5 sm:p-6 bg-[#131422]/95 backdrop-blur-2xl rounded-2xl sm:rounded-3xl border border-purple-500/30 shadow-2xl space-y-4">
+            <div data-fx="rise" className="p-5 sm:p-6 bg-[#131422]/95 backdrop-blur-2xl rounded-2xl sm:rounded-3xl border border-purple-500/30 shadow-2xl space-y-4">
               <h3 className="text-xs font-mono font-extrabold uppercase tracking-wider text-[#C084FC]">
                 Live Deployment Actions
               </h3>

@@ -38,7 +38,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
 
   return (
     <footer className="relative z-20 w-full mt-24 sm:mt-32 border-t border-[#E8EBF2]/10">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+      <div data-fx="rise" className="max-w-[1200px] mx-auto px-6 lg:px-8 py-14 sm:py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
           <div className="md:col-span-5 space-y-5">
             <p className="text-[15px] tracking-[-0.04em] text-[#E8EBF2]">Anorix</p>
@@ -52,7 +52,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
 
           <div className="md:col-span-4 grid grid-cols-2 gap-8">
             <div>
-              <p className="text-[11px] tracking-[0.18em] uppercase text-[#E8EBF2]/35 mb-4">Pages</p>
+              <p className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#E8EBF2]/35 mb-4">Pages</p>
               <ul className="space-y-2.5 text-sm text-[#E8EBF2]/70">
                 <li><button onClick={() => go('home')} className="lux-link cursor-pointer">Home</button></li>
                 <li><button onClick={() => go('deployments')} className="lux-link cursor-pointer">Deployments</button></li>
@@ -62,7 +62,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
               </ul>
             </div>
             <div>
-              <p className="text-[11px] tracking-[0.18em] uppercase text-[#E8EBF2]/35 mb-4">Channels</p>
+              <p className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#E8EBF2]/35 mb-4">Channels</p>
               <ul className="space-y-2.5 text-sm text-[#E8EBF2]/70">
                 <li>
                   <a href="https://www.fiverr.com/ahsxn_dev" target="_blank" rel="noopener noreferrer" className="lux-link">
@@ -79,7 +79,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
           </div>
 
           <div className="md:col-span-3">
-            <p className="text-[11px] tracking-[0.18em] uppercase text-[#E8EBF2]/35 mb-4">Studio time</p>
+            <p className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#E8EBF2]/35 mb-4">Studio time</p>
             <p suppressHydrationWarning className="text-3xl tracking-[-0.04em] text-[#E8EBF2] tabular-nums">
               {formattedTime}
             </p>

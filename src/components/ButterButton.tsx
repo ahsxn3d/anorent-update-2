@@ -37,12 +37,8 @@ export const ButterButton: React.FC<ButterButtonProps> = ({
   const btnRef = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [coords, setCoords] = useState({ x: 50, y: 50 });
-  const [isTouchDevice, setIsTouchDevice] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    }
-    return false;
-  });
+  // Start false on both server and client so hydration matches; the effect below switches touch devices on.
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   // Detect genuine touch/mobile/tablet devices where hover physically does not exist
   useEffect(() => {

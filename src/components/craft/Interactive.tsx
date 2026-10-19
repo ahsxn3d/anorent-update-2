@@ -1,57 +1,8 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ButterButton } from '../ButterButton';
 import { ArrowRight } from 'lucide-react';
-
-const prefersReduced = () =>
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-/** Cursor-reactive spotlight: writes --mx/--my on the parent hero, rAF-throttled. */
-export const HeroSpotlight: React.FC = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current?.parentElement;
-    if (!el || prefersReduced()) return;
-    let raf = 0;
-    const onMove = (e: PointerEvent) => {
-      const r = el.getBoundingClientRect();
-      const x = e.clientX - r.left;
-      const y = e.clientY - r.top;
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        el.style.setProperty('--mx', `${x}px`);
-        el.style.setProperty('--my', `${y}px`);
-      });
-    };
-    el.addEventListener('pointermove', onMove);
-    return () => {
-      el.removeEventListener('pointermove', onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-  return <div ref={ref} className="lux-spotlight" aria-hidden="true" />;
-};
-
-/** Magnetic wrapper: child drifts up to 6px toward the cursor, springs back on leave. */
-export const Magnetic: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const onMove = (e: React.PointerEvent) => {
-    if (prefersReduced() || e.pointerType !== 'mouse' || !ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
-    const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-    ref.current.style.transform = `translate3d(${dx * 6}px, ${dy * 4}px, 0)`;
-  };
-  const reset = () => {
-    if (ref.current) ref.current.style.transform = '';
-  };
-  return (
-    <div ref={ref} onPointerMove={onMove} onPointerLeave={reset} className={`lux-magnetic ${className}`}>
-      {children}
-    </div>
-  );
-};
 
 const ACCENTS = [
   { name: 'Blue', value: '#4F7CFF' },
@@ -99,7 +50,7 @@ export const TokenPlayground: React.FC<{ title: string; body: string; cta: strin
   );
 
   return (
-    <div className="lux-playground lux-card-surface grid md:grid-cols-2 gap-6 md:gap-10 items-center p-5 sm:p-8 rounded-[12px] border border-[#232837] bg-[#11141B]">
+    <div className="lux-playground lux-card-surface grid md:grid-cols-2 gap-6 md:gap-10 items-center p-6 sm:p-8">
       <div className="space-y-4 order-2 md:order-1">
         <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">Design tokens · try it</p>
         <Group label="Accent" items={ACCENTS} active={accent} onPick={setAccent} />
@@ -107,7 +58,7 @@ export const TokenPlayground: React.FC<{ title: string; body: string; cta: strin
         <Group label="Radius" items={RADII} active={radius} onPick={setRadius} />
       </div>
       <div
-        className="order-1 md:order-2 p-6 border border-[#232837] bg-[#0B0D12] transition-all duration-200"
+        className="order-1 md:order-2 p-6 border border-[#232837] bg-[#0B0D12] transition-[border-radius] duration-200"
         style={{ borderRadius: radius.value + 6, fontFamily: type.value }}
         aria-live="polite"
       >
@@ -119,7 +70,7 @@ export const TokenPlayground: React.FC<{ title: string; body: string; cta: strin
         <p className="mt-3 text-[14px] leading-relaxed text-[#8B93A7]">{body}</p>
         <span
           className="mt-6 inline-flex items-center h-10 px-5 text-[13px] font-medium transition-all duration-200"
-          style={{ background: accent.value, color: accent.name === 'Ink' ? '#0B0D12' : '#E8EBF2', borderRadius: radius.value }}
+          style={{ background: accent.value, color: '#0B0D12', borderRadius: radius.value }}
         >
           {cta}
         </span>
@@ -138,25 +89,24 @@ export const BeforeAfter: React.FC<{ title: string; subtitle: string; cta: strin
     setPos(Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100)));
   };
   const Before = (
-    <div className="absolute inset-0 p-6 sm:p-10 bg-[#1A1030] overflow-hidden" aria-hidden="true">
-      <div className="absolute -top-20 -left-10 w-72 h-72 rounded-full bg-[#7C3AED]/40 blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-80 h-60 rounded-full bg-[#06B6D4]/30 blur-3xl" />
-      <div className="relative flex gap-2 flex-wrap">
+    <div className="absolute inset-0 p-6 sm:p-10 bg-[#1A1030] overflow-hidden flex flex-col items-center justify-center text-center" aria-hidden="true">
+      <div className="absolute inset-0" style={{ background: 'radial-gradient(320px circle at 10% 0%, rgba(124,58,237,.38), transparent 70%), radial-gradient(360px circle at 100% 100%, rgba(6,182,212,.26), transparent 70%)' }} />
+      <div className="relative flex gap-2 flex-wrap justify-center">
         {['NEW!!', 'HOT', 'SALE', '50% OFF'].map((t) => (
           <span key={t} className="px-2 py-0.5 text-[10px] font-black border-2 border-[#F472B6] text-[#F472B6] rotate-[-3deg]">{t}</span>
         ))}
       </div>
-      <p className="relative mt-6 text-[28px] sm:text-[44px] font-black italic uppercase leading-none text-[#22D3EE] tracking-tight">{title}</p>
-      <p className="relative mt-3 text-[11px] text-[#C4B5FD] max-w-xs line-clamp-2">{subtitle}</p>
+      <p className="relative mt-6 text-[28px] sm:text-[56px] font-black italic uppercase leading-none text-[#22D3EE] tracking-tight">{title}</p>
+      <p className="relative mt-3 text-[11px] text-[#C4B5FD] max-w-sm line-clamp-2">{subtitle}</p>
       <span className="relative mt-5 inline-block px-4 py-2 text-[11px] font-black uppercase bg-gradient-to-r from-[#F472B6] to-[#7C3AED] text-[#E8EBF2] rounded-sm">{cta}!!!</span>
     </div>
   );
   const After = (
-    <div className="absolute inset-0 p-6 sm:p-10 bg-[#11141B]" aria-hidden="true">
+    <div className="absolute inset-0 p-6 sm:p-10 bg-[#11141B] flex flex-col items-center justify-center text-center" aria-hidden="true">
       <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">Studio</p>
-      <p className="mt-6 text-[28px] sm:text-[44px] font-medium leading-[1] tracking-[-0.035em] text-[#E8EBF2]">{title}</p>
-      <p className="mt-4 text-[13px] text-[#8B93A7] max-w-sm line-clamp-2">{subtitle}</p>
-      <span className="mt-6 inline-flex items-center h-10 px-5 rounded-full bg-[#4F7CFF] text-[#E8EBF2] text-[13px]">{cta} →</span>
+      <p className="mt-6 font-display text-[28px] sm:text-[56px] leading-[1] text-[#E8EBF2]">{title}</p>
+      <p className="mt-4 text-[13px] text-[#8B93A7] max-w-md line-clamp-2">{subtitle}</p>
+      <span className="mt-6 inline-flex items-center h-10 px-5 rounded-full bg-[#4F7CFF] text-[#0B0D12] text-[13px] font-medium">{cta} →</span>
     </div>
   );
   return (
@@ -199,7 +149,7 @@ export const ScopeConfigurator: React.FC<{
   const toggle = (t: string) => setPicked((p) => (p.includes(t) ? p.filter((x) => x !== t) : [...p, t]));
   return (
     <div className="grid lg:grid-cols-12 gap-6 lg:gap-10">
-      <div className="lg:col-span-7 grid gap-3" role="group" aria-label="Choose scope">
+      <div className="lg:col-span-7 grid gap-3" role="group" aria-label="Choose scope" data-fx="cards">
         {items.map((it, i) => {
           const on = picked.includes(it.title);
           return (
@@ -208,9 +158,8 @@ export const ScopeConfigurator: React.FC<{
               type="button"
               aria-pressed={on}
               onClick={() => toggle(it.title)}
-              className={`lux-card lux-tilt text-left flex items-center justify-between gap-4 p-5 rounded-[12px] border transition-colors duration-150 cursor-pointer ${
-                on ? 'border-[#4F7CFF]/60 bg-[#171B24]' : 'border-[#232837] bg-[#11141B] hover:border-[#2F3547]'
-              }`}
+              data-fx-item
+              className={`lux-card text-left flex items-center justify-between gap-4 p-6 cursor-pointer ${on ? 'is-on' : ''}`}
             >
               <span className="flex items-baseline gap-4">
                 <span className="font-mono text-[11px] text-[#5E667A]">{String(i + 1).padStart(2, '0')}</span>
@@ -219,12 +168,12 @@ export const ScopeConfigurator: React.FC<{
                   <span className="block mt-1 text-[13px] text-[#8B93A7]">{it.detail}</span>
                 </span>
               </span>
-              <span className={`w-5 h-5 rounded-full border grid place-items-center text-[11px] ${on ? 'bg-[#4F7CFF] border-[#4F7CFF] text-[#E8EBF2]' : 'border-[#2F3547] text-transparent'}`}>✓</span>
+              <span className={`w-5 h-5 rounded-full border grid place-items-center text-[11px] ${on ? 'bg-[#4F7CFF] border-[#4F7CFF] text-[#0B0D12]' : 'border-[#2F3547] text-transparent'}`}>✓</span>
             </button>
           );
         })}
       </div>
-      <div className="lux-card-surface lg:col-span-5 p-6 rounded-[12px] border border-[#232837] bg-[#11141B] self-start lg:sticky lg:top-24" aria-live="polite">
+      <div className="lux-card-surface lg:col-span-5 p-6 sm:p-8 self-start lg:sticky lg:top-24" aria-live="polite">
         <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#5E667A]">Your scope</p>
         <ul className="mt-4 space-y-2 min-h-[48px]">
           {picked.length === 0 && <li className="text-[13px] text-[#5E667A]">—</li>}
@@ -253,7 +202,7 @@ export const ScopeConfigurator: React.FC<{
   );
 };
 
-/** Editorial project tile with cursor-follow "View" chip and image reveal. */
+/** Editorial project tile: clip-path reveal + 8% media parallax (driven by ScrollDepth), hover lift via CSS. */
 export const ProjectTile: React.FC<{
   title: string;
   category?: string;
@@ -264,34 +213,29 @@ export const ProjectTile: React.FC<{
   large?: boolean;
   onOpen: () => void;
 }> = ({ title, category, description, image, tags = [], year, large, onOpen }) => {
-  const ref = useRef<HTMLDivElement>(null);
   const [broken, setBroken] = useState(false);
-  const move = (e: React.PointerEvent) => {
-    const r = ref.current?.getBoundingClientRect();
-    if (!r || !ref.current) return;
-    ref.current.style.setProperty('--cx', `${e.clientX - r.left}px`);
-    ref.current.style.setProperty('--cy', `${e.clientY - r.top}px`);
-  };
   return (
     <button type="button" onClick={onOpen} className="lux-tile group text-left w-full cursor-pointer" aria-label={title}>
       <div
-        ref={ref}
-        onPointerMove={move}
-        className={`lux-tilt relative overflow-hidden rounded-[12px] border border-[#232837] bg-[#171B24] ${large ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}
+        data-fx="media"
+        className={`lux-tile-media relative overflow-hidden rounded-[16px] border border-[rgba(232,235,242,0.08)] bg-[#171B24] ${large ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}
       >
-        {image && !broken ? (
-          <img
-            src={image}
-            alt=""
-            loading="lazy"
-            onError={() => setBroken(true)}
-            className="absolute inset-0 w-full h-full object-cover scale-[1.02] group-hover:scale-[1.06] transition-transform duration-700 ease-out"
-          />
-        ) : (
-          <div className="absolute inset-0 grid place-items-center">
-            <span className="text-[28px] tracking-[-0.03em] text-[#2F3547]">{title}</span>
-          </div>
-        )}
+        <div data-fx-inner className="absolute inset-0">
+          {image && !broken ? (
+            <img
+              src={image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              onError={() => setBroken(true)}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            />
+          ) : (
+            <div className="absolute inset-0 grid place-items-center">
+              <span className="text-[28px] tracking-[-0.03em] text-[#2F3547]">{title}</span>
+            </div>
+          )}
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D12]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <span className="lux-view-chip">View</span>
       </div>
