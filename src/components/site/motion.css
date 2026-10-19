@@ -11,25 +11,38 @@
 .ah-site .ah-work-frame, .ah-site .ah-case-frame, .ah-site .ah-case-media { border-radius: 12px; }
 .ah-js .ah-work-frame[data-r='media'].is-in { clip-path: inset(0 0 0 0 round 12px); }
 
-/* ---------- squared: cursor-follow case chip (fine pointers only) ---------- */
+/* ---------- squared: cursor-follow case chip (fine pointers only) ----------
+   Position rides the compositor-only `translate` property (no left/top layout),
+   written as CSS vars by CursorChip. The spring lives on `scale` alone, so the
+   follow is 1:1 and never wobbles. Visibility is pure CSS :hover, so nothing
+   can be left "stuck" by JS: on leave the chip fades out where it was. */
 @media (hover: hover) and (pointer: fine) {
-  .ah-work-frame.is-cursor, .ah-case-frame.is-cursor { cursor: none; }
-  .ah-work-frame.is-cursor .ah-work-hover,
-  .ah-case-frame.is-cursor .ah-case-hover {
-    left: var(--cx, 50%);
-    top: var(--cy, 50%);
+  .ah-cursor-on :is(.ah-work-frame, .ah-case-frame):hover { cursor: none; }
+  .ah-cursor-on .ah-work-frame .ah-work-hover,
+  .ah-cursor-on .ah-case-frame .ah-case-hover {
+    left: 0;
+    top: 0;
     bottom: auto;
-    translate: -50% -50%;
-    transform: scale(1);
-    opacity: 1;
+    translate: calc(var(--cx, 50%) - 50%) calc(var(--cy, 50%) - 50%);
+    transform: none;
+    scale: 0.4;
+    opacity: 0;
     pointer-events: none;
     background: var(--ah-cream);
     color: var(--ah-midnight);
-    transition: opacity 0.2s, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: translate, scale;
+    transition: opacity 0.2s, scale 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .ah-work-frame:not(:hover) .ah-work-hover,
-  .ah-case-frame:not(:hover) .ah-case-hover { transform: scale(0.4); }
+  .ah-cursor-on .ah-work-frame:hover .ah-work-hover,
+  .ah-cursor-on .ah-case-frame:hover .ah-case-hover { opacity: 1; scale: 1; transform: none; }
+  /* keyboard focus keeps the original corner chip */
+  .ah-cursor-on .ah-work-frame:focus-visible:not(:hover) .ah-work-hover,
+  .ah-cursor-on .ah-case-frame:focus-visible:not(:hover) .ah-case-hover { translate: none; left: 14px; top: auto; bottom: 14px; opacity: 1; scale: 1; }
 }
+
+/* media never starts a native image/link drag: a drag session froze :hover (chip stuck on) until the next mouse move */
+:is(.ah-work-frame, .ah-case-frame, .ah-reel-card, .ah-pd-media) img { -webkit-user-drag: none; user-select: none; }
+:is(.ah-work-frame, .ah-case-frame) { -webkit-user-drag: none; }
 
 /* ---------- squared: service ticker ---------- */
 .ah-ticker {
@@ -58,7 +71,8 @@
 }
 .ah-ticker-item i { font-style: italic; font-weight: 400; text-transform: none; font-size: 0.92em; letter-spacing: 0; color: var(--ah-dim); }
 .ah-ticker-sep { width: 9px; height: 9px; margin-left: 20px; background: var(--ah-coral); transform: rotate(45deg) translateY(-2px); align-self: center; }
-.ah-ticker:hover .ah-ticker-track { animation-play-state: paused; }
+@media (hover: hover) {
+.ah-ticker:hover .ah-ticker-track { animation-play-state: paused; } }
 @keyframes ah-ticker { to { transform: translate3d(-50%, 0, 0); } }
 @media (prefers-reduced-motion: reduce) { .ah-ticker-track { animation: none; } }
 
@@ -102,11 +116,13 @@
   background: radial-gradient(70% 60% at 50% 60%, #1740a9, #051236 75%);
   color: var(--ah-cream);
   pointer-events: none;
+  will-change: transform;
   animation: ah-curtain 0.95s var(--ah-ease) both;
 }
 .ah-curtain-mark { width: 64px; height: 64px; animation: ah-curtain-mark 0.95s var(--ah-ease) both; }
 .ah-curtain-mark path { stroke-dasharray: 1 1; animation: ah-draw 0.6s var(--ah-ease) calc(var(--i) * 0.06s) both; }
-@keyframes ah-curtain { 0%, 30% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 100% 0); } }
+/* transform-only lift (compositor): a full-screen clip-path repainted every frame while the new page hydrated */
+@keyframes ah-curtain { 0%, 30% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(0, -100%, 0); } }
 @keyframes ah-curtain-mark { 0% { opacity: 1; transform: none; } 45% { opacity: 1; } 100% { opacity: 0; transform: translateY(-40px); } }
 
 /* =========================================================================
@@ -114,6 +130,10 @@
    ========================================================================= */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
+    /* one driver per element: these are scroll-timeline driven, so the IO reveal
+       (opacity/transform/clip transitions) is switched off for them */
+    .ah-js .ah-matrix > .ah-mx[data-r], .ah-js .ah-stat[data-r] { opacity: 1; transform: none; filter: none; transition: none; }
+    .ah-gallery .ah-work-frame:hover .ah-work-zoom { transform: none; }
     /* every sub-page hero drifts up and thins out as the page takes over (fal pacing) */
     .ah-phero > .ah-grid {
       animation: ah-sd-out linear both;
@@ -143,7 +163,8 @@
     .ah-gallery .ah-work-zoom { animation: ah-sd-par linear both; animation-timeline: view(); animation-range: cover; }
     @keyframes ah-sd-par { from { transform: translate3d(0, -7%, 0) scale(1.16); } to { transform: translate3d(0, 7%, 0) scale(1.16); } }
     .ah-js .ah-work-frame[data-r='media'] img { transition: transform 1.1s var(--ah-ease); }
-    .ah-js .ah-work-frame[data-r='media'].is-in:hover img { transform: scale(1.05); }
+    @media (hover: hover) {
+    .ah-js .ah-work-frame[data-r='media'].is-in:hover img { transform: scale(1.05); } }
     /* the staggered right column travels faster: real depth between the two columns */
     @media (min-width: 900px) {
       .ah-gallery > :nth-child(even) .ah-work-frame { animation: ah-sd-col linear both; animation-timeline: view(); animation-range: cover; }
@@ -153,6 +174,7 @@
     /* ---- project detail: pinned image sequence ---- */
     @media (min-width: 900px) {
       .ah-pd-seq { height: 240vh; view-timeline-name: --ah-pd; }
+      .ah-js .ah-pd-seq .ah-pd-media[data-r], .ah-js .ah-pd-seq .ah-pd-media[data-r] img { transition: none; }
       .ah-pd-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; align-items: center; }
       .ah-pd-seq .ah-pd-media {
         height: 100vh;

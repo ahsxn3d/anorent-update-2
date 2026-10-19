@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import { useRouter } from 'next/navigation';
 import { Page, DeploymentProduct, ReviewItem, HeroContent } from '../types';
-import { loadGsap, whenInteract } from '../components/site/gsap';
+import { loadGsap, whenSettled } from '../components/site/gsap';
 import { HeroBlob } from '../components/site/HeroBlob';
 
 // The project modal (and its animation library) only loads when a project is opened
@@ -135,7 +135,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   useEffect(() => {
     let cancelled = false;
     let teardown = () => {};
-    whenInteract()
+    whenSettled()
       .then(loadGsap)
       .then(({ gsap, ScrollTrigger }) => {
         if (cancelled || !root.current) return;
@@ -208,10 +208,10 @@ export const HomePage: React.FC<HomePageProps> = ({
           // Statement: word-by-word reading reveal
           gsap.fromTo(
             '.ah-word',
-            { opacity: 0.12, filter: 'blur(6px)' },
+            // opacity only: a per-frame blur on dozens of word layers was the main scroll jank
+            { opacity: 0.12 },
             {
               opacity: 1,
-              filter: 'blur(0px)',
               ease: 'none',
               stagger: 0.08,
               scrollTrigger: {
@@ -378,15 +378,27 @@ export const HomePage: React.FC<HomePageProps> = ({
         }
       );
 
-      // Layout settles after web fonts and images: re-measure all triggers once
-      const refresh = () => ScrollTrigger.refresh();
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
-      window.addEventListener('load', refresh);
-      const t = window.setTimeout(refresh, 1200);
+      // Re-measure only when layout really changes (late fonts, images, data), never on a
+      // timer mid-scroll. Mobile URL-bar resizes are ignored so sticky scenes don't jump.
+      ScrollTrigger.config({ ignoreMobileResize: true });
+      let lastH = document.documentElement.scrollHeight;
+      let rt = 0;
+      const refresh = () => {
+        window.clearTimeout(rt);
+        rt = window.setTimeout(() => {
+          const h = document.documentElement.scrollHeight;
+          if (Math.abs(h - lastH) < 2) return;
+          lastH = h;
+          ScrollTrigger.refresh();
+        }, 180);
+      };
+      if (document.fonts && document.fonts.status !== 'loaded') document.fonts.ready.then(() => ScrollTrigger.refresh());
+      const ro = new ResizeObserver(refresh);
+      ro.observe(document.body);
 
       return () => {
-        window.removeEventListener('load', refresh);
-        window.clearTimeout(t);
+        ro.disconnect();
+        window.clearTimeout(rt);
         mm.revert();
       };
           })();

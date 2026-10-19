@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Page } from '../types';
 import { sound } from '../utils/audio';
 import { Monogram, Wordmark } from './site/Logo';
+import { lenisInstance } from './SmoothScroll';
 
 interface NavbarProps {
   currentPage?: Page;
@@ -63,7 +64,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage: propCurrentPage, se
     } else {
       router.push(item.href);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // jump (the route curtain covers it); a native smooth scroll here fought Lenis + Next's own scroll reset
+    if (lenisInstance) lenisInstance.scrollTo(0, { immediate: true, force: true });
+    else window.scrollTo(0, 0);
   };
 
   const menuItems = [...navItems, { id: 'contact' as Page, label: 'Contact', href: '/contact' }];

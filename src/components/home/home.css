@@ -271,8 +271,12 @@
   height: 22px;
   color: var(--ah-faint);
 }
+@media (hover: hover) {
 .ah-service-inner:hover .ah-service-title { transform: translateX(14px); }
+}
+@media (hover: hover) {
 .ah-service-inner:hover .ah-service-arrow { transform: rotate(45deg); color: var(--ah-accent); }
+}
 @media (min-width: 900px) {
   .ah-service-inner {
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -416,10 +420,15 @@
   transform: translateY(8px);
   transition: opacity 0.4s var(--ah-ease), transform 0.4s var(--ah-ease);
 }
-.ah-case-frame:hover .ah-case-hover,
 .ah-case-frame:focus-visible .ah-case-hover {
   opacity: 1;
   transform: none;
+}
+@media (hover: hover) {
+.ah-case-frame:hover .ah-case-hover {
+  opacity: 1;
+  transform: none;
+}
 }
 
 .ah-case-body {
@@ -586,8 +595,12 @@
 .ah-cta { padding-bottom: clamp(80px, 9vw, 140px); overflow: hidden; }
 .ah-cta > .ah-grid { position: relative; z-index: 1; }
 .ah-cta-big .ah-cta-word { transition: color 0.5s var(--ah-ease); }
+@media (hover: hover) {
 .ah-cta-big:hover .ah-cta-word { color: var(--ah-coral); }
+}
+@media (hover: hover) {
 .ah-cta-big:hover .ah-cta-arrow { color: var(--ah-cream); }
+}
 .ah-cta-big {
   grid-column: 1 / -1;
   display: flex;
@@ -610,7 +623,9 @@
   margin-top: 0.1em;
   color: var(--ah-accent);
 }
+@media (hover: hover) {
 .ah-cta-big:hover .ah-cta-arrow { transform: translate(0.06em, -0.06em); }
+}
 .ah-cta-foot {
   grid-column: 1 / -1;
   display: flex;
@@ -640,7 +655,10 @@
   .ah-cta-arrow { transition: none; }
 }
 
+@media (hover: hover) {
+
 .ah-case:hover .ah-case-name { color: var(--ah-coral); }
+}
 .ah-reel-card { box-shadow: 0 40px 80px -30px rgba(2, 8, 28, 0.8); }
 .ah-reel-tag { background: rgba(5, 18, 54, 0.82); }
 .ah-case-hover { background: rgba(5, 18, 54, 0.82); }
@@ -664,7 +682,8 @@
   opacity: 0.9;
   transition: opacity 1.6s var(--ah-ease);
 }
-.ah-blob.is-live .ah-blob-fallback { opacity: 0; }
+/* once the canvas is live the blurred fallback leaves the render tree (no hidden blur layer under the shader) */
+.ah-blob.is-live .ah-blob-fallback { opacity: 0; visibility: hidden; transition: opacity 1.6s var(--ah-ease), visibility 0s linear 1.6s; }
 @media (max-width: 899px) {
   .ah-blob-fallback { left: 50%; top: 46%; width: 92vw; }
 }

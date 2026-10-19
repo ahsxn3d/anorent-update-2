@@ -24,14 +24,18 @@ export const RevealObserver: React.FC = () => {
       timers.push(window.setTimeout(() => el.classList.add('is-done'), 2600));
     };
 
+    const pending = new Set<Element>();
+    const reveal = (el: Element) => {
+      el.classList.add('is-in');
+      settle(el);
+      io.unobserve(el);
+      pending.delete(el);
+    };
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-in');
-            settle(e.target);
-            io.unobserve(e.target);
-          }
+          // also reveal anything already scrolled past (fast flicks / jumps skip the intersecting state)
+          if (e.isIntersecting || e.boundingClientRect.bottom < 0) reveal(e.target);
         });
       },
       { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
@@ -43,7 +47,10 @@ export const RevealObserver: React.FC = () => {
           el.classList.add('is-in', 'is-done');
           return;
         }
-        io.observe(el);
+        if (!pending.has(el)) {
+          pending.add(el);
+          io.observe(el);
+        }
       });
       document.querySelectorAll('.ah-bt-load:not(.is-done)').forEach((el) => {
         timers.push(window.setTimeout(() => el.classList.add('is-done'), 2600));
@@ -51,6 +58,24 @@ export const RevealObserver: React.FC = () => {
     };
 
     scan();
+    // safety net for jumps (End key, anchor, scrollbar drag, fast fling): IO never reports
+    // an element that went from below the fold straight to above it, which left it invisible
+    let sraf = 0;
+    const sweep = () => {
+      sraf = 0;
+      const vh = window.innerHeight;
+      pending.forEach((el) => {
+        if (el.getBoundingClientRect().top < vh * 0.92) reveal(el);
+      });
+    };
+    let sweepT = 0;
+    const onScroll = () => {
+      window.clearTimeout(sweepT);
+      sweepT = window.setTimeout(() => {
+        if (!sraf) sraf = window.requestAnimationFrame(sweep);
+      }, 120);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
     let raf = 0;
     const mo = new MutationObserver(() => {
       if (raf) return;
@@ -64,6 +89,9 @@ export const RevealObserver: React.FC = () => {
     return () => {
       io.disconnect();
       mo.disconnect();
+      window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(sweepT);
+      if (sraf) window.cancelAnimationFrame(sraf);
       if (raf) window.cancelAnimationFrame(raf);
       timers.forEach((t) => window.clearTimeout(t));
     };

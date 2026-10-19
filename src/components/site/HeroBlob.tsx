@@ -93,15 +93,24 @@ export const HeroBlob: React.FC = () => {
 
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let w = 0, h = 0, wide = true;
+      // geometry is cached here (resize only), so the frame loop never forces layout
+      let hostTop = 0, hostH = 1;
       const size = () => {
         const r = host.getBoundingClientRect();
+        hostTop = r.top + window.scrollY;
+        hostH = Math.max(1, r.height);
         // the surface is meant to be soft: render at ~half resolution, capped
         const scale = Math.min(0.55, 720 / Math.max(1, r.width));
-        w = Math.max(2, Math.round(r.width * scale));
-        h = Math.max(2, Math.round(r.height * scale));
-        canvas.width = w;
-        canvas.height = h;
-        gl.viewport(0, 0, w, h);
+        const nw = Math.max(2, Math.round(r.width * scale));
+        const nh = Math.max(2, Math.round(r.height * scale));
+        // reallocating the drawing buffer clears it (a visible flash): only when the size really changes
+        if (nw !== w || nh !== h) {
+          w = nw;
+          h = nh;
+          canvas.width = w;
+          canvas.height = h;
+          gl.viewport(0, 0, w, h);
+        }
         wide = r.width >= 900;
       };
       size();
@@ -117,16 +126,26 @@ export const HeroBlob: React.FC = () => {
 
       let raf = 0;
       let visible = true;
+      let lastScroll = -1e9;
+      const onScroll = () => {
+        lastScroll = performance.now();
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
       let t0 = performance.now();
       let tAcc = 0;
       const frame = (now: number) => {
         raf = 0;
+        // while the page scrolls, the blob holds its last frame (the canvas is just a
+        // composited layer then) and resumes once scrolling rests: scroll always wins
+        if (now - lastScroll < 140) {
+          if (!reduce && visible && !document.hidden) raf = requestAnimationFrame(frame);
+          return;
+        }
         tAcc += Math.min(50, now - t0) / 1000;
         t0 = now;
         mouse.x += (mouse.tx - mouse.x) * 0.05;
         mouse.y += (mouse.ty - mouse.y) * 0.05;
-        const r = host.getBoundingClientRect();
-        const s = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height)));
+        const s = Math.min(1, Math.max(0, (window.scrollY - hostTop) / hostH));
         const aspect = w / h;
         gl.uniform2f(uR, w, h);
         gl.uniform1f(uT, tAcc + 8);
@@ -158,6 +177,7 @@ export const HeroBlob: React.FC = () => {
         io.disconnect();
         ro.disconnect();
         window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('scroll', onScroll);
         document.removeEventListener('visibilitychange', onVis);
         gl.getExtension('WEBGL_lose_context')?.loseContext();
       };

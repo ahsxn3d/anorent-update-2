@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import type Lenis from 'lenis';
-import { loadGsap, whenInteract } from './site/gsap';
+import { loadGsap, whenSettled } from './site/gsap';
 
 export let lenisInstance: Lenis | null = null;
 
@@ -20,8 +20,8 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
     let cancelled = false;
     let cleanup = () => {};
 
-    // Lenis + the GSAP ticker arrive on the first scroll intent; native scroll works until then
-    whenInteract().then(async () => {
+    // Lenis + the GSAP ticker arrive once settled (first scroll intent or idle); native scroll until then
+    whenSettled().then(async () => {
       const [{ default: LenisCtor }, { gsap, ScrollTrigger }] = await Promise.all([import('lenis'), loadGsap()]);
       if (cancelled) return;
       const lenis = new LenisCtor({
@@ -33,14 +33,18 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
         wheelMultiplier: 1.0,
         syncTouch: false,
         infinite: false,
+        autoRaf: false, // one RAF only: Lenis is driven by gsap.ticker below
       });
       lenisInstance = lenis;
-      lenis.on('scroll', () => ScrollTrigger.update());
+      const onScroll = () => ScrollTrigger.update();
+      lenis.on('scroll', onScroll);
       const update = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(update);
-      gsap.ticker.lagSmoothing(500, 33);
+      // never "catch up" after a long frame: Lenis and scrubs stay locked to real time
+      gsap.ticker.lagSmoothing(0);
       cleanup = () => {
         gsap.ticker.remove(update);
+        lenis.off('scroll', onScroll);
         lenis.destroy();
         lenisInstance = null;
       };

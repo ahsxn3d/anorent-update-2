@@ -45,3 +45,14 @@ export function whenInteract(): Promise<void> {
     evs.forEach((e) => window.addEventListener(e, go, { passive: true, once: true }));
   });
 }
+
+/**
+ * Scroll systems (GSAP scenes, Lenis) start on whichever comes first: the first
+ * scroll intent, or shortly after the page has gone idle. Starting them before the
+ * visitor reaches below-the-fold content avoids initial poses "snapping" in
+ * mid-scroll, while still keeping the runtime out of first paint.
+ */
+export function whenSettled(delay = 5000): Promise<void> {
+  const idle = whenIdle(2500).then(() => new Promise<void>((r) => window.setTimeout(r, delay)));
+  return Promise.race([whenInteract(), idle]);
+}
