@@ -41,7 +41,7 @@
 }
 
 /* media never starts a native image/link drag: a drag session froze :hover (chip stuck on) until the next mouse move */
-:is(.ah-work-frame, .ah-case-frame, .ah-reel-card, .ah-pd-media) img { -webkit-user-drag: none; user-select: none; }
+:is(.ah-work-frame, .ah-case-frame, .ah-pd-media) img { -webkit-user-drag: none; user-select: none; }
 :is(.ah-work-frame, .ah-case-frame) { -webkit-user-drag: none; }
 
 /* ---------- squared: service ticker ---------- */

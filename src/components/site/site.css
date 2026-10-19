@@ -1343,6 +1343,12 @@ button.ah-chip:hover { background: rgba(5, 18, 54, 0.9); } }
   .ah-js .ah-footer-mark .ah-draw .ah-wm-dot { transform: scale(0); transition: transform 0.8s var(--ah-ease) calc(0.9s + var(--i) * 0.15s); }
   .ah-js .ah-footer-mark.is-in .ah-draw path { stroke-dashoffset: 0; }
   .ah-js .ah-footer-mark.is-in .ah-draw .ah-wm-dot { transform: none; }
+  /* replays on every entry: the mark rises with the draw, and snaps back instantly once off-screen */
+  .ah-js .ah-footer-mark { display: block; opacity: 0.02; transform: translate3d(0, 28px, 0); transition: opacity 1s var(--ah-ease), transform 1.2s var(--ah-ease); }
+  .ah-js .ah-footer-mark.is-in { opacity: 1; transform: none; }
+  .ah-js .ah-footer-mark.is-reset,
+  .ah-js .ah-footer-mark.is-reset .ah-draw path,
+  .ah-js .ah-footer-mark.is-reset .ah-draw .ah-wm-dot { transition: none; }
   @keyframes ah-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
   @keyframes ah-dot { from { transform: scale(0) rotate(-90deg); } to { transform: none; } }
 }

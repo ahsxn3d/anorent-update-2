@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Wordmark } from './site/Logo';
 import { useRouter } from 'next/navigation';
 import { Page } from '../types';
@@ -13,6 +13,42 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
   const [time, setTime] = useState<Date | null>(null);
+  const mark = useRef<HTMLSpanElement>(null);
+
+  // Footer wordmark replays every time it comes back into view (scrolling down or up).
+  // Hysteresis: it plays once 25% is visible and only resets once fully off-screen,
+  // so it never flickers at the edge. The reset is instant (no reverse transition).
+  useEffect(() => {
+    const el = mark.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.classList.add('is-in');
+      return;
+    }
+    let raf = 0;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.intersectionRatio >= 0.25 && !el.classList.contains('is-in')) {
+          cancelAnimationFrame(raf);
+          el.classList.remove('is-reset');
+          // two frames: the reset pose is committed before the draw transition starts
+          raf = requestAnimationFrame(() => {
+            raf = requestAnimationFrame(() => el.classList.add('is-in'));
+          });
+        } else if (!e.isIntersecting && el.classList.contains('is-in')) {
+          cancelAnimationFrame(raf);
+          el.classList.add('is-reset');
+          el.classList.remove('is-in');
+        }
+      },
+      { threshold: [0, 0.25] }
+    );
+    io.observe(el);
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     setHasMounted(true);
@@ -89,7 +125,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
         </div>
       </div>
 
-      <span className="ah-footer-mark" aria-hidden="true" data-r="draw">
+      <span ref={mark} className="ah-footer-mark" aria-hidden="true">
         <Wordmark />
       </span>
 

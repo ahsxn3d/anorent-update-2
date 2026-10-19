@@ -13,6 +13,8 @@
 /* ================================ HERO ================================ */
 .ah-hero {
   position: relative;
+  /* no own stacking context: the travelling orb (a later sibling, z 0) sits above the hero glow but under its copy */
+  z-index: auto !important;
   overflow: hidden;
   min-height: calc(100svh - 64px);
   display: grid;
@@ -124,76 +126,122 @@
   to { transform: none; }
 }
 
-/* ================================ REEL ================================ */
-.ah-reel-stage {
-  display: grid;
-  gap: var(--ah-gut);
-  padding: clamp(40px, 6vw, 96px) var(--ah-pad) 0;
-}
-.ah-reel-card {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-radius: 6px;
-  background: var(--ah-surface);
-  cursor: pointer;
-}
-.ah-reel-card img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.ah-reel-tag {
-  position: absolute;
-  left: 14px;
-  bottom: 14px;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--ah-ink);
-  font-family: var(--ah-display);
-  font-weight: 500;
-  font-size: 14px;
+/* =============================== PROCESS ============================== */
+.ah-process { padding-block: clamp(112px, 13vw, 210px) clamp(96px, 11vw, 180px); }
+.ah-process-head { row-gap: 28px; align-items: end; margin-bottom: clamp(56px, 7vw, 112px); }
+.ah-process-head .ah-h2 { grid-column: 1 / -1; }
+.ah-process-h2-it {
+  font-family: var(--ah-serif-f);
+  font-style: italic;
+  font-weight: 400;
   letter-spacing: -0.01em;
-  color: var(--ah-text);
+  color: var(--ah-sky);
 }
-.ah-reel-tag .ah-serif { font-size: 16px; color: var(--ah-dim); }
-.ah-reel-tag .ah-label { font-size: 10px; }
+.ah-process-lead {
+  grid-column: 1 / -1;
+  margin: 0;
+  max-width: 40ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ah-dim);
+}
 @media (min-width: 900px) {
-  .ah-reel-stage { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .ah-reel-tag { left: 20px; bottom: 20px; font-size: 15px; }
+  .ah-process-head .ah-h2 { grid-column: 1 / span 8; }
+  .ah-process-lead { grid-column: 9 / -1; justify-self: end; margin-bottom: 0.6vw; }
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .ah-reel-track { height: 230svh; }
-  .ah-reel-stage {
-    position: sticky;
-    top: 0;
-    height: 100svh;
-    display: block;
-    padding: 0;
-    overflow: hidden;
-    perspective: 1700px;
+.ah-steps-wrap { position: relative; padding-inline: var(--ah-pad); }
+.ah-steps-rule {
+  position: absolute;
+  left: var(--ah-pad);
+  right: var(--ah-pad);
+  top: 0;
+  height: 1px;
+  background: var(--ah-line);
+  overflow: hidden;
+}
+.ah-steps-fill {
+  display: block;
+  height: 100%;
+  background: var(--ah-coral);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+.ah-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  perspective: 1400px;
+}
+.ah-step { border-bottom: 1px solid var(--ah-line); }
+.ah-step-inner {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  column-gap: var(--ah-gut);
+  row-gap: 14px;
+  padding-block: 32px 36px;
+}
+.ah-step-num {
+  grid-row: span 4;
+  font-family: var(--ah-serif-f);
+  font-style: italic;
+  font-size: 44px;
+  line-height: 0.9;
+  color: var(--ah-coral);
+}
+.ah-step-when { color: var(--ah-faint); }
+.ah-step-title {
+  margin: 0;
+  font-family: var(--ah-display);
+  font-weight: 600;
+  font-size: clamp(30px, 2.9vw, 50px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+.ah-step-desc { margin: 0; max-width: 34ch; font-size: 15px; line-height: 1.55; color: var(--ah-dim); }
+.ah-step-out { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.ah-step-out li {
+  padding: 6px 12px;
+  border: 1px solid var(--ah-line);
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.2;
+  color: rgba(255, 253, 226, 0.82);
+}
+@media (min-width: 900px) {
+  .ah-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--ah-gut); }
+  .ah-step { border-bottom: 0; }
+  .ah-step-inner {
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+    padding-block: clamp(28px, 2.6vw, 40px) 0;
+    padding-right: clamp(8px, 1.2vw, 20px);
+    min-height: clamp(380px, 34vw, 500px);
+    align-content: start;
   }
-  .ah-reel-card {
-    position: absolute;
-    left: calc(50% - 39vw);
-    top: calc(50% - 21.94vw);
-    width: 78vw;
-    transform: rotateX(30deg) scale(0.8);
-  }
-  @media (min-width: 900px) {
-    .ah-reel-card {
-      left: calc(50% - 23vw);
-      top: calc(50% - 12.94vw);
-      width: 46vw;
-    }
-  }
+  .ah-step-num { grid-row: auto; font-size: clamp(64px, 6.4vw, 112px); margin-bottom: clamp(28px, 4vw, 72px); }
+  .ah-step + .ah-step .ah-step-inner { border-left: 1px solid var(--ah-line); padding-left: clamp(16px, 1.6vw, 28px); }
+}
+.ah-process-facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: clamp(56px, 7vw, 104px) var(--ah-pad) 0;
+  border-top: 1px solid var(--ah-line);
+}
+.ah-fact {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--ah-line);
+}
+.ah-fact-v { font-family: var(--ah-display); font-weight: 500; font-size: clamp(18px, 1.6vw, 24px); letter-spacing: -0.02em; }
+@media (min-width: 900px) {
+  .ah-process-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--ah-gut); }
+  .ah-fact { border-bottom: 0; padding-block: 22px 0; flex-direction: column; gap: 10px; }
 }
 
 /* ============================== STATEMENT ============================= */
@@ -659,31 +707,42 @@
 
 .ah-case:hover .ah-case-name { color: var(--ah-coral); }
 }
-.ah-reel-card { box-shadow: 0 40px 80px -30px rgba(2, 8, 28, 0.8); }
-.ah-reel-tag { background: rgba(5, 18, 54, 0.82); }
 .ah-case-hover { background: rgba(5, 18, 54, 0.82); }
 
-/* ---- hero centrepiece (WebGL metaball, CSS fallback underneath) ---- */
-.ah-site .ah-hero > .ah-blob.ah-blob { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.ah-blob-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.6s var(--ah-ease); }
-.ah-blob.is-live .ah-blob-canvas { opacity: 1; }
-.ah-blob-fallback {
-  position: absolute;
-  left: 58%; top: 50%;
-  width: min(44vw, 640px); aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  border-radius: 46% 54% 52% 48% / 50% 44% 56% 50%;
-  background:
-    radial-gradient(60% 60% at 36% 30%, rgba(255, 253, 226, 0.28), transparent 60%),
-    radial-gradient(70% 70% at 30% 75%, rgba(68, 197, 171, 0.55), transparent 70%),
-    radial-gradient(60% 60% at 80% 40%, rgba(255, 107, 76, 0.42), transparent 70%),
-    radial-gradient(closest-side, #1740a9 55%, rgba(23, 64, 169, 0) 100%);
-  filter: blur(18px);
-  opacity: 0.9;
-  transition: opacity 1.6s var(--ah-ease);
+/* ---- travelling orb (WebGL metaball, gradient orb on low-end / no WebGL) ---- */
+.ah-orb {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: min(86vh, 56vw);
+  height: min(86vh, 56vw);
+  pointer-events: none;
+  will-change: transform, opacity;
+  contain: strict;
+  /* hero pose before the loop starts (matches data-orb on the hero) */
+  transform: translate3d(calc(68vw - min(86vh, 56vw) / 2), calc(50vh - min(86vh, 56vw) / 2), 0);
 }
-/* once the canvas is live the blurred fallback leaves the render tree (no hidden blur layer under the shader) */
-.ah-blob.is-live .ah-blob-fallback { opacity: 0; visibility: hidden; transition: opacity 1.6s var(--ah-ease), visibility 0s linear 1.6s; }
 @media (max-width: 899px) {
-  .ah-blob-fallback { left: 50%; top: 46%; width: 92vw; }
+  .ah-orb {
+    width: min(98vw, 62vh);
+    height: min(98vw, 62vh);
+    transform: translate3d(calc(50vw - min(98vw, 62vh) / 2), calc(42vh - min(98vw, 62vh) / 2), 0);
+  }
 }
+/* reduced motion: the orb belongs to the hero and scrolls away with it */
+@media (prefers-reduced-motion: reduce) { .ah-orb { position: absolute; } }
+.ah-orb-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s var(--ah-ease); }
+.ah-orb.is-live .ah-orb-canvas { opacity: 1; }
+.ah-orb-fallback {
+  position: absolute;
+  inset: 8%;
+  /* soft edges come from the gradient stops (every layer fades to 0 inside the box), never a filter */
+  background:
+    radial-gradient(36% 36% at 40% 36%, rgba(255, 253, 226, 0.26), rgba(255, 253, 226, 0) 100%),
+    radial-gradient(38% 38% at 38% 58%, rgba(68, 197, 171, 0.42), rgba(68, 197, 171, 0) 100%),
+    radial-gradient(36% 36% at 62% 44%, rgba(255, 107, 76, 0.36), rgba(255, 107, 76, 0) 100%),
+    radial-gradient(closest-side, #1740a9 30%, rgba(23, 64, 169, 0.45) 62%, rgba(23, 64, 169, 0) 100%);
+  transition: opacity 1.4s var(--ah-ease);
+}
+.ah-orb.is-live .ah-orb-fallback { opacity: 0; visibility: hidden; transition: opacity 1.4s var(--ah-ease), visibility 0s linear 1.4s; }

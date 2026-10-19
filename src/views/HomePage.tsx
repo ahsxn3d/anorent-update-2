@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Page, DeploymentProduct, ReviewItem, HeroContent } from '../types';
 import { loadGsap, whenSettled } from '../components/site/gsap';
-import { HeroBlob } from '../components/site/HeroBlob';
+import { ScrollOrb } from '../components/site/ScrollOrb';
 
 // The project modal (and its animation library) only loads when a project is opened
 const DeploymentModal = dynamic(() => import('../components/DeploymentModal').then((m) => m.DeploymentModal), { ssr: false });
@@ -104,6 +104,18 @@ export const HomePage: React.FC<HomePageProps> = ({
     ['03', 'SaaS Dashboards', 'Analytics and APIs'],
   ];
 
+  const process = [
+    { n: '01', when: 'Days 1-2', title: 'Discover', desc: 'A short call, your references and goals, turned into a one-page brief with scope and price locked.', out: ['Brief', 'Sitemap', 'Fixed quote'] },
+    { n: '02', when: 'Week 1', title: 'Design', desc: 'Art direction, key screens and a motion study you can click through before a line of code ships.', out: ['Moodboard', 'Key screens', 'Motion study'] },
+    { n: '03', when: 'Weeks 2-3', title: 'Build', desc: 'Next.js, 3D and motion wired to your content, tuned against a 60fps budget on real phones.', out: ['Next.js build', '3D + motion', 'CMS + forms'] },
+    { n: '04', when: 'Week 4', title: 'Launch', desc: 'QA across devices, SEO and analytics, then deploy and hand over everything you own.', out: ['QA pass', 'SEO setup', 'Handover'] },
+  ];
+  const facts: Array<[string, string]> = [
+    ['Pricing', 'Fixed, agreed upfront'],
+    ['Feedback', 'Live preview link every week'],
+    ['Performance', '60fps motion budget'],
+  ];
+
   const statementWords = useMemo(
     () => markWords(finalBioSubtext, heroContent?.highlightWords || []),
     [finalBioSubtext, heroContent?.highlightWords]
@@ -169,40 +181,33 @@ export const HomePage: React.FC<HomePageProps> = ({
             scrollTrigger: { trigger: '.ah-hero', start: 'top top', end: 'bottom top', scrub: true },
           });
 
-          // Reel: the project deck lifts out of a 3D tilt and fans out into a flat row
-          const reel = document.querySelector<HTMLElement>('.ah-reel-track');
-          const cards = gsap.utils.toArray<HTMLElement>('.ah-reel-card');
-          if (reel && cards.length > 0) {
-            const n = cards.length;
-            const mid = (n - 1) / 2;
-            cards.forEach((card, i) => {
-              const o = i - mid;
-              gsap.set(card, {
-                xPercent: o * 10,
-                yPercent: 14 + Math.abs(o) * 6,
-                rotateZ: o * 7,
-                rotateX: 30,
-                scale: 0.8 - Math.abs(o) * 0.05,
-                zIndex: n - Math.abs(Math.round(o)),
-                transformOrigin: '50% 100%',
-              });
-            });
-            const tl = gsap.timeline({
-              defaults: { ease: 'power2.inOut' },
-              scrollTrigger: { trigger: reel, start: 'top top', end: 'bottom bottom', scrub: 0.8 },
-            });
-            cards.forEach((card, i) => {
-              const o = i - mid;
-              tl.to(
-                card,
-                desktop
-                  ? { xPercent: o * 106, yPercent: 0, rotateZ: 0, rotateX: 0, scale: 1, duration: 1 }
-                  : { xPercent: o * 14, yPercent: o * 22, rotateZ: o * 4, rotateX: 0, scale: 1 - Math.abs(o) * 0.06, duration: 1 },
-                0
+          // Process: the coral rule draws across, the four steps fold up out of depth
+          gsap.fromTo(
+            '.ah-steps-fill',
+            { scaleX: 0 },
+            {
+              scaleX: 1,
+              ease: 'none',
+              scrollTrigger: { trigger: '.ah-steps-wrap', start: desktop ? 'top 82%' : 'top 85%', end: desktop ? 'top 30%' : 'bottom 75%', scrub: true },
+            }
+          );
+          const steps = gsap.utils.toArray<HTMLElement>('.ah-step-inner');
+          if (desktop && steps.length) {
+            gsap.timeline({
+              scrollTrigger: { trigger: '.ah-steps', start: 'top 92%', end: 'top 38%', scrub: true },
+            }).fromTo(
+              steps,
+              { rotateX: -38, yPercent: 16, opacity: 0, transformPerspective: 1400, transformOrigin: '50% 0%' },
+              { rotateX: 0, yPercent: 0, opacity: 1, ease: 'power2.out', stagger: 0.18, duration: 1 }
+            );
+          } else {
+            steps.forEach((st) => {
+              gsap.fromTo(
+                st,
+                { rotateX: -24, yPercent: 10, opacity: 0, transformPerspective: 1100, transformOrigin: '50% 0%' },
+                { rotateX: 0, yPercent: 0, opacity: 1, ease: 'power2.out', scrollTrigger: { trigger: st, start: 'top 96%', end: 'top 66%', scrub: true } }
               );
             });
-            tl.fromTo('.ah-reel-tag', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.04 }, 0.7);
-            tl.to({}, { duration: 0.25 });
           }
 
           // Statement: word-by-word reading reveal
@@ -419,9 +424,8 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <div ref={root} className="ah-home">
       {/* ============================ 01 HERO ============================ */}
-      <section className="ah-hero ah-bleed">
+      <section className="ah-hero ah-bleed" data-orb="0.68 0.5 1 0 1" data-orb-m="0.5 0.44 1 0 0.9" data-orb-at="top">
         <div className="ah-glow" aria-hidden="true" />
-        <HeroBlob />
         <div className="ah-hero-top ah-hero-chrome ah-load" style={{ animationDelay: '0.1s' }}>
           <p className="ah-label">{finalBadgeText}</p>
           <p className="ah-label ah-hero-telemetry">
@@ -485,6 +489,9 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* travelling orb: after the hero in the DOM so it sits over the hero glow, under every section */}
+      <ScrollOrb />
+
       {/* ticker: the existing service names, squared-media style */}
       <div className="ah-ticker ah-bleed" aria-hidden="true">
         <div className="ah-ticker-track">
@@ -502,37 +509,60 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
 
-      {/* ============================== REEL ============================= */}
-      {products && products.length > 0 && (
-        <section className="ah-reel ah-bleed" aria-label="Selected work">
-          <div className="ah-reel-track">
-            <div className="ah-reel-stage">
-              {products.slice(0, 3).map((project, i) => {
-                const image = project.coverImageUrl || project.thumbnailUrl || project.thumbnail;
-                return (
-                  <button
-                    key={project.id}
-                    type="button"
-                    className="ah-reel-card"
-                    onClick={() => inspect(project)}
-                    aria-label={`Inspect ${project.title}`}
-                  >
-                    {image ? <Image src={image} alt="" width={1376} height={768} sizes="(min-width: 900px) 34vw, 82vw" /> : null}
-                    <span className="ah-reel-tag">
-                      <span className="ah-serif">{pad(i + 1)}</span>
-                      <span>{project.title.split(' | ')[0]}</span>
-                      <span className="ah-label">{project.category}</span>
-                    </span>
-                  </button>
-                );
-              })}
+      {/* ============================ 01 PROCESS ========================= */}
+      <section
+        className="ah-process ah-bleed"
+        aria-label="Process"
+        data-orb="0.85 0.24 0.42 0.3 0.95"
+        data-orb-m="0.84 0.2 0.42 0.3 0.7"
+      >
+        <div className="ah-grid ah-process-head">
+          <p className="ah-chapter">
+            <span className="ah-serif">01</span>
+            <span className="ah-chapter-rule" />
+            <span>Process</span>
+            <span className="ah-chapter-tag">4 stages</span>
+          </p>
+          <h2 className="ah-h2">
+            <span className="ah-mask"><span className="ah-rise">From first call</span></span>
+            <span className="ah-mask"><span className="ah-rise">to <span className="ah-process-h2-it">live launch</span></span></span>
+          </h2>
+          <p className="ah-process-lead ah-fade">
+            Every build follows the same four stages, so you always know what ships next and when. No surprises, no vanishing weeks.
+          </p>
+        </div>
+
+        <div className="ah-steps-wrap">
+          <span className="ah-steps-rule" aria-hidden="true"><span className="ah-steps-fill" /></span>
+          <ol className="ah-steps">
+            {process.map((st) => (
+              <li key={st.n} className="ah-step">
+                <div className="ah-step-inner">
+                  <span className="ah-step-num" aria-hidden="true">{st.n}</span>
+                  <span className="ah-label ah-step-when">{st.when}</span>
+                  <h3 className="ah-step-title">{st.title}</h3>
+                  <p className="ah-step-desc">{st.desc}</p>
+                  <ul className="ah-step-out" aria-label={`${st.title} deliverables`}>
+                    {st.out.map((o) => <li key={o}>{o}</li>)}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <dl className="ah-process-facts">
+          {facts.map(([k, v]) => (
+            <div key={k} className="ah-fact ah-fade">
+              <dt className="ah-label">{k}</dt>
+              <dd className="ah-fact-v" style={{ margin: 0 }}>{v}</dd>
             </div>
-          </div>
-        </section>
-      )}
+          ))}
+        </dl>
+      </section>
 
       {/* ========================== 02 STATEMENT ========================== */}
-      <section className="ah-section ah-statement ah-bleed" aria-label="Statement">
+      <section className="ah-section ah-statement ah-bleed" aria-label="Statement" data-orb="0.12 0.52 0.5 0.55 0.9" data-orb-m="0.18 0.78 0.5 0.55 0.55">
         <div className="ah-notes" aria-hidden="true">
           {annotations.map((t, k) => (
             <span key={t} className={`ah-note ah-note-${k}`}>{t}</span>
@@ -540,7 +570,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
         <div className="ah-grid">
           <p className="ah-chapter">
-            <span className="ah-serif">01</span>
+            <span className="ah-serif">02</span>
             <span className="ah-chapter-rule" />
             <span>Studio</span>
           </p>
@@ -555,10 +585,10 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ========================== 03 SERVICES =========================== */}
-      <section className="ah-section ah-services ah-light ah-bleed" aria-label="Services">
+      <section className="ah-section ah-services ah-light ah-bleed" aria-label="Services" data-orb="0.86 0.5 0.45 0.65 1" data-orb-m="0.82 0.5 0.4 0.65 0.6">
         <div className="ah-grid">
           <p className="ah-chapter">
-            <span className="ah-serif">02</span>
+            <span className="ah-serif">03</span>
             <span className="ah-chapter-rule" />
             <span>Services</span>
           </p>
@@ -586,10 +616,10 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* ============================ 04 WORK ============================= */}
       {products && products.length > 0 && (
-        <section className="ah-section ah-work ah-bleed" aria-label="Featured Digital Deployments">
+        <section className="ah-section ah-work ah-bleed" aria-label="Featured Digital Deployments" data-orb="0.13 0.64 0.6 0.75 0.45" data-orb-m="0.86 0.22 0.45 0.75 0.35">
           <div className="ah-grid ah-work-head">
             <p className="ah-chapter">
-              <span className="ah-serif">03</span>
+              <span className="ah-serif">04</span>
               <span className="ah-chapter-rule" />
               <span>Curated Assets &amp; Systems</span>
               <span className="ah-chapter-tag">Featured</span>
@@ -697,12 +727,12 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* =========================== 05 REVIEWS =========================== */}
       {reviews && reviews.length > 0 && (
-        <section className="ah-reviews ah-cobalt-ground ah-bleed" aria-label="Client Reviews">
+        <section className="ah-reviews ah-cobalt-ground ah-bleed" aria-label="Client Reviews" data-orb="0.8 0.5 0.6 0.85 0.4" data-orb-m="0.2 0.5 0.5 0.85 0.3">
           <div className="ah-reviews-track" style={{ ['--ah-count' as string]: reviews.length } as React.CSSProperties}>
             <div className="ah-reviews-stage">
               <div className="ah-grid ah-reviews-head">
                 <p className="ah-chapter">
-                  <span className="ah-serif">04</span>
+                  <span className="ah-serif">05</span>
                   <span className="ah-chapter-rule" />
                   <span>02 // VERIFIED FEEDBACK</span>
                 </p>
@@ -745,11 +775,11 @@ export const HomePage: React.FC<HomePageProps> = ({
       )}
 
       {/* ============================ 06 CTA ============================== */}
-      <section className="ah-section ah-cta ah-bleed" aria-label="Start a project">
+      <section className="ah-section ah-cta ah-bleed" aria-label="Start a project" data-orb="0.74 0.48 1.05 0.9 1" data-orb-m="0.62 0.62 0.9 1 0.85">
         <div className="ah-glow ah-glow-low ah-glow-warm" aria-hidden="true" />
         <div className="ah-grid">
           <p className="ah-chapter">
-            <span className="ah-serif">05</span>
+            <span className="ah-serif">06</span>
             <span className="ah-chapter-rule" />
             <span>Contact</span>
           </p>
